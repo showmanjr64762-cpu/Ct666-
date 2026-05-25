@@ -343,7 +343,6 @@
         if (level1Ref.exists()) {
           const newBal1 = (level1Ref.data().balance || 0) + level1Commission;
           await updateDoc(doc(db, "users", referredBy), { balance: newBal1 });
-          await logCommission(referredBy, userId, level1Commission, 1, spentAmount);
         }
         
         const level2Data = level1Ref.exists() ? level1Ref.data() : null;
@@ -353,26 +352,18 @@
           if (level2Ref.exists()) {
             const newBal2 = (level2Ref.data().balance || 0) + level2Commission;
             await updateDoc(doc(db, "users", level2Data.referredBy), { balance: newBal2 });
-            await logCommission(level2Data.referredBy, userId, level2Commission, 2, spentAmount);
           }
         }
       } catch (error) { console.error("Commission error:", error); }
     }
     
-    async function logCommission(referrerId, userId, amount, level, depositAmount) {
-      try {
-        await setDoc(doc(collection(db, "commissions")), {
-          referrerId, userId, amount, level, depositAmount, timestamp: Date.now()
-        });
-      } catch (e) {}
-    }
-    
     async function getReferralEarnings(userId) {
       try {
-        const q = query(collection(db, "commissions"), where("referrerId", "==", userId));
+        const q = query(collection(db, "users"), where("referredBy", "==", userId));
         const snap = await getDocs(q);
         let total = 0;
-        snap.forEach(doc => total += doc.data().amount);
+        // Simple count for now - each referral gives 50 coins
+        total = snap.size * 50;
         return total;
       } catch (e) { return 0; }
     }
@@ -434,7 +425,7 @@
       } catch (error) { showToast('❌ Login failed: ' + error.message); }
     }
     
-    // FIXED: Referrer gets 50 coins on signup
+    // FIXED: Referrer gets 50 coins on signup - Using direct user lookup
     window.doFirebaseRegister = async function() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
@@ -459,22 +450,22 @@
         // Process referral - give 50 coins to referrer
         if (referralCode && referralCode.trim()) {
           try {
+            // Get all users and find by referralCode (simpler approach)
             const usersRef = collection(db, "users");
-            const q = query(usersRef, where("referralCode", "==", referralCode.trim()));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(usersRef);
             
-            if (!querySnapshot.empty) {
-              const referrerDoc = querySnapshot.docs[0];
-              referredById = referrerDoc.id;
-              const referrerData = referrerDoc.data();
-              const currentReferrerBalance = referrerData.balance || 0;
-              
-              await updateDoc(doc(db, "users", referredById), { 
-                balance: currentReferrerBalance + 50 
-              });
-              referrerBonusGiven = true;
-              await logCommission(referredById, uid, 50, 1, 0);
-              showToast(`🎉 Referrer earned 50 coins!`);
+            for (const docSnap of querySnapshot.docs) {
+              const userData = docSnap.data();
+              if (userData.referralCode === referralCode.trim()) {
+                referredById = docSnap.id;
+                const currentReferrerBalance = userData.balance || 0;
+                await updateDoc(doc(db, "users", referredById), { 
+                  balance: currentReferrerBalance + 50 
+                });
+                referrerBonusGiven = true;
+                console.log("Referrer found and awarded 50 coins!");
+                break;
+              }
             }
           } catch (err) {
             console.error("Referral lookup error:", err);
@@ -497,7 +488,11 @@
           createdAt: Date.now()
         });
         
-        showToast('✅ Registration successful! +50 bonus coins!');
+        if (referrerBonusGiven) {
+          showToast('✅ Registration successful! +50 bonus coins! Referrer also got 50 coins!');
+        } else {
+          showToast('✅ Registration successful! +50 bonus coins!');
+        }
         localStorage.removeItem('pendingReferral');
         closeModal('authModal');
       } catch (error) { 
@@ -609,10 +604,10 @@
         } else {
           myReferralCode = await generateReferralCode(user.uid, user.email);
           await setDoc(userRef, {
-            email: user.email, displayName: user.email.split('@')[0], balance: 0, totalSpent: 0, totalBets: 0, wins: 0,
+            email: user.email, displayName: user.email.split('@')[0], balance: 100, totalSpent: 0, totalBets: 0, wins: 0,
             userAvatar: '🐉', jazzcashNum: '', easypaisaNum: '', referralCode: myReferralCode, createdAt: Date.now()
           });
-          balance = 0;
+          balance = 100;
           showToast('🎊 New account created! Start playing!');
         }
         
@@ -806,8 +801,7 @@
           • Share your referral link with friends<br>
           • They get 50 bonus coins on signup<br>
           • You get 50 bonus coins per referral<br>
-          • When they spend 1000+ coins, you earn Level 1,2,3 commissions!<br>
-          • When they spend total 3000 coins, you earn an extra 600 coins bonus!<br>
+          • When they spend 1000+ coins, you earn commissions!<br>
           • Commission is automatically added to your balance
           </div>
         </div>`;
