@@ -321,6 +321,20 @@
     
     let autoSyncInterval = null;
     
+    // FORCE LOGOUT ON PAGE LOAD - Clear any existing session
+    async function forceClearSession() {
+      try {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          console.log("Found existing session, signing out...");
+          await signOut(auth);
+          console.log("Successfully signed out existing user");
+        }
+      } catch (e) {
+        console.log("No existing session or error clearing:", e);
+      }
+    }
+    
     async function autoSyncGameData() {
       if (!currentFirebaseUser) return;
       const syncStatus = document.getElementById('syncStatus');
@@ -369,7 +383,6 @@
       const refInput = document.getElementById('regReferral');
       if (refInput) {
         const pending = localStorage.getItem('pendingReferral');
-        // Only auto-fill if there's a pending referral AND the field is empty
         if (pending && pending.trim() && !refInput.value) {
           refInput.value = pending;
           console.log("Auto-filled referral input from URL:", pending);
@@ -536,7 +549,6 @@
         } else {
           let html = '';
           commissions.slice(-10).reverse().forEach(comm => {
-            const date = new Date(comm.createdAt).toLocaleDateString();
             const statusClass = comm.status === 'pending' ? 'status-pending' : 'status-collected';
             const statusText = comm.status === 'pending' ? 'Pending' : 'Collected';
             html += `<div class="commission-item">
@@ -1157,9 +1169,13 @@
     }
     
     // AUTH STATE HANDLER - NO AUTO-LOGIN, ONLY RESPOND TO USER ACTIONS
+    // First clear any existing session
+    await forceClearSession();
+    
     onAuthStateChanged(auth, async (user) => {
       if (user && !currentFirebaseUser) {
         // User logged in via login/register action
+        console.log("User logged in:", user.email);
         currentFirebaseUser = user;
         isGuestMode = false;
         await loadUserDataFromFirestore(user);
@@ -1168,8 +1184,12 @@
         renderBonusTabContent();
         startAutoSync();
       } else if (!user && currentFirebaseUser) {
-        // User logged out - already handled by firebaseLogout
-        console.log("User signed out");
+        // User logged out
+        console.log("User logged out");
+        currentFirebaseUser = null;
+      } else if (!user && !currentFirebaseUser) {
+        // No user, already in guest mode - do nothing
+        console.log("No user, guest mode active");
       }
     });
     
