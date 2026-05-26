@@ -149,7 +149,6 @@
     .ref-link-input { flex: 1; background: #1a1a1a; border: 1px solid #ffd70033; border-radius: 8px; padding: 8px; color: white; font-size: 0.7rem; }
     .level-badge { display: inline-block; background: #ffd70020; border-radius: 10px; padding: 2px 6px; margin: 2px; font-size: 0.6rem; }
     
-    /* Referral Dashboard Styles */
     .ref-dashboard { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 15px; margin-bottom: 15px; }
     .ref-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
     .ref-stat-card { background: rgba(255,215,0,0.1); border-radius: 12px; padding: 10px; text-align: center; }
@@ -157,6 +156,7 @@
     .ref-stat-label { font-size: 0.7rem; color: #aaa; }
     .ref-referral-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(255,215,0,0.1); }
     .claim-btn { background: linear-gradient(145deg, #2ecc71, #27ae60); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; }
+    .claim-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .commission-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(255,215,0,0.05); border-radius: 8px; margin-bottom: 5px; }
     .commission-amount { color: #2ecc71; font-weight: bold; }
     .commission-status { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
@@ -177,7 +177,7 @@
   </div>
 
   <!-- Auth Modal -->
-  <div class="modal-overlay" id="authModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('authModal')">×</span><div style="text-align:center;font-size:2rem;">🌴</div><h3 style="text-align:center;">Flappy 777</h3><div style="background:#48C9B010; padding:8px; border-radius:12px; margin:10px 0; text-align:center; font-size:0.7rem;">🔒 Cloud Save • Multi-Level Referrals (10% / 5% / 2.5%)<br>🎁 Get 50 bonus coins when signing up with a referral link!<br>💰 Refer friends and earn 50 coins + commissions!</div><input type="email" id="loginEmail" placeholder="Email" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;"><input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;"><button class="btn btn-gold" style="width:100%;" onclick="doFirebaseLogin()">🔑 LOGIN</button><div style="text-align:center;margin:16px 0;">── ☀️ REFERRAL BONUS ──</div><button class="btn btn-outline" style="width:100%;" onclick="guestLogin()">🏄 Continue as Guest</button><div style="margin-top:20px;"><input type="text" id="regUsername" placeholder="Username" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="email" id="regEmail" placeholder="Email" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="text" id="regReferral" placeholder="Referral Code (Get 50 bonus coins!)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FFD700;color:#ffd700;"><input type="password" id="regPassword" placeholder="Password (min 6 chars)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="password" id="regConfirm" placeholder="Confirm Password" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><button class="btn" style="background:#FF6B6B;width:100%;" onclick="doFirebaseRegister()">🐚 CREATE ACCOUNT</button></div></div></div>
+  <div class="modal-overlay" id="authModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('authModal')">×</span><div style="text-align:center;font-size:2rem;">🌴</div><h3 style="text-align:center;">Flappy 777</h3><div style="background:#48C9B010; padding:8px; border-radius:12px; margin:10px 0; text-align:center; font-size:0.7rem;">🔒 Cloud Save • Multi-Level Referrals (10% / 5% / 2.5%)<br>🎁 Get 50 bonus coins when signing up with a referral link!<br>💰 Refer friends and earn 50 coins + commissions!</div><input type="email" id="loginEmail" placeholder="Email" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;"><input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;"><button class="btn btn-gold" style="width:100%;" onclick="doFirebaseLogin()">🔑 LOGIN</button><div style="text-align:center;margin:16px 0;">── ☀️ REFERRAL BONUS ──</div><button class="btn btn-outline" style="width:100%;" onclick="guestLogin()">🏄 Continue as Guest (0 coins)</button><div style="margin-top:20px;"><input type="text" id="regUsername" placeholder="Username" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="email" id="regEmail" placeholder="Email" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="text" id="regReferral" placeholder="Referral Code (Get 50 bonus coins!)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FFD700;color:#ffd700;"><input type="password" id="regPassword" placeholder="Password (min 6 chars)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="password" id="regConfirm" placeholder="Confirm Password" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><button class="btn" style="background:#FF6B6B;width:100%;" onclick="doFirebaseRegister()">🐚 CREATE ACCOUNT</button></div></div></div>
 
   <!-- Profile Modal with Referral Dashboard -->
   <div class="modal-overlay" id="profileModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('profileModal')">×</span><div style="text-align:center;"><div class="profile-avatar" id="profileAvatarDisplay" style="width:80px;height:80px;font-size:2.5rem;margin:0 auto;cursor:pointer;" onclick="showAvatarSelector()">🐉</div><h3 id="profileName" style="color:white;margin-top:8px;"></h3><div style="color:#aaa;font-size:0.7rem;" id="profileUserId"></div></div><div class="profile-row"><span>VIP Level</span><span id="profileVipLevel" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Coins</span><span id="profileCoins" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Total Bets</span><span id="profileTotalBets">0</span></div><div class="profile-row"><span>Wins</span><span id="profileWins">0</span></div><div class="profile-row"><span>Total Spent</span><span id="profileTotalSpent">0</span></div>
@@ -189,12 +189,10 @@
         <button class="btn-gold" style="padding: 4px 12px; font-size: 0.7rem; width: auto;" onclick="copyRefLink()">📋 Copy Link</button>
       </div>
       
-      <!-- Referral Link Display -->
       <div class="ref-link-container" style="margin-bottom: 12px;">
         <input type="text" id="myReferralCodeDisplay" class="ref-link-input" readonly value="Loading...">
       </div>
       
-      <!-- Stats Cards -->
       <div class="ref-stats">
         <div class="ref-stat-card">
           <div class="ref-stat-value" id="totalReferralsCount">0</div>
@@ -206,14 +204,12 @@
         </div>
       </div>
       
-      <!-- Pending Commission to Collect -->
       <div style="background: rgba(46,204,113,0.1); border-radius: 12px; padding: 10px; margin-bottom: 12px; text-align: center;">
         <div style="font-size: 0.7rem; color: #aaa;">💰 AVAILABLE TO COLLECT</div>
         <div style="font-size: 1.8rem; font-weight: bold; color: #2ecc71;" id="availableCommission">0</div>
         <button class="claim-btn" onclick="claimAllCommission()" id="claimCommissionBtn">🎁 CLAIM ALL COMMISSION</button>
       </div>
       
-      <!-- My Referrals List -->
       <div style="margin-top: 10px;">
         <strong>📋 My Referrals</strong>
         <div id="referralsListContainer" style="max-height: 150px; overflow-y: auto; margin-top: 8px; font-size: 0.75rem;">
@@ -221,7 +217,6 @@
         </div>
       </div>
       
-      <!-- Commission History -->
       <div style="margin-top: 12px;">
         <strong>📜 Commission History</strong>
         <div id="commissionHistoryContainer" style="max-height: 150px; overflow-y: auto; margin-top: 8px; font-size: 0.7rem;">
@@ -259,7 +254,7 @@
 
   <!-- Main App -->
   <div class="app-container" id="appContainer">
-    <header class="lobby-header"><div class="header-left" style="display:flex; gap:0.6rem;"><div class="profile-avatar" id="headerAvatar" onclick="openModal('profileModal')">🐉</div><div><span class="username" id="headerUsername">Guest</span><br><span class="user-status">🌺 Play as Guest</span></div><div class="balance-container"><span class="balance-amount" id="lobbyBalance">100</span> 🐚</div></div><div id="authButtons"></div><div class="header-actions"><button class="header-btn" onclick="openModal('downloadPopup')">📱</button><button class="header-btn" onclick="openModal('notificationPanel')">🔔</button></div></header>
+    <header class="lobby-header"><div class="header-left" style="display:flex; gap:0.6rem;"><div class="profile-avatar" id="headerAvatar" onclick="openModal('profileModal')">🐉</div><div><span class="username" id="headerUsername">Guest</span><br><span class="user-status">🌺 Play as Guest</span></div><div class="balance-container"><span class="balance-amount" id="lobbyBalance">0</span> 🐚</div></div><div id="authButtons"></div><div class="header-actions"><button class="header-btn" onclick="openModal('downloadPopup')">📱</button><button class="header-btn" onclick="openModal('notificationPanel')">🔔</button></div></header>
     <div class="lobby-content"><div class="games-section"><h2 style="font-family:'Playfair Display';color:#ffd700;">🎮 Featured Games</h2><div class="games-grid"><div class="game-tile" onclick="enterGame()"><div class="game-icon">👑</div><div class="game-name">Casino Shuffle 786</div><div style="color:#ffd700;">Min: 10 🐚</div><button class="play-btn">Play Now</button></div><div class="game-tile" onclick="enterFlappyGame()"><div class="game-icon">🐦</div><div class="game-name">Flappy Bird</div><div style="color:#ffd700;">Min: 10 🐚</div><button class="play-btn">Play Now</button></div></div></div></div>
     <nav class="bottom-nav"><button class="nav-item active" onclick="setActiveNav(this); exitAllGames()">🏠 Home</button><button class="nav-item" onclick="openFullscreen('offersSection')">🎁 Offers</button><button class="nav-item" onclick="openFullscreen('shopSection')">🛒 Shop</button><button class="nav-item" onclick="openWithdraw()">💸 Withdraw</button></nav>
   </div>
@@ -292,10 +287,10 @@
 
     window.showToast = function(msg) { let t = document.getElementById('customToast'); t.textContent = msg; t.style.opacity = '1'; setTimeout(() => t.style.opacity = '0', 3000); };
     
-    // Game state
+    // Game state - GUEST STARTS WITH 0 COINS
     let currentFirebaseUser = null;
     let isGuestMode = true;
-    let balance = 100;
+    let balance = 0;
     let totalSpent = 0;
     let totalBets = 0;
     let wins = 0;
@@ -350,7 +345,7 @@
     const urlReferralCode = urlParams.get('ref');
     if (urlReferralCode) {
       localStorage.setItem('pendingReferral', urlReferralCode);
-      console.log("Referral code detected:", urlReferralCode);
+      console.log("Referral code detected in URL:", urlReferralCode);
     }
     
     function autoFillReferralInput() {
@@ -359,6 +354,7 @@
         const pending = localStorage.getItem('pendingReferral');
         if (pending && !refInput.value) {
           refInput.value = pending;
+          console.log("Auto-filled referral input:", pending);
         }
       }
     }
@@ -384,7 +380,7 @@
           createdAt: Date.now()
         };
         await addDoc(collection(db, "commissions"), commissionData);
-        console.log(`Commission saved: ${amount} coins to ${referrerId}`);
+        console.log(`Commission saved: ${amount} coins to ${referrerId} (Level ${level})`);
         return true;
       } catch (e) {
         console.error("Error saving commission:", e);
@@ -395,13 +391,22 @@
     // Process commission when user spends coins
     async function processReferralCommissions(spentAmount, userId) {
       if (spentAmount < 1000) return;
+      console.log(`Processing commission for spend of ${spentAmount} by user ${userId}`);
       
       try {
         const userDoc = await getDoc(doc(db, "users", userId));
-        if (!userDoc.exists()) return;
+        if (!userDoc.exists()) {
+          console.log("User not found");
+          return;
+        }
         
         const referredBy = userDoc.data().referredBy;
-        if (!referredBy) return;
+        if (!referredBy) {
+          console.log("No referrer found for this user");
+          return;
+        }
+        
+        console.log(`User was referred by: ${referredBy}`);
         
         // Level 1 - 10%
         const level1Commission = Math.floor(spentAmount * 0.10);
@@ -414,6 +419,7 @@
         if (level2Referrer) {
           const level2Commission = Math.floor(spentAmount * 0.05);
           await saveCommission(level2Referrer, userId, level2Commission, 2, 'spend_commission', spentAmount);
+          console.log(`Level 2 commission: ${level2Commission} to ${level2Referrer}`);
         }
         
         // Level 3 - 2.5%
@@ -423,6 +429,7 @@
           if (level3Referrer) {
             const level3Commission = Math.floor(spentAmount * 0.025);
             await saveCommission(level3Referrer, userId, level3Commission, 3, 'spend_commission', spentAmount);
+            console.log(`Level 3 commission: ${level3Commission} to ${level3Referrer}`);
           }
         }
         
@@ -437,8 +444,9 @@
       if (!currentFirebaseUser) return;
       
       const userId = currentFirebaseUser.uid;
+      console.log("Loading referral data for:", userId);
       
-      // Get referrals list
+      // Get referrals list (users who used this user's referral code)
       const usersRef = collection(db, "users");
       const qReferrals = query(usersRef, where("referredBy", "==", userId));
       const referralSnapshot = await getDocs(qReferrals);
@@ -451,6 +459,7 @@
           joined: data.createdAt
         });
       });
+      console.log(`Found ${referrals.length} referrals`);
       
       // Get commissions for this user
       const commissionsRef = collection(db, "commissions");
@@ -473,6 +482,7 @@
           pending += data.amount;
         }
       });
+      console.log(`Found ${commissions.length} commissions, pending: ${pending}, total: ${total}`);
       
       pendingCommission = pending;
       totalCommissionEarned = total;
@@ -540,6 +550,8 @@
       }
       
       try {
+        console.log("Claiming commission:", pendingCommission);
+        
         // Update all pending commissions to collected
         const commissionsRef = collection(db, "commissions");
         const qCommissions = query(commissionsRef, where("referrerId", "==", currentFirebaseUser.uid), where("status", "==", "pending"));
@@ -606,6 +618,7 @@
         
         // Check for valid referral code
         if (referralCode && referralCode.trim()) {
+          console.log("Looking for referrer with code:", referralCode);
           const usersRef = collection(db, "users");
           const querySnapshot = await getDocs(usersRef);
           
@@ -620,8 +633,12 @@
               // Save signup bonus commission
               await saveCommission(referrerId, uid, 50, 1, 'signup_bonus', 0);
               console.log("Referrer found! Awarded 50 coins to:", referrerId);
+              showToast(`🎉 Referrer ${userData.displayName || 'someone'} got 50 coins!`);
               break;
             }
+          }
+          if (!referrerBonusGiven) {
+            console.log("Referral code not found:", referralCode);
           }
         }
         
@@ -644,7 +661,7 @@
         if (referrerBonusGiven) {
           showToast(`✅ Account created! You got +50 bonus coins! Your referrer also got 50 coins!`);
         } else if (referralCode && referralCode.trim()) {
-          showToast(`✅ Account created! (Referral code not found, no bonus)`);
+          showToast(`✅ Account created! (Referral code "${referralCode}" not found, no bonus)`);
         } else {
           showToast(`✅ Account created! Sign up with a referral link to get 50 bonus coins!`);
         }
@@ -664,7 +681,7 @@
         stopAutoSync();
         currentFirebaseUser = null;
         isGuestMode = true;
-        balance = 100;
+        balance = 0;
         totalSpent = 0;
         totalBets = 0;
         wins = 0;
@@ -677,11 +694,15 @@
         document.getElementById('headerUsername').innerText = 'Guest';
         document.getElementById('myReferralCodeDisplay').value = 'Login to get code';
         document.getElementById('referralsListContainer') && (document.getElementById('referralsListContainer').innerHTML = '<div style="text-align:center; color:#aaa;">Login to see referrals</div>');
+        document.getElementById('commissionHistoryContainer') && (document.getElementById('commissionHistoryContainer').innerHTML = '<div style="text-align:center; color:#aaa;">Login to see commissions</div>');
+        document.getElementById('totalReferralsCount') && (document.getElementById('totalReferralsCount').innerText = '0');
+        document.getElementById('totalCommissionDisplay') && (document.getElementById('totalCommissionDisplay').innerText = '0');
+        document.getElementById('availableCommission') && (document.getElementById('availableCommission').innerText = '0');
         
         updateAuthButtons();
         updateUI();
         closeModal('profileModal');
-        showToast('Logged out, now playing as Guest');
+        showToast('Logged out, now playing as Guest (0 coins)');
       } catch (error) { showToast('Logout error: ' + error.message); }
     }
     
@@ -689,7 +710,7 @@
       stopAutoSync();
       currentFirebaseUser = null;
       isGuestMode = true;
-      balance = 100;
+      balance = 0;
       totalSpent = 0;
       totalBets = 0;
       wins = 0;
@@ -705,7 +726,7 @@
       updateAuthButtons();
       closeModal('authModal');
       updateUI();
-      showToast('Welcome Guest! (Register to save progress and earn referrals!)');
+      showToast('Welcome Guest! (0 coins - Register to play and earn referrals!)');
     }
     
     function updateAuthButtons() {
@@ -749,6 +770,7 @@
             userAvatar: '🐉', jazzcashNum: '', easypaisaNum: '', referralCode: myReferralCode, createdAt: Date.now()
           });
           balance = 0;
+          showToast('🎊 New account created! Start playing!');
         }
         
         document.getElementById('profileAvatarDisplay').innerHTML = userAvatar;
@@ -921,7 +943,7 @@
           • When they sign up using your link, BOTH get 50 bonus coins!<br>
           • When they spend 1000+ coins, you earn commissions!<br>
           • Commission is saved and you can claim it anytime<br>
-          • Guest accounts do NOT earn referral bonuses
+          • Guest accounts have 0 coins and cannot earn referrals
           </div>
         </div>`;
       document.getElementById('tabContent').innerHTML = html;
