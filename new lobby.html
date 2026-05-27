@@ -26,6 +26,7 @@
     .custom-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); color: #ffd700; padding: 12px 20px; border-radius: 50px; z-index: 9999; font-size: 14px; text-align: center; border: 2px solid #ffd700; max-width: 90%; pointer-events: none; opacity: 0; transition: opacity 0.3s; z-index: 10000; }
     
     .sync-status { position: fixed; bottom: 70px; right: 15px; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); border-radius: 20px; padding: 4px 10px; font-size: 10px; color: #ffd700; z-index: 999; border: 1px solid #ffd70033; pointer-events: none; font-family: monospace; }
+    .sync-status.syncing { color: #2ecc71; }
     
     .tropical-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
     .sky-layer { position: absolute; inset: 0; background: linear-gradient(180deg, #87CEEB 0%, #48C9B0 60%, #0083B0 100%); animation: skyShift 18s infinite alternate ease-in-out; opacity: 0.25; }
@@ -87,13 +88,17 @@
     .offer-tab-btn { background: rgba(255,215,0,0.15); border: 1px solid #ffd70033; padding: 0.6rem 1.2rem; border-radius: 40px; font-weight: bold; cursor: pointer; font-size: 0.8rem; color: white; }
     .offer-tab-btn.active { background: #ffd700; color: #000; }
     .bonus-card { background: rgba(255,215,0,0.1); border-radius: 16px; padding: 0.8rem; margin-bottom: 0.8rem; border-left: 4px solid #ffd700; cursor: pointer; transition: all 0.2s; }
+    .bonus-card:hover { background: rgba(255,215,0,0.2); }
+    .bonus-amount { font-size: 1.3rem; font-weight: bold; color: #ffd700; }
+    .timer-text { font-size: 0.7rem; color: #ffaa66; }
     .vip-card { background: rgba(255,215,0,0.1); border-radius: 12px; padding: 10px; margin-bottom: 8px; border-left: 3px solid #ffd700; }
-    .support-option { display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,215,0,0.08); border-radius: 16px; margin-bottom: 10px; cursor: pointer; }
+    .support-option { display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,215,0,0.08); border-radius: 16px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
+    .support-option:active { background: rgba(255,215,0,0.2); }
     .profile-row { display: flex; justify-content: space-between; margin: 8px 0; border-bottom: 1px solid rgba(255,215,0,0.1); padding-bottom: 6px; }
     .avatar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
     .avatar-option { width: 60px; height: 60px; background: linear-gradient(145deg, #ffd700, #9b59b6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; border: 2px solid transparent; }
     .shop-item { background: rgba(255,215,0,0.1); border-radius: 16px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-    .payment-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(145deg, #1a1a2e, #0f0f1a); border: 2px solid #ffd700; border-radius: 24px; padding: 20px; z-index: 5000; width: 90%; max-width: 380px; }
+    .payment-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(145deg, #1a1a2e, #0f0f1a); border: 2px solid #ffd700; border-radius: 24px; padding: 20px; z-index: 5000; width: 90%; max-width: 380px; max-height: 80vh; overflow-y: auto; }
     .withdraw-method { display: flex; gap: 10px; margin: 10px 0; }
     .method-btn { flex: 1; padding: 10px; background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; text-align: center; cursor: pointer; }
     .method-btn.selected { background: #ffd700; color: #000; }
@@ -133,6 +138,7 @@
     .flappy-bet-btn.selected { background: #f59e0b; color: #000; }
     .flappy-start-btn { background: linear-gradient(145deg, #e67e22, #d35400); color: white; border: none; padding: 13px; font-size: 21px; font-weight: bold; border-radius: 30px; cursor: pointer; width: 80%; margin-top: 8px; }
     .gameover-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(145deg, #1f3e48, #0e2a32); border-radius: 20px; padding: 15px 25px; text-align: center; z-index: 4001; width: 250px; border: 2px solid #ff4444; }
+    .close-popup { position: absolute; top: 10px; right: 15px; background: red; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
     
     .leaderboard-container { max-height: 400px; overflow-y: auto; margin-top: 15px; }
     .leaderboard-entry { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid rgba(255,215,0,0.1); font-size: 0.8rem; }
@@ -196,7 +202,7 @@
         <button class="btn-gold" style="padding: 4px 12px; font-size: 0.7rem; width: auto;" onclick="copyRefLink()">📋 Copy Link</button>
       </div>
       
-      <!-- Stats Grid - Like your screenshot -->
+      <!-- Stats Grid -->
       <div class="ref-stats">
         <div class="ref-stat-card">
           <div class="ref-stat-value" id="totalReferralsCount">0</div>
@@ -289,12 +295,12 @@
     <nav class="bottom-nav"><button class="nav-item active" onclick="setActiveNav(this); exitAllGames()">🏠 Home</button><button class="nav-item" onclick="openFullscreen('offersSection')">🎁 Offers</button><button class="nav-item" onclick="openFullscreen('shopSection')">🛒 Shop</button><button class="nav-item" onclick="openWithdraw()">💸 Withdraw</button></nav>
   </div>
 
-  <!-- GAME VIEWS (ORIGINAL - UNCHANGED) -->
+  <!-- GAME VIEWS (ORIGINAL) -->
   <div class="game-view" id="gameView"><button class="back-to-lobby" onclick="exitGame()">← Lobby</button><div class="game-screen"><div class="game-header"><h1>Casino Shuffle 786</h1></div><div class="balance-bar"><span>💰 Balance: </span><span class="balance-amount" id="balanceDisplay">0</span></div><div class="stats-panel"><div class="stat-box"><div class="stat-label">Current Win</div><div class="stat-value win" id="currentWin">0</div></div><div class="stat-box"><div class="stat-label">Multiplier</div><div class="stat-value multiplier" id="multiplier">1.00x</div></div><div class="stat-box"><div class="stat-label">Pairs</div><div class="stat-value pairs" id="pairsDisplay">0/10</div></div></div><div class="bet-panel" id="betPanel"><div class="bet-panel-title">Select Your Bet</div><div class="bet-options"><button class="bet-option" data-bet="10">10</button><button class="bet-option" data-bet="25">25</button><button class="bet-option" data-bet="50">50</button><button class="bet-option" data-bet="100">100</button><button class="bet-option" data-bet="250">250</button><button class="bet-option" data-bet="500">500</button></div></div><div class="action-buttons"><button class="action-btn start-btn" id="startBtn">START GAME</button><button class="action-btn cashout-btn hidden" id="cashoutBtn">CASH OUT</button><button class="action-btn continue-btn hidden" id="continueBtn">CONTINUE</button></div><div class="message-display"><p class="message-text" id="messageText">Select your bet and tap START GAME</p></div><div class="card-grid" id="cardGrid"></div></div></div>
   <div class="win-overlay" id="winOverlay"><div class="win-label">YOU WON</div><div class="win-amount" id="winAmountDisplay">0</div><button class="play-again-btn" id="winPlayAgainBtn">PLAY AGAIN</button></div>
   <div class="lose-overlay" id="loseOverlay"><div class="lose-icon">💣</div><div class="lose-text">BOOM!</div><button class="play-again-btn" id="losePlayAgainBtn">TRY AGAIN</button></div>
 
-  <!-- FLAPPY BIRD GAME (ORIGINAL - UNCHANGED) -->
+  <!-- FLAPPY BIRD GAME (ORIGINAL) -->
   <div class="fullscreen-section" id="flappyGameSection"><div class="fullscreen-header"><button class="back-btn" onclick="exitFlappyGame()">← Lobby</button><span style="font-family:'Playfair Display';font-size:1.3rem;color:#ffd700;">🐦 Flappy Bird</span><span class="balance-amount" id="flappyBalanceDisplay" style="margin-left:auto;">0</span> 🐚</div><div class="flappy-container"><canvas id="flappyCanvas"></canvas></div><div id="flappyBetOverlay" class="flappy-overlay"><h3>🐦 FLAPPY BIRD</h3><div style="color:#f9e45b;">💰 BAL: <span id="flappyBetBal">0</span></div><div class="flappy-bet-grid" id="flappyBetBtns"><button class="flappy-bet-btn" data-bet="10">10</button><button class="flappy-bet-btn" data-bet="20">20</button><button class="flappy-bet-btn" data-bet="50">50</button><button class="flappy-bet-btn" data-bet="100">100</button><button class="flappy-bet-btn" data-bet="250">250</button><button class="flappy-bet-btn" data-bet="500">500</button></div><button id="flappyStartBtn" class="flappy-start-btn">▶ START GAME</button><div style="color:#b9e6ff;font-size:11px;margin-top:10px;">⚡ Tap to fly! Every 6th pipe = 💰 Multiplier</div></div><div id="flappyMultOverlay" class="flappy-overlay hidden"><h3>✨ MULTIPLIER HIT!</h3><div id="flappyMultVal" style="font-size:28px;color:#ffd966;">x1.2</div><div class="win-amount" id="flappyWinAmt">0</div><div class="flappy-action-btns"><button id="flappyCashout" class="flappy-cashout">💰 CASHOUT</button><button id="flappyContinue" class="flappy-continue">🔄 CONTINUE</button></div><div id="flappyTimer" class="flappy-timer hidden">⏱️ 3s</div></div></div>
 
   <script type="module">
@@ -340,7 +346,7 @@
     
     let autoSyncInterval = null;
     
-    // FORCE LOGOUT ON PAGE LOAD - Clear any existing session
+    // FORCE LOGOUT ON PAGE LOAD - Clear any existing session (NO AUTO-LOGIN)
     async function forceClearSession() {
       try {
         const currentUser = auth.currentUser;
@@ -387,6 +393,7 @@
     function stopAutoSync() { if (autoSyncInterval) { clearInterval(autoSyncInterval); autoSyncInterval = null; } }
     
     // ============ REFERRAL SYSTEM ============
+    // ONLY store referral code from URL - do NOT auto-login
     const urlParams = new URLSearchParams(window.location.search);
     const urlReferralCode = urlParams.get('ref');
     
@@ -637,7 +644,7 @@
       } catch (error) { showToast('❌ Login failed: ' + error.message); }
     }
     
-    // Registration with referral tracking
+    // Registration with referral tracking - THIS IS WHERE REFERRAL BONUS IS GIVEN
     window.doFirebaseRegister = async function() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
@@ -660,7 +667,7 @@
         let referrerBonusGiven = false;
         let newUserBonus = 0;
         
-        // Check for valid referral code
+        // Check for valid referral code - ONLY HERE the referrer gets the bonus
         if (referralCode && referralCode.trim()) {
           console.log("Looking for referrer with code:", referralCode);
           const usersRef = collection(db, "users");
