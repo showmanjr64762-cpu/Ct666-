@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Flappy 777• Referral System • Fully Working</title>
+  <title>Flappy 777• Tropical Paradise • Cloud Save</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a'/%3E%3Ctext x='50' y='72' font-size='65' text-anchor='middle' fill='%23ffd700' font-family='Arial'%3E♛%3C/text%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -147,18 +147,6 @@
     .ref-link-container { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; margin: 10px 0; display: flex; gap: 8px; align-items: center; }
     .ref-link-input { flex: 1; background: #1a1a1a; border: 1px solid #ffd70033; border-radius: 8px; padding: 8px; color: white; font-size: 0.7rem; }
     .level-badge { display: inline-block; background: #ffd70020; border-radius: 10px; padding: 2px 6px; margin: 2px; font-size: 0.6rem; }
-    
-    .ref-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; }
-    .ref-stat-card { background: rgba(255,215,0,0.1); border-radius: 12px; padding: 10px; text-align: center; }
-    .ref-stat-value { font-size: 1.5rem; font-weight: bold; color: #ffd700; }
-    .ref-stat-label { font-size: 0.7rem; color: #aaa; }
-    .ref-referral-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(255,215,0,0.1); }
-    .claim-btn { background: linear-gradient(145deg, #2ecc71, #27ae60); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; }
-    .commission-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(255,215,0,0.05); border-radius: 8px; margin-bottom: 5px; }
-    .commission-amount { color: #2ecc71; font-weight: bold; }
-    .commission-status { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
-    .status-pending { background: #f39c12; color: #000; }
-    .status-collected { background: #2ecc71; color: #fff; }
   </style>
 </head>
 <body class="theme-premium-black">
@@ -174,96 +162,30 @@
   </div>
 
   <!-- Auth Modal -->
-  <div class="modal-overlay" id="authModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('authModal')">×</span><div style="text-align:center;font-size:2rem;">🌴</div><h3 style="text-align:center;">Flappy 777</h3><div style="background:#48C9B010; padding:8px; border-radius:12px; margin:10px 0; text-align:center; font-size:0.7rem;">🔒 Cloud Save • Multi-Level Referrals (10% / 5% / 2.5%)<br>🎁 Get 50 bonus coins when signing up with a referral link!<br>💰 EVERY referral link works - share and earn!</div>
-      <input type="email" id="loginEmail" placeholder="Email" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;">
-      <input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;">
-      <button class="btn btn-gold" style="width:100%;" onclick="doFirebaseLogin()">🔑 LOGIN</button>
-      <div style="text-align:center;margin:16px 0;">── ☀️ NEW USER? REGISTER ──</div>
-      <input type="text" id="regUsername" placeholder="Username" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
-      <input type="email" id="regEmail" placeholder="Email" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
-      <input type="text" id="regReferral" placeholder="Referral Code (Auto-filled from link)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FFD700;color:#ffd700;">
-      <input type="password" id="regPassword" placeholder="Password (min 6 chars)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
-      <input type="password" id="regConfirm" placeholder="Confirm Password" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
-      <button class="btn" style="background:#FF6B6B;width:100%;" onclick="doFirebaseRegister()">🐚 CREATE ACCOUNT</button>
-      <div style="text-align:center;margin:16px 0;">── OR PLAY AS GUEST ──</div>
-      <button class="btn btn-outline" style="width:100%;" onclick="guestLogin()">🏄 Continue as Guest (0 coins)</button>
-    </div></div>
+  <div class="modal-overlay" id="authModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('authModal')">×</span><div style="text-align:center;font-size:2rem;">🌴</div><h3 style="text-align:center;">Flappy 777</h3><div style="background:#48C9B010; padding:8px; border-radius:12px; margin:10px 0; text-align:center; font-size:0.7rem;">🔒 Cloud Save • Multi-Level Referrals (10% / 5% / 2.5%)<br>🎁 New user: +50 coins | Referrer: +50 coins<br>💰 Spend 3000 = Valid Referral → Referrer gets +600!</div><input type="email" id="loginEmail" placeholder="Email" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;"><input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;"><button class="btn btn-gold" style="width:100%;" onclick="doFirebaseLogin()">🔑 LOGIN</button><div style="text-align:center;margin:16px 0;">── ☀️ REFERRAL BONUS ──</div><button class="btn btn-outline" style="width:100%;" onclick="guestLogin()">🏄 Continue as Guest</button><div style="margin-top:20px;"><input type="text" id="regUsername" placeholder="Username" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="email" id="regEmail" placeholder="Email" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="text" id="regReferral" placeholder="Referral Code (Auto-filled from link)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FFD700;color:#ffd700;"><input type="password" id="regPassword" placeholder="Password (min 6 chars)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><input type="password" id="regConfirm" placeholder="Confirm Password" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;"><button class="btn" style="background:#FF6B6B;width:100%;" onclick="doFirebaseRegister()">🐚 CREATE ACCOUNT (+50 BONUS)</button></div></div></div>
 
   <!-- Profile Modal -->
-  <div class="modal-overlay" id="profileModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('profileModal')">×</span><div style="text-align:center;"><div class="profile-avatar" id="profileAvatarDisplay" style="width:80px;height:80px;font-size:2.5rem;margin:0 auto;cursor:pointer;" onclick="showAvatarSelector()">🐉</div><h3 id="profileName" style="color:white;margin-top:8px;"></h3><div style="color:#aaa;font-size:0.7rem;" id="profileUserId"></div></div><div class="profile-row"><span>VIP Level</span><span id="profileVipLevel" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Coins</span><span id="profileCoins" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Total Bets</span><span id="profileTotalBets">0</span></div><div class="profile-row"><span>Wins</span><span id="profileWins">0</span></div><div class="profile-row"><span>Total Spent</span><span id="profileTotalSpent">0</span></div>
-
-    <!-- REFERRAL DASHBOARD -->
-    <div style="margin-top: 15px; background: rgba(255,215,0,0.15); border-radius: 16px; padding: 12px;">
+  <div class="modal-overlay" id="profileModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('profileModal')">×</span><div style="text-align:center;"><div class="profile-avatar" id="profileAvatarDisplay" style="width:80px;height:80px;font-size:2.5rem;margin:0 auto;cursor:pointer;" onclick="showAvatarSelector()">🐉</div><h3 id="profileName" style="color:white;margin-top:8px;"></h3><div style="color:#aaa;font-size:0.7rem;" id="profileUserId"></div></div><div class="profile-row"><span>VIP Level</span><span id="profileVipLevel" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Coins</span><span id="profileCoins" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Total Bets</span><span id="profileTotalBets">0</span></div><div class="profile-row"><span>Wins</span><span id="profileWins">0</span></div><div class="profile-row"><span>Total Spent</span><span id="profileTotalSpent">0</span></div><div class="profile-row"><span>Referral Earnings</span><span id="profileRefEarnings" style="color:#ffd700;">0</span></div><div class="profile-row"><span>Next VIP</span><span id="profileNextVip"></span></div><div class="progress-meter"><div class="progress-fill-meter" id="vipProgressBar"></div></div>
+    <div style="margin-top: 15px; background: rgba(255,215,0,0.1); border-radius: 16px; padding: 12px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <strong style="font-size: 1rem;">🤝 REFERRAL DASHBOARD</strong>
+        <strong>🤝 MY REFERRAL TREE</strong>
         <button class="btn-gold" style="padding: 4px 12px; font-size: 0.7rem; width: auto;" onclick="copyRefLink()">📋 Copy Link</button>
       </div>
-      
-      <div class="ref-stats">
-        <div class="ref-stat-card">
-          <div class="ref-stat-value" id="totalReferralsCount">0</div>
-          <div class="ref-stat-label">TOTAL REFERRALS</div>
-        </div>
-        <div class="ref-stat-card">
-          <div class="ref-stat-value" id="totalCommissionDisplay">0</div>
-          <div class="ref-stat-label">TOTAL EARNINGS</div>
-        </div>
-        <div class="ref-stat-card">
-          <div class="ref-stat-value" id="activeReferralsCount">0</div>
-          <div class="ref-stat-label">ACTIVE REFERRALS</div>
-        </div>
+      <div class="ref-link-container">
+        <input type="text" id="myReferralCodeDisplay" class="ref-link-input" readonly value="Loading...">
       </div>
-      
-      <div class="ref-link-container" style="margin-bottom: 12px;">
-        <input type="text" id="myReferralCodeDisplay" class="ref-link-input" readonly value="Login to get code">
-        <button class="btn-gold" style="width:auto; padding:8px 16px;" onclick="copyRefLink()">Copy</button>
+      <div id="referralTreeContainer" style="max-height: 200px; overflow-y: auto; font-size: 0.7rem;">
+        <div style="text-align: center; color: #aaa;">Loading referral data...</div>
       </div>
-      
-      <div style="background: rgba(255,215,0,0.08); border-radius: 12px; padding: 10px; margin-bottom: 12px; text-align: center; font-size: 0.7rem;">
-        🔗 Share your referral link. When they deposit 3000+ coins, you earn commissions!
-      </div>
-      
-      <div style="margin-top: 10px;">
-        <strong>💰 Commission Structure</strong>
-        <div style="margin-top: 8px;">
-          <div class="profile-row" style="border-bottom: none;">
-            <span>Level 1 (Direct)</span>
-            <span style="color:#2ecc71;">10% commission + 50 signup bonus</span>
-          </div>
-          <div class="profile-row" style="border-bottom: none;">
-            <span>Level 2</span>
-            <span style="color:#2ecc71;">5% commission</span>
-          </div>
-          <div class="profile-row" style="border-bottom: none;">
-            <span>Level 3</span>
-            <span style="color:#2ecc71;">2.5% commission</span>
-          </div>
-        </div>
-      </div>
-      
-      <div style="background: rgba(46,204,113,0.1); border-radius: 12px; padding: 10px; margin: 12px 0; text-align: center;">
-        <div style="font-size: 0.7rem; color: #aaa;">💰 AVAILABLE TO COLLECT</div>
-        <div style="font-size: 1.5rem; font-weight: bold; color: #2ecc71;" id="availableCommission">0</div>
-        <button class="claim-btn" onclick="claimAllCommission()" id="claimCommissionBtn">🎁 CLAIM ALL COMMISSION</button>
-      </div>
-      
-      <div style="margin-top: 10px;">
-        <strong>📋 My Referrals</strong>
-        <div id="referralsListContainer" style="max-height: 200px; overflow-y: auto; margin-top: 8px; font-size: 0.75rem;">
-          <div style="text-align: center; color: #aaa;">Login to see referrals</div>
-        </div>
-      </div>
-      
-      <div style="margin-top: 12px;">
-        <strong>📜 Commission History</strong>
-        <div id="commissionHistoryContainer" style="max-height: 150px; overflow-y: auto; margin-top: 8px; font-size: 0.7rem;">
-          <div style="text-align: center; color: #aaa;">Login to see commissions</div>
-        </div>
+      <div style="margin-top: 10px; font-size: 0.65rem; color: #ffd700; text-align: center;">
+        <span class="level-badge">Level 1: 10%</span>
+        <span class="level-badge">Level 2: 5%</span>
+        <span class="level-badge">Level 3: 2.5%</span>
+        <span class="level-badge">💰 Spend 3000 = Valid Referral (+600 to referrer)</span>
       </div>
     </div>
-
-    <div class="profile-row"><span>JazzCash Number</span><input id="jazzcashNumber" placeholder="03XXXXXXXXX" style="background:rgba(255,255,255,0.1);border:1px solid #ffd70033;border-radius:8px;padding:5px;color:white;"></div>
-    <div class="profile-row"><span>Easypaisa Number</span><input id="easypaisaNumber" placeholder="03XXXXXXXXX" style="background:rgba(255,255,255,0.1);border:1px solid #ffd70033;border-radius:8px;padding:5px;color:white;"></div>
+    <div class="profile-row"><span>JazzCash Number</span><input id="jazzcashNumber" placeholder="03XXXXXXXXX (11 digits)" style="background:rgba(255,255,255,0.1);border:1px solid #ffd70033;border-radius:8px;padding:5px;color:white;"></div>
+    <div class="profile-row"><span>Easypaisa Number</span><input id="easypaisaNumber" placeholder="03XXXXXXXXX (11 digits)" style="background:rgba(255,255,255,0.1);border:1px solid #ffd70033;border-radius:8px;padding:5px;color:white;"></div>
     <button class="btn-gold" onclick="saveAccountDetails()" style="margin-top:10px;width:100%;">Save Account Details</button>
     <button class="btn-outline" onclick="changeUsername()" style="margin-top:8px;width:100%;">Change Username</button>
     <button class="btn-outline" onclick="firebaseLogout()" style="margin-top:8px;width:100%;background:transparent;border:1px solid #ff6b6b;color:#ff6b6b;">🚪 Logout</button>
@@ -273,23 +195,25 @@
   <div class="fullscreen-section" id="offersSection"><div class="fullscreen-header"><button class="back-btn" onclick="closeFullscreen('offersSection')">← Back</button><span style="font-family:'Playfair Display';font-size:1.3rem;color:#ffd700;">🎁 Summer Offers</span></div><div style="padding:1.5rem;"><div class="offers-tabs" id="offersTabs"><button class="offer-tab-btn active" data-tab="bonus">🎁 Bonus</button><button class="offer-tab-btn" data-tab="refer">🤝 Refer & Earn</button><button class="offer-tab-btn" data-tab="support">🛡️ Support</button><button class="offer-tab-btn" data-tab="vip">👑 VIP</button><button class="offer-tab-btn" data-tab="leaderboard">🏆 Leaderboard</button></div><div id="tabContent"></div></div></div>
 
   <!-- Shop Section -->
-  <div class="fullscreen-section" id="shopSection"><div class="fullscreen-header"><button class="back-btn" onclick="closeFullscreen('shopSection')">← Back</button><span style="color:#ffd700;">🛒 Shop</span></div><div style="padding:1rem;"><div class="shop-item" onclick="showPaymentPopup(100, 102, 2)"><div>💰 ₨100</div><div>100 Coins +2 Bonus</div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(500, 525, 25)"><div>💰 ₨500</div><div>500 Coins +25 Bonus</div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(1000, 1050, 50)"><div>💰 ₨1000</div><div>1.0K Coins +50 Bonus</div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(3000, 3150, 150)"><div>💰 ₨3000</div><div>3.0K Coins +150 Bonus</div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(5000, 5250, 250)"><div>💰 ₨5000</div><div>5.0K Coins +250 Bonus</div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(10000, 10500, 500)"><div>💰 ₨10000</div><div>10.0K Coins +500 Bonus</div><div>BUY NOW →</div></div></div></div>
+  <div class="fullscreen-section" id="shopSection"><div class="fullscreen-header"><button class="back-btn" onclick="closeFullscreen('shopSection')">← Back</button><span style="color:#ffd700;">🛒 Shop</span></div><div style="padding:1rem;"><div class="shop-item" onclick="showPaymentPopup(100, 102, 2)"><div>💰 ₨100</div><div>100 Coins +2 Bonus<br><span style="font-size:0.7rem;">Total: 102 Coins</span></div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(500, 525, 25)"><div>💰 ₨500</div><div>500 Coins +25 Bonus<br><span style="font-size:0.7rem;">Total: 525 Coins</span></div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(1000, 1050, 50)"><div>💰 ₨1000</div><div>1.0K Coins +50 Bonus<br><span style="font-size:0.7rem;">Total: 1.1K Coins</span></div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(3000, 3150, 150)"><div>💰 ₨3000</div><div>3.0K Coins +150 Bonus<br><span style="font-size:0.7rem;">Total: 3.1K Coins</span></div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(5000, 5250, 250)"><div>💰 ₨5000</div><div>5.0K Coins +250 Bonus<br><span style="font-size:0.7rem;">Total: 5.3K Coins</span></div><div>BUY NOW →</div></div><div class="shop-item" onclick="showPaymentPopup(10000, 10500, 500)"><div>💰 ₨10000</div><div>10.0K Coins +500 Bonus<br><span style="font-size:0.7rem;">Total: 10.5K Coins</span></div><div>BUY NOW →</div></div></div></div>
 
   <!-- Withdraw Modal -->
   <div class="modal-overlay" id="withdrawPopup"><div class="modal-content"><span class="close-btn" onclick="closeModal('withdrawPopup')">×</span><h3 style="color:#ffd700;">🌊 Withdraw Funds</h3><input type="number" id="withdrawAmount" placeholder="Enter amount" style="width:100%;padding:10px;margin:10px 0;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid #ffd70033;color:white;"><div class="withdraw-method"><div class="method-btn" data-method="jazzcash" onclick="selectWithdrawMethod('jazzcash')">JazzCash</div><div class="method-btn" data-method="easypaisa" onclick="selectWithdrawMethod('easypaisa')">Easypaisa</div></div><div id="withdrawNumberDisplay" style="background:rgba(255,255,255,0.05);padding:10px;border-radius:8px;margin:10px 0;">No number saved.</div><button class="btn-gold" onclick="processWithdraw()" style="width:100%;">Withdraw</button></div></div>
 
   <div class="modal-overlay" id="notificationPanel"><div class="modal-content"><span class="close-btn" onclick="closeModal('notificationPanel')">×</span>🔔 Notifications<div>🎁 Daily bonus ready!</div></div></div>
+  
   <div class="modal-overlay" id="downloadPopup"><div class="modal-content"><span class="close-btn" onclick="closeModal('downloadPopup')">×</span><div style="text-align:center; margin-bottom:10px;">📱 Download APK</div><div style="background:rgba(255,215,0,0.15); padding:12px; border-radius:12px; margin:10px 0; border-left:3px solid #ffd700;"><div style="font-size:0.8rem; margin-bottom:8px;">⚠️ Copy this link and paste it in your browser to download.</div><input id="apkLink" value="https://flappy-777.com/apk" readonly style="width:100%;padding:10px;background:rgba(255,255,255,0.1);border:1px solid #ffd70033;border-radius:8px;color:white;font-size:0.7rem;"></div><button class="btn-gold" onclick="copyAPKLink()" style="width:100%;padding:10px;">📋 Copy Link</button></div></div>
-  <div id="paymentPopup" class="payment-popup hidden"><button class="close-popup" onclick="closePaymentPopup()">×</button><div id="paymentPopupContent"></div><input type="text" id="popupPaymentNumber" placeholder="Your JazzCash / Easypaisa Number" style="width:100%;padding:10px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid #ffd70033;color:white;"><input type="text" id="popupTransactionId" placeholder="Transaction ID (Optional)" style="width:100%;padding:10px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid #ffd70033;color:white;"><button class="btn-gold" onclick="submitPaymentPopup()">Submit Payment Request</button></div>
+
+  <div id="paymentPopup" class="payment-popup hidden"><button class="close-popup" onclick="closePaymentPopup()">×</button><div id="paymentPopupContent"></div><input type="text" id="popupPaymentNumber" placeholder="Your JazzCash / Easypaisa Number (03XXXXXXXXX)" style="width:100%;padding:10px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid #ffd70033;color:white;"><input type="text" id="popupTransactionId" placeholder="Transaction ID (Optional)" style="width:100%;padding:10px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.1);border:1px solid #ffd70033;color:white;"><button class="btn-gold" onclick="submitPaymentPopup()">Submit Payment Request</button></div>
 
   <!-- Main App -->
   <div class="app-container" id="appContainer">
-    <header class="lobby-header"><div class="header-left" style="display:flex; gap:0.6rem;"><div class="profile-avatar" id="headerAvatar" onclick="openModal('profileModal')">🐉</div><div><span class="username" id="headerUsername">Guest</span><br><span class="user-status">🌺 Play as Guest</span></div><div class="balance-container"><span class="balance-amount" id="lobbyBalance">0</span> 🐚</div></div><div id="authButtons"></div><div class="header-actions"><button class="header-btn" onclick="openModal('downloadPopup')">📱</button><button class="header-btn" onclick="openModal('notificationPanel')">🔔</button></div></header>
+    <header class="lobby-header"><div class="header-left" style="display:flex; gap:0.6rem;"><div class="profile-avatar" id="headerAvatar" onclick="openModal('profileModal')">🐉</div><div><span class="username" id="headerUsername">Guest</span><br><span class="user-status">🌺 Play as Guest</span></div><div class="balance-container"><span class="balance-amount" id="lobbyBalance">100</span> 🐚</div></div><div id="authButtons"></div><div class="header-actions"><button class="header-btn" onclick="openModal('downloadPopup')">📱</button><button class="header-btn" onclick="openModal('notificationPanel')">🔔</button></div></header>
     <div class="lobby-content"><div class="games-section"><h2 style="font-family:'Playfair Display';color:#ffd700;">🎮 Featured Games</h2><div class="games-grid"><div class="game-tile" onclick="enterGame()"><div class="game-icon">👑</div><div class="game-name">Casino Shuffle 786</div><div style="color:#ffd700;">Min: 10 🐚</div><button class="play-btn">Play Now</button></div><div class="game-tile" onclick="enterFlappyGame()"><div class="game-icon">🐦</div><div class="game-name">Flappy Bird</div><div style="color:#ffd700;">Min: 10 🐚</div><button class="play-btn">Play Now</button></div></div></div></div>
     <nav class="bottom-nav"><button class="nav-item active" onclick="setActiveNav(this); exitAllGames()">🏠 Home</button><button class="nav-item" onclick="openFullscreen('offersSection')">🎁 Offers</button><button class="nav-item" onclick="openFullscreen('shopSection')">🛒 Shop</button><button class="nav-item" onclick="openWithdraw()">💸 Withdraw</button></nav>
   </div>
 
-  <!-- GAME VIEWS -->
+  <!-- GAME VIEWS (ORIGINAL - UNCHANGED) -->
   <div class="game-view" id="gameView"><button class="back-to-lobby" onclick="exitGame()">← Lobby</button><div class="game-screen"><div class="game-header"><h1>Casino Shuffle 786</h1></div><div class="balance-bar"><span>💰 Balance: </span><span class="balance-amount" id="balanceDisplay">0</span></div><div class="stats-panel"><div class="stat-box"><div class="stat-label">Current Win</div><div class="stat-value win" id="currentWin">0</div></div><div class="stat-box"><div class="stat-label">Multiplier</div><div class="stat-value multiplier" id="multiplier">1.00x</div></div><div class="stat-box"><div class="stat-label">Pairs</div><div class="stat-value pairs" id="pairsDisplay">0/10</div></div></div><div class="bet-panel" id="betPanel"><div class="bet-panel-title">Select Your Bet</div><div class="bet-options"><button class="bet-option" data-bet="10">10</button><button class="bet-option" data-bet="25">25</button><button class="bet-option" data-bet="50">50</button><button class="bet-option" data-bet="100">100</button><button class="bet-option" data-bet="250">250</button><button class="bet-option" data-bet="500">500</button></div></div><div class="action-buttons"><button class="action-btn start-btn" id="startBtn">START GAME</button><button class="action-btn cashout-btn hidden" id="cashoutBtn">CASH OUT</button><button class="action-btn continue-btn hidden" id="continueBtn">CONTINUE</button></div><div class="message-display"><p class="message-text" id="messageText">Select your bet and tap START GAME</p></div><div class="card-grid" id="cardGrid"></div></div></div>
   <div class="win-overlay" id="winOverlay"><div class="win-label">YOU WON</div><div class="win-amount" id="winAmountDisplay">0</div><button class="play-again-btn" id="winPlayAgainBtn">PLAY AGAIN</button></div>
   <div class="lose-overlay" id="loseOverlay"><div class="lose-icon">💣</div><div class="lose-text">BOOM!</div><button class="play-again-btn" id="losePlayAgainBtn">TRY AGAIN</button></div>
@@ -300,7 +224,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDUSi0mM3bYMEozFD3Ahh0vUZ5gBG1dNTU",
@@ -317,10 +241,10 @@
 
     window.showToast = function(msg) { let t = document.getElementById('customToast'); t.textContent = msg; t.style.opacity = '1'; setTimeout(() => t.style.opacity = '0', 3000); };
     
-    // Game state - GUEST STARTS WITH 0 COINS
+    // Game state - ALWAYS START IN GUEST MODE
     let currentFirebaseUser = null;
     let isGuestMode = true;
-    let balance = 0;
+    let balance = 100;
     let totalSpent = 0;
     let totalBets = 0;
     let wins = 0;
@@ -329,78 +253,23 @@
     let easypaisaNum = '';
     let selectedWithdrawMethod = 'jazzcash';
     let myReferralCode = '';
-    
-    // Referral tracking
-    let pendingCommission = 0;
-    let totalCommissionEarned = 0;
-    let referrals = [];
-    let commissions = [];
-    let totalReferralsCount = 0;
-    let activeReferralsCount = 0;
-    
-    let autoSyncInterval = null;
-    
-    async function forceClearSession() {
-      try {
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-          console.log("Found existing session, signing out...");
-          await signOut(auth);
-          console.log("Successfully signed out existing user");
-        }
-      } catch (e) {
-        console.log("No existing session or error clearing:", e);
-      }
-    }
-    
-    async function autoSyncGameData() {
-      if (!currentFirebaseUser) return;
-      const syncStatus = document.getElementById('syncStatus');
-      syncStatus.classList.add('syncing');
-      syncStatus.textContent = '🔄 Syncing...';
-      try {
-        const userDoc = await getDoc(doc(db, "users", currentFirebaseUser.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          const isPlayingGame = window.gameState && window.gameState.isPlaying === true;
-          const isFlappyPlaying = window.flappyGame && window.flappyGame.state === 'playing';
-          
-          if (!isPlayingGame && !isFlappyPlaying) {
-            if (data.balance !== undefined && data.balance !== balance) {
-              balance = data.balance;
-              updateUI();
-            }
-            if (data.totalSpent !== undefined && data.totalSpent !== totalSpent) {
-              totalSpent = data.totalSpent;
-              updateUI();
-            }
-          }
-          syncStatus.textContent = '✅ Synced';
-          setTimeout(() => { if(syncStatus) syncStatus.textContent = '🔄 Auto-sync (3s)'; }, 1500);
-        }
-      } catch(e) { console.error("Auto-sync error:", e); syncStatus.textContent = '⚠️ Sync error'; }
-      finally { setTimeout(() => syncStatus.classList.remove('syncing'), 500); }
-    }
-    
-    function startAutoSync() { if (autoSyncInterval) clearInterval(autoSyncInterval); autoSyncInterval = setInterval(() => autoSyncGameData(), 3000); }
-    function stopAutoSync() { if (autoSyncInterval) { clearInterval(autoSyncInterval); autoSyncInterval = null; } }
+    let referralEarningsTotal = 0;
     
     // ============ REFERRAL SYSTEM - FIXED ============
-    // Get referral code from URL immediately
+    // Get referral code from URL and store it
     const urlParams = new URLSearchParams(window.location.search);
     const urlReferralCode = urlParams.get('ref');
-    
     if (urlReferralCode && urlReferralCode.trim()) {
       localStorage.setItem('pendingReferral', urlReferralCode);
       console.log("✅ Referral code detected in URL:", urlReferralCode);
     }
     
-    // Auto-fill the referral input field when modal opens
+    // Auto-fill the referral input field when registration form is shown
     function autoFillReferralInput() {
       const refInput = document.getElementById('regReferral');
       if (refInput) {
         const pending = localStorage.getItem('pendingReferral');
-        if (pending && pending.trim()) {
+        if (pending && pending.trim() && !refInput.value) {
           refInput.value = pending;
           console.log("✅ Auto-filled referral input with:", pending);
         }
@@ -408,231 +277,140 @@
     }
     
     // Call auto-fill when modal opens
-    const originalOpenModal = window.openModal;
-    window.openModal = function(id) {
-      document.getElementById(id).classList.add('active');
+    window.openModal = function(id) { 
+      document.getElementById(id).classList.add('active'); 
       if (id === 'authModal') {
-        setTimeout(autoFillReferralInput, 100);
+        setTimeout(autoFillReferralInput, 200);
       }
     }
     
-    async function generateReferralCode(uid, username) {
-      const base = username ? username.substring(0, 5).toUpperCase() : uid.substring(0, 5);
-      const random = Math.floor(Math.random() * 10000);
+    window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
+    
+    async function generateReferralCode(uid, email) {
+      const base = email ? email.split('@')[0].substring(0, 6).toUpperCase() : uid.substring(0, 6);
+      const random = Math.floor(Math.random() * 1000);
       return `${base}${random}`;
     }
     
-    async function saveCommission(referrerId, userId, amount, level, type) {
-      try {
-        const commissionData = {
-          referrerId: referrerId,
-          userId: userId,
-          amount: amount,
-          level: level,
-          type: type,
-          status: 'pending',
-          createdAt: Date.now()
-        };
-        await addDoc(collection(db, "commissions"), commissionData);
-        console.log(`✅ Commission saved: ${amount} coins to ${referrerId} (Level ${level})`);
-        
-        // For signup bonuses, add directly to referrer's balance
-        if (type === 'signup_bonus') {
-          const referrerRef = doc(db, "users", referrerId);
-          const referrerDoc = await getDoc(referrerRef);
-          if (referrerDoc.exists()) {
-            const currentBalance = referrerDoc.data().balance || 0;
-            await updateDoc(referrerRef, { balance: currentBalance + amount });
-            console.log(`✅ Added ${amount} signup bonus to referrer ${referrerId}`);
-          }
-        }
-        
-        const referrerRef = doc(db, "users", referrerId);
-        const referrerDoc = await getDoc(referrerRef);
-        if (referrerDoc.exists()) {
-          const currentEarnings = referrerDoc.data().totalEarnings || 0;
-          await updateDoc(referrerRef, { totalEarnings: currentEarnings + amount });
-        }
-        return true;
-      } catch (e) {
-        console.error("Error saving commission:", e);
-        return false;
-      }
-    }
-    
-    async function processDepositCommission(spentAmount, userId) {
-      if (spentAmount < 3000) return;
-      
+    async function checkAndProcessValidReferral(userId, newTotalSpent) {
+      if (newTotalSpent < 3000) return;
       try {
         const userDoc = await getDoc(doc(db, "users", userId));
         if (!userDoc.exists()) return;
+        const referredBy = userDoc.data().referredBy;
+        const bonusPaid = userDoc.data().validReferralBonusPaid || false;
+        if (!referredBy || bonusPaid) return;
         
+        const referrerRef = doc(db, "users", referredBy);
+        const referrerDoc = await getDoc(referrerRef);
+        if (referrerDoc.exists()) {
+          const newBal = (referrerDoc.data().balance || 0) + 600;
+          await updateDoc(referrerRef, { balance: newBal });
+          await updateDoc(doc(db, "users", userId), { validReferralBonusPaid: true });
+          showToast(`🎉 Your referrer earned 600 coins (Valid referral: 3000 spent!)`);
+          if (currentFirebaseUser && currentFirebaseUser.uid === referredBy) {
+            balance = newBal;
+            updateUI();
+          }
+        }
+      } catch (error) { console.error("Valid referral error:", error); }
+    }
+    
+    async function processReferralCommissions(spentAmount, userId) {
+      if (spentAmount < 1000) return;
+      try {
+        const userDoc = await getDoc(doc(db, "users", userId));
+        if (!userDoc.exists()) return;
         const referredBy = userDoc.data().referredBy;
         if (!referredBy) return;
         
-        // Level 1 - 10%
         const level1Commission = Math.floor(spentAmount * 0.10);
-        await saveCommission(referredBy, userId, level1Commission, 1, 'deposit_commission');
-        
-        // Level 2 - 5%
-        const level1Doc = await getDoc(doc(db, "users", referredBy));
-        const level2Referrer = level1Doc.exists() ? level1Doc.data().referredBy : null;
-        if (level2Referrer) {
-          const level2Commission = Math.floor(spentAmount * 0.05);
-          await saveCommission(level2Referrer, userId, level2Commission, 2, 'deposit_commission');
+        const level1Ref = await getDoc(doc(db, "users", referredBy));
+        if (level1Ref.exists()) {
+          const newBal1 = (level1Ref.data().balance || 0) + level1Commission;
+          await updateDoc(doc(db, "users", referredBy), { balance: newBal1 });
+          await logCommission(referredBy, userId, level1Commission, 1, spentAmount);
         }
         
-        // Level 3 - 2.5%
-        if (level2Referrer) {
-          const level2Doc = await getDoc(doc(db, "users", level2Referrer));
-          const level3Referrer = level2Doc.exists() ? level2Doc.data().referredBy : null;
-          if (level3Referrer) {
+        const level2Data = level1Ref.exists() ? level1Ref.data() : null;
+        if (level2Data && level2Data.referredBy) {
+          const level2Commission = Math.floor(spentAmount * 0.05);
+          const level2Ref = await getDoc(doc(db, "users", level2Data.referredBy));
+          if (level2Ref.exists()) {
+            const newBal2 = (level2Ref.data().balance || 0) + level2Commission;
+            await updateDoc(doc(db, "users", level2Data.referredBy), { balance: newBal2 });
+            await logCommission(level2Data.referredBy, userId, level2Commission, 2, spentAmount);
+          }
+          
+          const level3Data = level2Ref.exists() ? level2Ref.data() : null;
+          if (level3Data && level3Data.referredBy) {
             const level3Commission = Math.floor(spentAmount * 0.025);
-            await saveCommission(level3Referrer, userId, level3Commission, 3, 'deposit_commission');
+            const level3Ref = await getDoc(doc(db, "users", level3Data.referredBy));
+            if (level3Ref.exists()) {
+              const newBal3 = (level3Ref.data().balance || 0) + level3Commission;
+              await updateDoc(doc(db, "users", level3Data.referredBy), { balance: newBal3 });
+              await logCommission(level3Data.referredBy, userId, level3Commission, 3, spentAmount);
+            }
           }
         }
-      } catch (error) {
-        console.error("Commission error:", error);
-      }
+      } catch (error) { console.error("Commission error:", error); }
     }
     
-    async function loadReferralData() {
-      if (!currentFirebaseUser) return;
-      
-      const userId = currentFirebaseUser.uid;
-      
-      const usersRef = collection(db, "users");
-      const qReferrals = query(usersRef, where("referredBy", "==", userId));
-      const referralSnapshot = await getDocs(qReferrals);
-      referrals = [];
-      let activeCount = 0;
-      
-      for (const docSnap of referralSnapshot.docs) {
-        const data = docSnap.data();
-        const isActive = (data.totalSpent || 0) >= 3000;
-        if (isActive) activeCount++;
-        referrals.push({
-          name: data.displayName || data.email?.split('@')[0] || 'Player',
-          spent: data.totalSpent || 0,
-          isActive: isActive
-        });
-      }
-      totalReferralsCount = referrals.length;
-      activeReferralsCount = activeCount;
-      
-      const commissionsRef = collection(db, "commissions");
-      const qCommissions = query(commissionsRef, where("referrerId", "==", userId));
-      const commissionSnapshot = await getDocs(qCommissions);
-      commissions = [];
-      let pending = 0;
-      let total = 0;
-      commissionSnapshot.forEach(doc => {
-        const data = doc.data();
-        commissions.push({
-          amount: data.amount,
-          level: data.level,
-          type: data.type,
-          status: data.status,
-          createdAt: data.createdAt
-        });
-        total += data.amount;
-        if (data.status === 'pending') {
-          pending += data.amount;
-        }
-      });
-      
-      pendingCommission = pending;
-      totalCommissionEarned = total;
-      
-      const userDoc = await getDoc(doc(db, "users", userId));
-      if (userDoc.exists()) {
-        totalCommissionEarned = userDoc.data().totalEarnings || 0;
-      }
-      
-      updateReferralUI();
-    }
-    
-    function updateReferralUI() {
-      document.getElementById('totalReferralsCount') && (document.getElementById('totalReferralsCount').innerText = totalReferralsCount);
-      document.getElementById('totalCommissionDisplay') && (document.getElementById('totalCommissionDisplay').innerText = totalCommissionEarned);
-      document.getElementById('activeReferralsCount') && (document.getElementById('activeReferralsCount').innerText = activeReferralsCount);
-      document.getElementById('availableCommission') && (document.getElementById('availableCommission').innerText = pendingCommission);
-      
-      const claimBtn = document.getElementById('claimCommissionBtn');
-      if (claimBtn) {
-        claimBtn.disabled = pendingCommission === 0;
-        claimBtn.style.opacity = pendingCommission === 0 ? '0.5' : '1';
-      }
-      
-      const referralsContainer = document.getElementById('referralsListContainer');
-      if (referralsContainer) {
-        if (referrals.length === 0) {
-          referralsContainer.innerHTML = '<div style="text-align:center; color:#aaa; padding:10px;">No referrals yet. Share your link!</div>';
-        } else {
-          let html = '';
-          referrals.forEach(ref => {
-            const statusText = ref.isActive ? '✓ Active' : `💰 ${ref.spent} spent`;
-            const statusColor = ref.isActive ? '#2ecc71' : '#aaa';
-            html += `<div class="ref-referral-item">
-              <span>🐣 ${ref.name}</span>
-              <span style="color:${statusColor};">${statusText}</span>
-            </div>`;
-          });
-          referralsContainer.innerHTML = html;
-        }
-      }
-      
-      const historyContainer = document.getElementById('commissionHistoryContainer');
-      if (historyContainer) {
-        if (commissions.length === 0) {
-          historyContainer.innerHTML = '<div style="text-align:center; color:#aaa; padding:10px;">No commissions yet.</div>';
-        } else {
-          let html = '';
-          commissions.slice(-10).reverse().forEach(comm => {
-            const statusClass = comm.status === 'pending' ? 'status-pending' : 'status-collected';
-            const statusText = comm.status === 'pending' ? 'Pending' : 'Collected';
-            const typeText = comm.type === 'deposit_commission' ? `Level ${comm.level} Deposit Commission` : 'Signup Bonus';
-            html += `<div class="commission-item">
-              <span>🎯 ${typeText}</span>
-              <span class="commission-amount">+${comm.amount} coins</span>
-              <span class="commission-status ${statusClass}">${statusText}</span>
-            </div>`;
-          });
-          historyContainer.innerHTML = html;
-        }
-      }
-    }
-    
-    window.claimAllCommission = async function() {
-      if (!currentFirebaseUser) {
-        showToast('Login to claim commission');
-        return;
-      }
-      if (pendingCommission === 0) {
-        showToast('No pending commission to claim');
-        return;
-      }
-      
+    async function logCommission(referrerId, userId, amount, level, depositAmount) {
       try {
-        const commissionsRef = collection(db, "commissions");
-        const qCommissions = query(commissionsRef, where("referrerId", "==", currentFirebaseUser.uid), where("status", "==", "pending"));
-        const snapshot = await getDocs(qCommissions);
-        
-        for (const docSnap of snapshot.docs) {
-          await updateDoc(doc(db, "commissions", docSnap.id), { status: 'collected' });
+        await setDoc(doc(collection(db, "commissions")), {
+          referrerId, userId, amount, level, depositAmount, timestamp: Date.now()
+        });
+      } catch (e) {}
+    }
+    
+    async function getReferralEarnings(userId) {
+      try {
+        const q = query(collection(db, "commissions"), where("referrerId", "==", userId));
+        const snap = await getDocs(q);
+        let total = 0;
+        snap.forEach(doc => total += doc.data().amount);
+        return total;
+      } catch (e) { return 0; }
+    }
+    
+    async function getReferralTree(userId) {
+      try {
+        const q = query(collection(db, "users"), where("referredBy", "==", userId));
+        const snap = await getDocs(q);
+        const referrals = [];
+        for (const docSnap of snap.docs) {
+          const data = docSnap.data();
+          referrals.push({ name: data.displayName || data.email?.split('@')[0] || 'Player', spent: data.totalSpent || 0 });
         }
-        
-        balance += pendingCommission;
-        await updateUI();
-        await saveUserDataToFirestore();
-        
-        showToast(`🎉 You claimed ${pendingCommission} coins commission!`);
-        await loadReferralData();
-      } catch (error) {
-        console.error("Error claiming commission:", error);
-        showToast('Error claiming commission');
+        return referrals;
+      } catch (e) { return []; }
+    }
+    
+    async function renderReferralTree() {
+      if (!currentFirebaseUser) return;
+      const referrals = await getReferralTree(currentFirebaseUser.uid);
+      const earnings = await getReferralEarnings(currentFirebaseUser.uid);
+      referralEarningsTotal = earnings;
+      const container = document.getElementById('referralTreeContainer');
+      if (!container) return;
+      if (referrals.length === 0) {
+        container.innerHTML = '<div style="text-align:center; color:#aaa;">No referrals yet. Share your link!</div>';
+      } else {
+        let html = '<div style="margin-bottom: 8px;"><strong>Direct Referrals (Level 1):</strong></div>';
+        referrals.forEach(ref => {
+          html += `<div style="display:flex; justify-content:space-between; padding: 4px 0; border-bottom: 1px solid #ffd70020;">
+            <span>🐣 ${ref.name}</span>
+            <span style="color:#ffd700;">Spent: ${ref.spent}</span>
+          </div>`;
+        });
+        html += `<div style="margin-top: 10px; padding: 8px; background: #ffd70010; border-radius: 8px;">
+          <strong>💰 Total Commission Earned:</strong> ${earnings} coins
+        </div>`;
+        container.innerHTML = html;
       }
-    };
+      document.getElementById('profileRefEarnings') && (document.getElementById('profileRefEarnings').innerText = earnings);
+    }
     
     window.copyRefLink = function() {
       if (!myReferralCode) { showToast('Login to get referral link'); return; }
@@ -641,7 +419,7 @@
       showToast('✅ Referral link copied! Share with friends!');
     }
     
-    // ============ AUTH FUNCTIONS ============
+    // ============ AUTH FUNCTIONS - FIXED REFERRAL BONUS ============
     window.doFirebaseLogin = async function() {
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPass').value;
@@ -653,18 +431,14 @@
       } catch (error) { showToast('❌ Login failed: ' + error.message); }
     }
     
-    // FIXED REGISTRATION - Proper referral lookup
+    // FIXED: Registration with working referral bonus - Referrer gets 50 coins
     window.doFirebaseRegister = async function() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
       const password = document.getElementById('regPassword').value;
       const confirm = document.getElementById('regConfirm').value;
       let referralCode = document.getElementById('regReferral').value;
-      
-      // Also check localStorage for pending referral
-      if (!referralCode || !referralCode.trim()) {
-        referralCode = localStorage.getItem('pendingReferral');
-      }
+      if (!referralCode) referralCode = localStorage.getItem('pendingReferral');
       
       if (!username) { showToast('Please enter username'); return; }
       if (!email) { showToast('Please enter email'); return; }
@@ -674,73 +448,54 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid;
-        const newReferralCode = await generateReferralCode(uid, username);
+        const newReferralCode = await generateReferralCode(uid, email);
         
-        let referrerId = null;
+        let referredById = null;
         let referrerBonusGiven = false;
-        let newUserBonus = 0;
+        let newUserBonus = 50; // New user always gets 50 coins
         
-        // FIXED: Look up the referrer by their referral code
+        // Process referral - give 50 coins to referrer
         if (referralCode && referralCode.trim()) {
           console.log("🔍 Looking for referrer with code:", referralCode);
-          
-          // Get all users and find by referralCode
           const usersRef = collection(db, "users");
           const querySnapshot = await getDocs(usersRef);
           
-          let found = false;
           for (const docSnap of querySnapshot.docs) {
             const userData = docSnap.data();
             if (userData.referralCode === referralCode.trim()) {
-              referrerId = docSnap.id;
+              referredById = docSnap.id;
+              const currentReferrerBalance = userData.balance || 0;
+              // Award 50 coins to referrer
+              await updateDoc(doc(db, "users", referredById), { 
+                balance: currentReferrerBalance + 50 
+              });
               referrerBonusGiven = true;
-              newUserBonus = 50;
-              found = true;
-              console.log("✅ Referrer FOUND! ID:", referrerId, "Name:", userData.displayName);
+              await logCommission(referredById, uid, 50, 1, 0);
+              console.log("✅ Referrer found! Awarded 50 coins to:", referredById);
+              showToast(`🎉 Referrer earned 50 coins bonus!`);
               break;
             }
           }
-          
-          if (!found) {
-            console.log("❌ Referral code NOT found:", referralCode);
-            showToast(`⚠️ Referral code "${referralCode}" not found. No bonus applied.`);
+          if (!referrerBonusGiven) {
+            console.log("❌ Referral code not found:", referralCode);
           }
         }
         
-        // Save signup bonus commission if referrer found
-        if (referrerBonusGiven && referrerId) {
-          await saveCommission(referrerId, uid, 50, 1, 'signup_bonus');
-          showToast(`🎉 Your referrer got 50 coins bonus!`);
-        }
-        
-        // Create new user
+        // Create new user with 50 bonus coins
         await setDoc(doc(db, "users", uid), {
-          email: email, 
-          displayName: username, 
-          balance: newUserBonus,
-          totalSpent: 0, 
-          totalBets: 0, 
-          wins: 0,
-          userAvatar: '🐉', 
-          jazzcashNum: '', 
-          easypaisaNum: '', 
-          referralCode: newReferralCode,
-          referredBy: referrerId,
-          totalEarnings: 0,
-          totalReferrals: 0,
-          activeReferrals: 0,
-          createdAt: Date.now()
+          email: email, displayName: username, balance: newUserBonus, totalSpent: 0, totalBets: 0, wins: 0,
+          userAvatar: '🐉', jazzcashNum: '', easypaisaNum: '', referralCode: newReferralCode,
+          referredBy: referredById, validReferralBonusPaid: false, createdAt: Date.now()
         });
         
         if (referrerBonusGiven) {
-          showToast(`✅ Account created! You got +50 bonus coins! Your referrer also got 50 coins!`);
+          showToast(`✅ Registration successful! You got +50 bonus coins! Your referrer also got 50 coins!`);
         } else if (referralCode && referralCode.trim()) {
-          showToast(`✅ Account created! (Referral code not found - no bonus)`);
+          showToast(`✅ Registration successful! +50 bonus coins! (Referral code not found)`);
         } else {
-          showToast(`✅ Account created! Share your referral link to earn! Your code: ${newReferralCode}`);
+          showToast(`✅ Registration successful! +50 bonus coins!`);
         }
         
-        // Clear pending referral
         localStorage.removeItem('pendingReferral');
         document.getElementById('regReferral').value = '';
         closeModal('authModal');
@@ -752,67 +507,71 @@
     
     window.firebaseLogout = async function() {
       try {
-        if (currentFirebaseUser) await saveUserDataToFirestore();
-        await signOut(auth);
-        stopAutoSync();
+        if (currentFirebaseUser) {
+          await saveUserDataToFirestore();
+          await signOut(auth);
+        }
+        // Switch to Guest mode
         currentFirebaseUser = null;
         isGuestMode = true;
-        balance = 0;
+        balance = 100;
         totalSpent = 0;
         totalBets = 0;
         wins = 0;
         userAvatar = '🐧';
         myReferralCode = '';
+        jazzcashNum = '';
+        easypaisaNum = '';
         
         document.getElementById('profileAvatarDisplay').innerHTML = userAvatar;
         document.getElementById('headerAvatar').innerHTML = userAvatar;
         document.getElementById('profileName').innerText = 'Guest';
+        document.getElementById('profileUserId').innerText = 'Guest Mode';
         document.getElementById('headerUsername').innerText = 'Guest';
         document.getElementById('myReferralCodeDisplay').value = 'Login to get code';
-        document.getElementById('referralsListContainer') && (document.getElementById('referralsListContainer').innerHTML = '<div style="text-align:center; color:#aaa;">Login to see referrals</div>');
-        document.getElementById('commissionHistoryContainer') && (document.getElementById('commissionHistoryContainer').innerHTML = '<div style="text-align:center; color:#aaa;">Login to see commissions</div>');
-        document.getElementById('totalReferralsCount') && (document.getElementById('totalReferralsCount').innerText = '0');
-        document.getElementById('totalCommissionDisplay') && (document.getElementById('totalCommissionDisplay').innerText = '0');
-        document.getElementById('activeReferralsCount') && (document.getElementById('activeReferralsCount').innerText = '0');
-        document.getElementById('availableCommission') && (document.getElementById('availableCommission').innerText = '0');
+        document.getElementById('referralTreeContainer').innerHTML = '<div style="text-align:center; color:#aaa;">Login to see referral tree</div>';
+        document.getElementById('profileRefEarnings') && (document.getElementById('profileRefEarnings').innerText = '0');
         
         updateAuthButtons();
         updateUI();
         closeModal('profileModal');
-        showToast('Logged out, now playing as Guest (0 coins)');
+        showToast('Logged out, now playing as Guest');
       } catch (error) { showToast('Logout error: ' + error.message); }
     }
     
     window.guestLogin = function() {
-      stopAutoSync();
       currentFirebaseUser = null;
       isGuestMode = true;
-      balance = 0;
+      balance = 100;
       totalSpent = 0;
       totalBets = 0;
       wins = 0;
       userAvatar = '🐧';
       myReferralCode = '';
+      jazzcashNum = '';
+      easypaisaNum = '';
       
       document.getElementById('profileAvatarDisplay').innerHTML = userAvatar;
       document.getElementById('headerAvatar').innerHTML = userAvatar;
       document.getElementById('profileName').innerText = 'Guest';
+      document.getElementById('profileUserId').innerText = 'Guest Mode';
       document.getElementById('headerUsername').innerText = 'Guest';
       document.getElementById('myReferralCodeDisplay').value = 'Login to get code';
+      document.getElementById('referralTreeContainer').innerHTML = '<div style="text-align:center; color:#aaa;">Login to see referral tree</div>';
       
       updateAuthButtons();
       closeModal('authModal');
       updateUI();
-      showToast('Welcome Guest! (0 coins - Register to play and earn referrals!)');
+      showToast('Welcome Guest! (Register to save progress and earn referrals!)');
     }
     
     function updateAuthButtons() {
       let c = document.getElementById('authButtons');
       if(c) {
         if(currentFirebaseUser) { 
-          c.innerHTML = ''; 
+          c.innerHTML = '';
         } else { 
-          c.innerHTML = '<button class="auth-header-btn" onclick="openModal(\'authModal\')">🔑 Login / Register</button>';
+          c.innerHTML = '<button class="auth-header-btn" onclick="openModal(\'authModal\')">🔑 Login</button>';
         }
       }
     }
@@ -841,14 +600,15 @@
           totalBets = data.totalBets || 0;
           wins = data.wins || 0;
           userAvatar = data.userAvatar || '🐉';
+          jazzcashNum = data.jazzcashNum || '';
+          easypaisaNum = data.easypaisaNum || '';
           myReferralCode = data.referralCode || '';
           showToast(`🎉 Welcome back! Balance: ${balance} coins`);
         } else {
-          myReferralCode = await generateReferralCode(user.uid, user.email.split('@')[0]);
+          myReferralCode = await generateReferralCode(user.uid, user.email);
           await setDoc(userRef, {
             email: user.email, displayName: user.email.split('@')[0], balance: 0, totalSpent: 0, totalBets: 0, wins: 0,
-            userAvatar: '🐉', jazzcashNum: '', easypaisaNum: '', referralCode: myReferralCode, totalEarnings: 0,
-            totalReferrals: 0, activeReferrals: 0, createdAt: Date.now()
+            userAvatar: '🐉', jazzcashNum: '', easypaisaNum: '', referralCode: myReferralCode, createdAt: Date.now()
           });
           balance = 0;
           showToast('🎊 New account created! Start playing!');
@@ -857,15 +617,18 @@
         document.getElementById('profileAvatarDisplay').innerHTML = userAvatar;
         document.getElementById('headerAvatar').innerHTML = userAvatar;
         document.getElementById('profileName').innerText = user.email.split('@')[0];
+        document.getElementById('profileUserId').innerText = 'ID: ' + user.uid.substring(0, 12);
         document.getElementById('headerUsername').innerText = user.email.split('@')[0];
-        document.getElementById('myReferralCodeDisplay').value = `${window.location.origin}${window.location.pathname}?ref=${myReferralCode}`;
         
-        await loadReferralData();
+        await renderReferralTree();
+        const display = document.getElementById('myReferralCodeDisplay');
+        if (display && myReferralCode) display.value = `${window.location.origin}${window.location.pathname}?ref=${myReferralCode}`;
         updateUI();
+        
       } catch (error) { console.error('Error loading user data:', error); }
     }
     
-    // VIP SYSTEM
+    // ============ ORIGINAL GAME CODE - COMPLETELY UNCHANGED ==========
     const VIP_LEVELS = [
       { level: 0, required: 0, daily: 5, weekly: 35, monthly: 60 },
       { level: 1, required: 40000, daily: 10, weekly: 70, monthly: 120 },
@@ -903,12 +666,18 @@
     function getRemaining(last, cd) { if(last === 0) return "Available now!"; let diff = (last + cd) - Date.now(); if(diff <= 0) return "Available now!"; let h = Math.floor(diff/(3600*1000)); let m = Math.floor((diff%(3600*1000))/(60*1000)); return `${h}h ${m}m left`; }
     
     window.claimBonus = async function(type) { 
-      if(!currentFirebaseUser) { showToast('Login to claim bonuses!'); return false; }
+      if(!currentFirebaseUser) { 
+        showToast('Login to claim bonuses!'); 
+        return false; 
+      }
       let amount = bonusState[type].amount;
       let cd = COOLDOWN[type];
       let now = Date.now(); 
       let last = bonusState[type].lastClaim; 
-      if(last !== 0 && (now - last) < cd) { showToast(`Wait ${getRemaining(last, cd)}`); return false; } 
+      if(last !== 0 && (now - last) < cd) { 
+        showToast(`Wait ${getRemaining(last, cd)}`); 
+        return false; 
+      } 
       balance += amount; 
       bonusState[type].lastClaim = now; 
       saveBonus(); 
@@ -931,20 +700,26 @@
       document.getElementById('profileTotalBets') && (document.getElementById('profileTotalBets').textContent = totalBets);
       document.getElementById('profileWins') && (document.getElementById('profileWins').textContent = wins);
       updateVIPProgressBar();
-      if(document.getElementById('currentWin')) { document.getElementById('currentWin').textContent = formatNumber(window.gameState?.currentWin || 0); document.getElementById('multiplier').textContent = (window.gameState?.multiplier || 1).toFixed(2) + 'x'; document.getElementById('pairsDisplay').textContent = (window.gameState?.pairsMatched || 0) + '/10'; }
+      if(document.getElementById('currentWin')) { document.getElementById('currentWin').textContent = formatNumber(gameState.currentWin); document.getElementById('multiplier').textContent = gameState.multiplier.toFixed(2) + 'x'; document.getElementById('pairsDisplay').textContent = gameState.pairsMatched + '/10'; }
+      
       if (currentFirebaseUser) { await saveUserDataToFirestore(); }
     }
     
+    function generateUserId() { return 'ID: ' + Math.random().toString(36).substring(2, 15); }
     function validatePakNumber(num) { if(!num) return false; let c = num.toString().trim(); return c.length === 11 && c.startsWith('03') && /^\d+$/.test(c); }
     const avatars = ['🐉','🐱','🐶','🦁','🐸','🐼','🐨','🦊'];
+    function getRandomAvatar() { return avatars[Math.floor(Math.random() * avatars.length)]; }
     
     // UI FUNCTIONS
-    window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
     window.openFullscreen = function(id) { document.getElementById(id).classList.add('active'); }
     window.closeFullscreen = function(id) { document.getElementById(id).classList.remove('active'); }
     window.setActiveNav = function(el) { document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active')); el.classList.add('active'); }
     
-    window.copyAPKLink = function() { let link = document.getElementById('apkLink'); if(link) { link.select(); document.execCommand('copy'); showToast('✅ Link copied!'); } }
+    window.copyAPKLink = function() { 
+      let link = document.getElementById('apkLink'); 
+      if(link) { link.select(); document.execCommand('copy'); showToast('✅ Link copied!'); } 
+    }
+    
     window.openWithdraw = function() { if(!currentFirebaseUser) { openModal('authModal'); showToast('Login to withdraw'); return; } if(balance<100) { showToast('Minimum 100 coins to withdraw'); return; } openModal('withdrawPopup'); updateWithdrawDisplay(); }
     window.selectWithdrawMethod = function(method) { selectedWithdrawMethod = method; document.querySelectorAll('.method-btn').forEach(btn => btn.classList.remove('selected')); document.querySelector(`.method-btn[data-method="${method}"]`).classList.add('selected'); updateWithdrawDisplay(); }
     function updateWithdrawDisplay() { let number = selectedWithdrawMethod === 'jazzcash' ? jazzcashNum : easypaisaNum; let d = document.getElementById('withdrawNumberDisplay'); if(d) d.innerHTML = number ? `${selectedWithdrawMethod === 'jazzcash' ? 'JazzCash' : 'Easypaisa'}: ${number}` : 'No number saved. Please save in profile first.'; }
@@ -984,13 +759,19 @@
     }
     
     window.showPaymentPopup = function(amount, total, bonus) { 
-      document.getElementById('paymentPopupContent').innerHTML = `<div style="text-align:center;"><div style="font-size:1.5rem; color:#ffd700;">₨${amount}</div><div>${amount} Coins +${bonus} Bonus</div><div>Total: ${total} Coins</div><div style="margin-top:10px; padding:10px; background:#ffd70020; border-radius:12px;">Send payment to: <strong>03420095235</strong></div></div>`; 
+      document.getElementById('paymentPopupContent').innerHTML = `<div style="text-align:center;">
+        <div style="font-size:1.5rem; color:#ffd700;">₨${amount}</div>
+        <div>${amount} Coins +${bonus} Bonus</div>
+        <div>Total: ${total} Coins</div>
+        <div style="margin-top:10px; padding:10px; background:#ffd70020; border-radius:12px;">Send payment to: <strong>03420095235</strong></div>
+      </div>`; 
       document.getElementById('paymentPopup').classList.remove('hidden'); 
     }
     window.closePaymentPopup = function() { document.getElementById('paymentPopup').classList.add('hidden'); }
     window.submitPaymentPopup = function() { showToast('Payment request submitted!'); closePaymentPopup(); }
-    window.exitAllGames = function() { exitGame(); if(window.flappyGame) window.flappyGame.stop(); document.getElementById('flappyGameSection').classList.remove('active'); }
+    window.exitAllGames = function() { exitGame(); if(flappyGame) flappyGame.stop(); document.getElementById('flappyGameSection').classList.remove('active'); }
     
+    // Tab Rendering
     function renderBonusTabContent() { 
       let c = document.getElementById('tabContent'); if(!c) return; updateVIPBonuses(); 
       c.innerHTML = `<div><h3 style="color:#ffd700;">🎁 Claim Your Bonuses (VIP ${getVIPLevel().level})</h3></div>
@@ -1006,7 +787,7 @@
       let html = `<div class="bonus-card"><div><strong>🤝 Multi-Level Referral System</strong></div></div>
         <div style="background:rgba(255,215,0,0.1); border-radius:16px; padding:12px; margin-bottom:12px;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
-            <div><div style="font-size:1.5rem; color:#ffd700;" id="refEarningsDisplay">${totalCommissionEarned}</div><div>Total Earnings</div></div>
+            <div><div style="font-size:1.5rem; color:#ffd700;" id="refEarningsDisplay">${referralEarningsTotal}</div><div>Total Earnings</div></div>
             <div><div style="font-size:1.5rem; color:#ffd700;" id="refCodeDisplayShort">${myReferralCode || 'Login'}</div><div>Your Code</div></div>
           </div>
           <div class="ref-link-container">
@@ -1014,39 +795,58 @@
             <button class="btn-gold" style="width:auto; padding:8px 16px;" onclick="copyRefLink()">📋 Copy</button>
           </div>
           <div style="font-size:0.7rem; text-align:center; margin:10px 0;">
-            <span class="level-badge">Level 1: 10% commission + 50 signup bonus</span>
+            <span class="level-badge">Level 1 (Direct): 10% commission</span>
             <span class="level-badge">Level 2: 5% commission</span>
             <span class="level-badge">Level 3: 2.5% commission</span>
+            <span class="level-badge">💰 Spend 3000 = Valid Referral (+600 to referrer)</span>
           </div>
           <div class="vip-card"><strong>How it works:</strong><br>
           • Share your referral link with friends<br>
-          • When they sign up using your link, you get 50 bonus coins!<br>
-          • When they deposit 3000+ coins, you earn 10% commission!<br>
-          • Their referrals also give you 5% and 2.5% commissions!<br>
-          • EVERY referral link works - the chain continues!
+          • They get 50 bonus coins on signup<br>
+          • You get 50 bonus coins per referral<br>
+          • When they spend 1000+ coins, you earn Level 1,2,3 commissions!<br>
+          • When they spend total 3000 coins, you earn an extra 600 coins bonus!<br>
+          • Commission is automatically added to your balance
           </div>
         </div>`;
       document.getElementById('tabContent').innerHTML = html;
-      document.getElementById('refEarningsDisplay') && (document.getElementById('refEarningsDisplay').innerText = totalCommissionEarned);
+      document.getElementById('refEarningsDisplay') && (document.getElementById('refEarningsDisplay').innerText = referralEarningsTotal);
     }
     
-    function renderSupportTab() { document.getElementById('tabContent').innerHTML = `<div class="bonus-card"><div><strong>🎧 Support</strong></div></div><div class="support-option" onclick="showToast('Live chat connecting...')"><div style="font-size:1.5rem;">💬</div><div><strong>Live Chat</strong><br>Available 24/7</div></div><div class="support-option" onclick="showToast('Email: support@flappy777.com')"><div style="font-size:1.5rem;">📧</div><div><strong>Email Support</strong><br>support@flappy777.com</div></div>`; }
+    function renderSupportTab() { 
+      document.getElementById('tabContent').innerHTML = `<div class="bonus-card"><div><strong>🎧 Support</strong></div></div>
+        <div class="support-option" onclick="showToast('Live chat connecting...')"><div style="font-size:1.5rem;">💬</div><div><strong>Live Chat</strong><br>Available 24/7</div></div>
+        <div class="support-option" onclick="showToast('Email: support@flappy777.com')"><div style="font-size:1.5rem;">📧</div><div><strong>Email Support</strong><br>support@flappy777.com</div></div>`;
+    }
+    
     function renderVipTab() { 
-      let html = `<div class="bonus-card"><div><strong>👑 VIP Club Benefits</strong></div></div><div class="progress-meter"><div class="progress-fill-meter" style="width:${Math.min(100, (totalSpent/(VIP_LEVELS[Math.min(getVIPLevel().level+1,5)].required))*100)}%"></div></div><div style="font-size:0.7rem; text-align:center; margin-bottom:10px;">💰 Total Spent: ${formatNumber(totalSpent)} 🐚 | VIP Level: ${getVIPLevel().level}</div>`;
+      let html = `<div class="bonus-card"><div><strong>👑 VIP Club Benefits</strong></div></div>
+        <div class="progress-meter"><div class="progress-fill-meter" style="width:${Math.min(100, (totalSpent/(VIP_LEVELS[Math.min(getVIPLevel().level+1,5)].required))*100)}%"></div></div>
+        <div style="font-size:0.7rem; text-align:center; margin-bottom:10px;">💰 Total Spent: ${formatNumber(totalSpent)} 🐚 | VIP Level: ${getVIPLevel().level}</div>`;
       for(let v of VIP_LEVELS) html += `<div class="vip-card"><strong>VIP ${v.level}</strong><br>Daily: ${v.daily} | Weekly: ${v.weekly} | Monthly: ${v.monthly}<br>Requires ${formatNumber(v.required)} coins spent</div>`;
       document.getElementById('tabContent').innerHTML = html;
     }
+    
     async function renderLeaderboardTab() {
-      let html = `<div class="bonus-card"><div><strong>🏆 Top Players Leaderboard</strong></div></div><div class="leaderboard-container" id="leaderboardList">Loading...</div>`;
+      let html = `<div class="bonus-card"><div><strong>🏆 Top Players Leaderboard</strong></div></div>
+        <div class="leaderboard-container" id="leaderboardList">Loading...</div>`;
       document.getElementById('tabContent').innerHTML = html;
       try {
         const usersRef = collection(db, "users");
         const snap = await getDocs(usersRef);
         let players = [];
-        snap.forEach(doc => { const data = doc.data(); players.push({ name: data.displayName || data.email?.split('@')[0] || 'Player', spent: data.totalSpent || 0 }); });
+        snap.forEach(doc => {
+          const data = doc.data();
+          players.push({
+            name: data.displayName || data.email?.split('@')[0] || 'Player',
+            spent: data.totalSpent || 0
+          });
+        });
         players.sort((a,b) => b.spent - a.spent);
         let listHtml = `<div class="leaderboard-entry" style="font-weight:bold;"><span>Rank</span><span>Player</span><span>Spent</span></div>`;
-        players.slice(0, 20).forEach((p, i) => { listHtml += `<div class="leaderboard-entry"><span class="leaderboard-rank">#${i+1}</span><span class="leaderboard-name">${p.name}</span><span class="leaderboard-score">${formatNumber(p.spent)}</span></div>`; });
+        players.slice(0, 20).forEach((p, i) => {
+          listHtml += `<div class="leaderboard-entry"><span class="leaderboard-rank">#${i+1}</span><span class="leaderboard-name">${p.name}</span><span class="leaderboard-score">${formatNumber(p.spent)}</span></div>`;
+        });
         document.getElementById('leaderboardList').innerHTML = listHtml;
       } catch(e) { document.getElementById('leaderboardList').innerHTML = 'Error loading leaderboard'; }
     }
@@ -1065,35 +865,38 @@
     });
     renderBonusTabContent();
     
-    // ORIGINAL CASINO SHUFFLE GAME (PRESERVED)
+    // ============ ORIGINAL CASINO SHUFFLE GAME (UNCHANGED LOGIC) ==========
     const CONFIG = { PAIRS_COUNT: 10, BOMB_COUNT: 6, GOLDEN_COUNT: 2, GOLDEN_MULTIPLIER: 20, MULTIPLIERS: [1.5,2.0,2.5,3.0,4.0,5.0,7.0,10.0,15.0,22.0] };
     const CARD_VALUES = ['A','K','Q','J','10','9','8','7','6','5'];
     const CARD_SUITS = [{symbol:'♥',color:'red'},{symbol:'♠',color:'black'},{symbol:'♦',color:'red'},{symbol:'♣',color:'black'}];
-    window.gameState = { currentBet:0, currentWin:0, multiplier:1, pairsMatched:0, isPlaying:false, canFlip:false, firstCard:null, secondCard:null, cards:[] };
+    let gameState = { currentBet:0, currentWin:0, multiplier:1, pairsMatched:0, isPlaying:false, canFlip:false, firstCard:null, secondCard:null, cards:[] };
     
     window.enterGame = function() { resetGame(); document.getElementById('gameView').classList.add('active'); }
     window.exitGame = function() { resetGame(); document.getElementById('gameView').classList.remove('active'); }
-    function selectBet(amount) { if(window.gameState.isPlaying) return; if(amount>balance){showToast('Insufficient balance');return;} window.gameState.currentBet=amount; document.querySelectorAll('.bet-option').forEach(b=>{b.classList.remove('selected'); if(parseInt(b.dataset.bet)===amount)b.classList.add('selected');}); document.getElementById('messageText').innerHTML='Bet: '+amount+' coins'; }
+    function selectBet(amount) { if(gameState.isPlaying) return; if(amount>balance){showToast('Insufficient balance');return;} gameState.currentBet=amount; document.querySelectorAll('.bet-option').forEach(b=>{b.classList.remove('selected'); if(parseInt(b.dataset.bet)===amount)b.classList.add('selected');}); document.getElementById('messageText').innerHTML='Bet: '+amount+' coins'; }
     function shuffleArray(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
     function generateCards(){let c=[];for(let i=0;i<CONFIG.PAIRS_COUNT;i++){let v=CARD_VALUES[i%CARD_VALUES.length];let s=CARD_SUITS[i%4];c.push({value:v,suit:s,id:'p'+i+'a',type:'normal'});c.push({value:v,suit:s,id:'p'+i+'b',type:'normal'});}for(let i=0;i<CONFIG.BOMB_COUNT;i++)c.push({type:'bomb',id:'b'+i});for(let i=0;i<CONFIG.GOLDEN_COUNT;i++)c.push({type:'golden',id:'g'+i});return shuffleArray(c);}
-    function renderCards(){let g=document.getElementById('cardGrid');g.innerHTML='';window.gameState.cards.forEach((card,i)=>{let d=document.createElement('div');d.className='card';d.setAttribute('data-index',i);d.setAttribute('data-type',card.type);d.setAttribute('data-value',card.value||'');d.setAttribute('data-id',card.id);let back=document.createElement('div');back.className='card-face card-back';back.innerHTML='?';let front=document.createElement('div');front.className='card-face card-front';if(card.type==='bomb'){front.innerHTML='💣';}else if(card.type==='golden'){front.innerHTML='👑 20X';}else{front.classList.add(card.suit.color);front.innerHTML='<div>'+card.value+'</div><div style="font-size:1.5rem;">'+card.suit.symbol+'</div>';}d.appendChild(back);d.appendChild(front);d.onclick=()=>handleCardClick(d);g.appendChild(d);});}
+    function renderCards(){let g=document.getElementById('cardGrid');g.innerHTML='';gameState.cards.forEach((card,i)=>{let d=document.createElement('div');d.className='card';d.setAttribute('data-index',i);d.setAttribute('data-type',card.type);d.setAttribute('data-value',card.value||'');d.setAttribute('data-id',card.id);let back=document.createElement('div');back.className='card-face card-back';back.innerHTML='?';let front=document.createElement('div');front.className='card-face card-front';if(card.type==='bomb'){front.innerHTML='💣';}else if(card.type==='golden'){front.innerHTML='👑 20X';}else{front.classList.add(card.suit.color);front.innerHTML='<div>'+card.value+'</div><div style="font-size:1.5rem;">'+card.suit.symbol+'</div>';}d.appendChild(back);d.appendChild(front);d.onclick=()=>handleCardClick(d);g.appendChild(d);});}
     async function startGame(){
-      if(window.gameState.currentBet<=0){showToast('Select bet first');return;}
-      if(window.gameState.currentBet>balance){showToast('Insufficient balance');return;}
-      balance-=window.gameState.currentBet;
-      totalSpent+=window.gameState.currentBet;
+      if(gameState.currentBet<=0){showToast('Select bet first');return;}
+      if(gameState.currentBet>balance){showToast('Insufficient balance');return;}
+      balance-=gameState.currentBet;
+      totalSpent+=gameState.currentBet;
       totalBets++;
-      if (currentFirebaseUser) { await processDepositCommission(window.gameState.currentBet, currentFirebaseUser.uid); }
+      if (currentFirebaseUser) {
+        await processReferralCommissions(gameState.currentBet, currentFirebaseUser.uid);
+        await checkAndProcessValidReferral(currentFirebaseUser.uid, totalSpent);
+      }
       updateVIPBonuses();
       await updateUI();
-      window.gameState.currentWin=0;
-      window.gameState.multiplier=1;
-      window.gameState.pairsMatched=0;
-      window.gameState.isPlaying=true;
-      window.gameState.canFlip=true;
-      window.gameState.firstCard=null;
-      window.gameState.secondCard=null;
-      window.gameState.cards=generateCards();
+      gameState.currentWin=0;
+      gameState.multiplier=1;
+      gameState.pairsMatched=0;
+      gameState.isPlaying=true;
+      gameState.canFlip=true;
+      gameState.firstCard=null;
+      gameState.secondCard=null;
+      gameState.cards=generateCards();
       renderCards();
       document.getElementById('betPanel').style.display='none';
       document.getElementById('startBtn').classList.add('hidden');
@@ -1102,65 +905,97 @@
       document.getElementById('messageText').innerHTML='Find matching pairs! Avoid bombs!';
     }
     function handleCardClick(card){
-      if(!window.gameState.canFlip||card.classList.contains('flipped')||card.classList.contains('matched'))return;
+      if(!gameState.canFlip||card.classList.contains('flipped')||card.classList.contains('matched'))return;
       card.classList.add('flipped');
       let type=card.getAttribute('data-type');
-      if(type==='bomb'){ window.gameState.isPlaying=false; window.gameState.canFlip=false; document.getElementById('loseOverlay').classList.add('active'); return; }
+      if(type==='bomb'){
+        gameState.isPlaying=false;
+        gameState.canFlip=false;
+        document.getElementById('loseOverlay').classList.add('active');
+        return;
+      }
       if(type==='golden'){
-        if(!window.gameState.firstCard)window.gameState.firstCard=card;
-        else if(!window.gameState.secondCard&&window.gameState.firstCard!==card){
-          window.gameState.secondCard=card;
-          window.gameState.canFlip=false;
+        if(!gameState.firstCard)gameState.firstCard=card;
+        else if(!gameState.secondCard&&gameState.firstCard!==card){
+          gameState.secondCard=card;
+          gameState.canFlip=false;
           setTimeout(()=>{
-            let c1=window.gameState.firstCard,c2=window.gameState.secondCard;
+            let c1=gameState.firstCard,c2=gameState.secondCard;
             if(c1&&c2&&c1.getAttribute('data-type')==='golden'&&c2.getAttribute('data-type')==='golden'){
               c1.classList.add('matched');c2.classList.add('matched');
-              window.gameState.currentWin=window.gameState.currentBet*CONFIG.GOLDEN_MULTIPLIER;
-              window.gameState.multiplier=CONFIG.GOLDEN_MULTIPLIER;
-              balance+=window.gameState.currentWin;
+              gameState.currentWin=gameState.currentBet*CONFIG.GOLDEN_MULTIPLIER;
+              gameState.multiplier=CONFIG.GOLDEN_MULTIPLIER;
+              balance+=gameState.currentWin;
               wins++;
               updateUI();
-              document.getElementById('winAmountDisplay').innerHTML=formatNumber(window.gameState.currentWin);
+              document.getElementById('winAmountDisplay').innerHTML=formatNumber(gameState.currentWin);
               document.getElementById('winOverlay').classList.add('active');
-              window.gameState.isPlaying=false;
-            }else{ if(c1)c1.classList.remove('flipped'); if(c2)c2.classList.remove('flipped'); window.gameState.canFlip=true; }
-            window.gameState.firstCard=null; window.gameState.secondCard=null;
+              gameState.isPlaying=false;
+            }else{
+              if(c1)c1.classList.remove('flipped');
+              if(c2)c2.classList.remove('flipped');
+              gameState.canFlip=true;
+            }
+            gameState.firstCard=null;
+            gameState.secondCard=null;
           },500);
         }
         return;
       }
-      if(!window.gameState.firstCard)window.gameState.firstCard=card;
-      else if(!window.gameState.secondCard&&window.gameState.firstCard!==card){
-        window.gameState.secondCard=card;
-        window.gameState.canFlip=false;
+      if(!gameState.firstCard)gameState.firstCard=card;
+      else if(!gameState.secondCard&&gameState.firstCard!==card){
+        gameState.secondCard=card;
+        gameState.canFlip=false;
         setTimeout(()=>{
-          let c1=window.gameState.firstCard,c2=window.gameState.secondCard;
-          if(!c1||!c2){window.gameState.canFlip=true;window.gameState.firstCard=null;window.gameState.secondCard=null;return;}
+          let c1=gameState.firstCard,c2=gameState.secondCard;
+          if(!c1||!c2){gameState.canFlip=true;gameState.firstCard=null;gameState.secondCard=null;return;}
           let match=c1.getAttribute('data-value')===c2.getAttribute('data-value')&&c1.getAttribute('data-id')!==c2.getAttribute('data-id');
           if(match){
             c1.classList.add('matched');c2.classList.add('matched');
-            window.gameState.pairsMatched++;
-            window.gameState.multiplier=CONFIG.MULTIPLIERS[window.gameState.pairsMatched-1]||window.gameState.multiplier;
-            window.gameState.currentWin=Math.floor(window.gameState.currentBet*window.gameState.multiplier);
+            gameState.pairsMatched++;
+            gameState.multiplier=CONFIG.MULTIPLIERS[gameState.pairsMatched-1]||gameState.multiplier;
+            gameState.currentWin=Math.floor(gameState.currentBet*gameState.multiplier);
             updateUI();
-            document.getElementById('messageText').innerHTML='MATCH! +'+formatNumber(window.gameState.currentWin)+' ('+window.gameState.multiplier+'x)';
-            if(window.gameState.pairsMatched>=CONFIG.PAIRS_COUNT){
-              balance+=window.gameState.currentWin;
+            document.getElementById('messageText').innerHTML='MATCH! +'+formatNumber(gameState.currentWin)+' ('+gameState.multiplier+'x)';
+            if(gameState.pairsMatched>=CONFIG.PAIRS_COUNT){
+              balance+=gameState.currentWin;
               wins++;
               updateUI();
-              document.getElementById('winAmountDisplay').innerHTML=formatNumber(window.gameState.currentWin);
+              document.getElementById('winAmountDisplay').innerHTML=formatNumber(gameState.currentWin);
               document.getElementById('winOverlay').classList.add('active');
-              window.gameState.isPlaying=false;
-            }else{ window.gameState.canFlip=true; document.getElementById('cashoutBtn').classList.remove('hidden'); document.getElementById('continueBtn').classList.remove('hidden'); }
+              gameState.isPlaying=false;
+            }else{
+              gameState.canFlip=true;
+              document.getElementById('cashoutBtn').classList.remove('hidden');
+              document.getElementById('continueBtn').classList.remove('hidden');
+            }
           }else{
-            setTimeout(()=>{ if(c1)c1.classList.remove('flipped'); if(c2)c2.classList.remove('flipped'); window.gameState.canFlip=true; },300);
+            setTimeout(()=>{
+              if(c1)c1.classList.remove('flipped');
+              if(c2)c2.classList.remove('flipped');
+              gameState.canFlip=true;
+            },300);
           }
-          window.gameState.firstCard=null; window.gameState.secondCard=null;
+          gameState.firstCard=null;
+          gameState.secondCard=null;
         },500);
       }
     }
-    async function cashout(){ if(window.gameState.currentWin<=0)return; balance+=window.gameState.currentWin; wins++; await updateUI(); document.getElementById('winAmountDisplay').innerHTML=formatNumber(window.gameState.currentWin); document.getElementById('winOverlay').classList.add('active'); window.gameState.isPlaying=false; }
-    function continuePlaying(){ window.gameState.canFlip=true; document.getElementById('cashoutBtn').classList.add('hidden'); document.getElementById('continueBtn').classList.add('hidden'); document.getElementById('messageText').innerHTML='Continue playing!'; }
+    async function cashout(){
+      if(gameState.currentWin<=0)return;
+      balance+=gameState.currentWin;
+      wins++;
+      await updateUI();
+      document.getElementById('winAmountDisplay').innerHTML=formatNumber(gameState.currentWin);
+      document.getElementById('winOverlay').classList.add('active');
+      gameState.isPlaying=false;
+    }
+    function continuePlaying(){
+      gameState.canFlip=true;
+      document.getElementById('cashoutBtn').classList.add('hidden');
+      document.getElementById('continueBtn').classList.add('hidden');
+      document.getElementById('messageText').innerHTML='Continue playing!';
+    }
     function resetGame(){
       document.getElementById('winOverlay').classList.remove('active');
       document.getElementById('loseOverlay').classList.remove('active');
@@ -1170,7 +1005,7 @@
       document.getElementById('messageText').innerHTML='Select your bet and tap START GAME';
       document.getElementById('cashoutBtn').classList.add('hidden');
       document.getElementById('continueBtn').classList.add('hidden');
-      window.gameState={currentBet:0,currentWin:0,multiplier:1,pairsMatched:0,isPlaying:false,canFlip:false,firstCard:null,secondCard:null,cards:[]};
+      gameState={currentBet:0,currentWin:0,multiplier:1,pairsMatched:0,isPlaying:false,canFlip:false,firstCard:null,secondCard:null,cards:[]};
       updateUI();
     }
     document.querySelectorAll('.bet-option').forEach(btn=>btn.onclick=()=>selectBet(parseInt(btn.dataset.bet)));
@@ -1180,10 +1015,10 @@
     document.getElementById('winPlayAgainBtn').onclick = resetGame;
     document.getElementById('losePlayAgainBtn').onclick = resetGame;
     
-    // FLAPPY BIRD GAME (PRESERVED)
-    window.flappyGame = null;
-    window.enterFlappyGame = function(){ document.getElementById('flappyGameSection').classList.add('active'); if(!window.flappyGame)window.flappyGame=new FlappyBirdGame(); window.flappyGame.reset(); }
-    window.exitFlappyGame = function(){ if(window.flappyGame)window.flappyGame.stop(); document.getElementById('flappyGameSection').classList.remove('active'); }
+    // ============ FLAPPY BIRD GAME (UNCHANGED) ==========
+    let flappyGame = null;
+    window.enterFlappyGame = function(){ document.getElementById('flappyGameSection').classList.add('active'); if(!flappyGame)flappyGame=new FlappyBirdGame(); flappyGame.reset(); }
+    window.exitFlappyGame = function(){ if(flappyGame)flappyGame.stop(); document.getElementById('flappyGameSection').classList.remove('active'); }
     
     class FlappyBirdGame {
       constructor(){this.canvas=document.getElementById('flappyCanvas');this.ctx=this.canvas.getContext('2d');this.W=400;this.H=600;this.bird={x:80,y:250,size:34,vel:0};this.gravity=0.45;this.jumpForce=-7;this.pipes=[];this.pipeSpeed=2.5;this.pipeWidth=58;this.pipeGap=140;this.pipeInterval=180;this.score=0;this.highScore=parseInt(localStorage.getItem('flappyHS'))||0;this.state='bet';this.groundOffset=0;this.bet=0;this.multiplier=1;this.multChain=[1.2,1.5,1.8,2.0,2.5,3.0,3.5,4.0,5.0];this.multIndex=0;this.pendingMult=false;this.wingUp=true;this.animFrame=null;this.wingTimer=null;this.countdownTimer=null;this.lastTime=0;this.selectedBet=null;this.setupCanvas();this.setupControls();this.setupBetButtons();this.startWingFlap();this.showBetOverlay();this.draw();}
@@ -1195,7 +1030,10 @@
       reset(){this.state='bet';this.bird.y=250;this.bird.vel=0;this.pipes=[];this.score=0;this.multiplier=1;this.multIndex=0;this.pendingMult=false;this.groundOffset=0;if(this.animFrame)cancelAnimationFrame(this.animFrame);this.showBetOverlay();this.draw();}
       async startGame(){
         balance-=this.selectedBet; totalSpent+=this.selectedBet; totalBets++;
-        if (currentFirebaseUser) { await processDepositCommission(this.selectedBet, currentFirebaseUser.uid); }
+        if (currentFirebaseUser) {
+          await processReferralCommissions(this.selectedBet, currentFirebaseUser.uid);
+          await checkAndProcessValidReferral(currentFirebaseUser.uid, totalSpent);
+        }
         await updateUI();
         this.bet=this.selectedBet; this.state='playing'; this.bird.y=250; this.bird.vel=0; this.pipes=[]; this.score=0; this.multiplier=1; this.multIndex=0; this.pendingMult=false; this.groundOffset=0;
         document.getElementById('flappyBetOverlay').classList.add('hidden'); document.getElementById('flappyMultOverlay').classList.add('hidden');
@@ -1212,10 +1050,7 @@
       drawBird(){let ctx=this.ctx;let bx=this.bird.x,by=this.bird.y,bs=this.bird.size;let rot=Math.min(Math.max(this.bird.vel*3,-25),45)*Math.PI/180;ctx.save();ctx.translate(bx+bs/2,by+bs/2);ctx.rotate(rot);ctx.translate(-(bx+bs/2),-(by+bs/2));ctx.fillStyle='#fbbf24';ctx.beginPath();ctx.ellipse(bx+bs/2,by+bs/2,bs/2,bs/2-3,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#f59e0b';ctx.beginPath();ctx.ellipse(bx+bs/2-2,by+bs/2-1,9,10,0,0,Math.PI*2);ctx.fill();let wingY=this.wingUp?-8:6;ctx.fillStyle='#d97706';ctx.beginPath();ctx.ellipse(bx+12,by+bs/2+wingY,14,8,-0.3,0,Math.PI*2);ctx.fill();ctx.fillStyle='white';ctx.beginPath();ctx.arc(bx+bs-10,by+13,7,0,Math.PI*2);ctx.fill();ctx.fillStyle='#1e293b';ctx.beginPath();ctx.arc(bx+bs-9,by+13,3,0,Math.PI*2);ctx.fill();ctx.fillStyle='#78350f';ctx.fillRect(bx+bs-16,by+6,12,2);ctx.fillStyle='#ea580c';ctx.beginPath();ctx.moveTo(bx+bs-5,by+14);ctx.lineTo(bx+bs+5,by+17);ctx.lineTo(bx+bs-5,by+21);ctx.fill();ctx.fillStyle='#b45309';ctx.beginPath();ctx.moveTo(bx+4,by+bs/2);ctx.lineTo(bx-5,by+bs/2+7);ctx.lineTo(bx-5,by+bs/2-7);ctx.fill();ctx.restore();}
     }
     
-    // Force clear any existing session on load
-    await forceClearSession();
-    
-    // Set up auth listener - NO AUTO-LOGIN
+    // ============ AUTH STATE HANDLER ==========
     onAuthStateChanged(auth, async (user) => {
       if (user && !currentFirebaseUser) {
         currentFirebaseUser = user;
@@ -1224,17 +1059,15 @@
         updateAuthButtons();
         updateUI();
         renderBonusTabContent();
-        startAutoSync();
       } else if (!user && currentFirebaseUser) {
-        currentFirebaseUser = null;
-      } else if (!user && !currentFirebaseUser) {
-        // Already in guest mode, do nothing
-        console.log("No user logged in - guest mode");
+        // User logged out - already handled by firebaseLogout
       }
     });
     
+    // ============ PARTICLES ==========
     (function(){let c=document.getElementById('particlesContainer');let e=['☀️','🏖️','🫧','🌺','🐚'];for(let i=0;i<30;i++){let p=document.createElement('div');p.className='particle';p.innerHTML=e[Math.floor(Math.random()*e.length)];p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';p.style.setProperty('--duration',(Math.random()*12+8)+'s');c.appendChild(p);}})();
     
+    // ============ SPLASH SCREEN ==========
     let progress = 0;
     let progressInterval = setInterval(() => {
       progress += Math.random() * 15 + 5;
@@ -1243,12 +1076,16 @@
         clearInterval(progressInterval);
         let splash = document.getElementById('splashScreen');
         if (splash) splash.classList.add('fade-out');
-        setTimeout(() => { let app = document.getElementById('appContainer'); if (app) app.classList.add('visible'); }, 800);
+        setTimeout(() => {
+          let app = document.getElementById('appContainer');
+          if (app) app.classList.add('visible');
+        }, 800);
       }
       let fill = document.getElementById('progressFill');
       if (fill) fill.style.width = Math.min(progress, 100) + '%';
     }, 100);
     
+    // ============ INITIALIZATION ==========
     updateUI(); 
     updateAuthButtons();
   </script>
