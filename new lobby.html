@@ -212,7 +212,7 @@
           </div>
           <div class="profile-row" style="border-bottom: none;">
             <span>Sign-up Bonus</span>
-            <span style="color:#2ecc71;">50 coins for referrer</span>
+            <span style="color:#2ecc71;">50 coins for referrer (INSTANT)</span>
           </div>
         </div>
       </div>
@@ -341,7 +341,7 @@
       }
     }
 
-    // ===== REFERRAL SYSTEM - WORKING MULTI-LEVEL =====
+    // ===== REFERRAL SYSTEM - WORKING WITH INSTANT BONUS =====
     const urlParams = new URLSearchParams(window.location.search);
     const urlReferralCode = urlParams.get('ref');
     
@@ -382,7 +382,7 @@
         await database.ref('commissions').push().set(commissionData);
         console.log(`✅ Commission saved: ${amount} coins to ${referrerId} (Level ${level})`);
         
-        // For signup bonuses, add directly to referrer's balance
+        // For signup bonuses, add directly to referrer's balance IMMEDIATELY
         if (type === 'signup_bonus') {
           const referrerRef = database.ref('users/' + referrerId);
           const referrerSnapshot = await referrerRef.once('value');
@@ -390,7 +390,13 @@
           if (referrerData) {
             const currentBalance = referrerData.coins || 0;
             await referrerRef.update({ coins: currentBalance + amount });
-            console.log(`✅ Added ${amount} signup bonus to referrer ${referrerId}`);
+            console.log(`✅ Added ${amount} signup bonus instantly to referrer ${referrerId}`);
+            
+            // If the referrer is currently logged in, update their balance in real-time
+            if (currentFirebaseUser && currentFirebaseUser.uid === referrerId) {
+              balance = currentBalance + amount;
+              updateUI();
+            }
           }
         }
         
@@ -425,7 +431,6 @@
         // Level 1 - 10% to direct referrer
         const level1Commission = Math.floor(spentAmount * 0.10);
         await saveCommission(referredBy, userId, level1Commission, 1, 'deposit_commission');
-        showToast(`🎉 Level 1 referrer earned ${level1Commission} coins!`);
         
         // Level 2 - 5% to second level referrer
         const level1Snapshot = await database.ref('users/' + referredBy).once('value');
@@ -434,7 +439,6 @@
         if (level2Referrer) {
           const level2Commission = Math.floor(spentAmount * 0.05);
           await saveCommission(level2Referrer, userId, level2Commission, 2, 'deposit_commission');
-          console.log(`Level 2 commission: ${level2Commission} to ${level2Referrer}`);
         }
         
         // Level 3 - 2.5% to third level referrer
@@ -445,7 +449,6 @@
           if (level3Referrer) {
             const level3Commission = Math.floor(spentAmount * 0.025);
             await saveCommission(level3Referrer, userId, level3Commission, 3, 'deposit_commission');
-            console.log(`Level 3 commission: ${level3Commission} to ${level3Referrer}`);
           }
         }
       } catch (error) {
@@ -623,7 +626,7 @@
       } catch (error) { showToast('❌ Login failed: ' + error.message); }
     }
     
-    // FIXED REGISTRATION - Referrer gets 50 coins
+    // FIXED REGISTRATION - Referrer gets 50 coins INSTANTLY
     window.doFirebaseRegister = async function() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
@@ -646,7 +649,7 @@
         let referrerBonusGiven = false;
         let newUserBonus = 0;
         
-        // Check for valid referral code
+        // Check for valid referral code - GIVE REFERRER 50 COINS INSTANTLY
         if (referralCode && referralCode.trim()) {
           console.log("🔍 Looking for referrer with code:", referralCode);
           const usersSnapshot = await database.ref('users').once('value');
@@ -657,16 +660,37 @@
             if (userData.referralCode === referralCode.trim()) {
               referrerId = id;
               const currentReferrerBalance = userData.coins || 0;
-              // Give referrer 50 coins
+              const currentReferrerEarnings = userData.referralEarnings || 0;
+              
+              // GIVE REFERRER 50 COINS INSTANTLY
               await database.ref('users/' + referrerId).update({ 
                 coins: currentReferrerBalance + 50,
-                referralEarnings: (userData.referralEarnings || 0) + 50
+                referralEarnings: currentReferrerEarnings + 50,
+                totalReferrals: (userData.totalReferrals || 0) + 1
               });
+              
               referrerBonusGiven = true;
               newUserBonus = 50;
-              await saveCommission(referrerId, uid, 50, 1, 'signup_bonus');
-              console.log("✅ Referrer found! Awarded 50 coins to:", referrerId);
-              showToast(`🎉 Your referrer got 50 coins bonus!`);
+              
+              // Save to commissions for tracking
+              await database.ref('commissions').push().set({
+                referrerId: referrerId,
+                userId: uid,
+                amount: 50,
+                level: 1,
+                type: 'signup_bonus',
+                status: 'collected',
+                createdAt: Date.now()
+              });
+              
+              console.log("✅ Referrer found! Awarded 50 coins instantly to:", referrerId);
+              
+              // If the referrer is currently logged in, update their balance in real-time
+              if (currentFirebaseUser && currentFirebaseUser.uid === referrerId) {
+                balance = currentReferrerBalance + 50;
+                updateUI();
+                showToast(`🎉 You got 50 coins referral bonus! Someone signed up using your link!`);
+              }
               break;
             }
           }
@@ -693,11 +717,11 @@
         });
         
         if (referrerBonusGiven) {
-          showToast(`✅ Account created! You got +50 bonus coins! Your referrer also got 50 coins!`);
+          showToast(`✅ Account created! You got +50 bonus coins! Your referrer also got 50 coins instantly!`);
         } else if (referralCode && referralCode.trim()) {
           showToast(`✅ Account created! (Referral code not found, no bonus)`);
         } else {
-          showToast(`✅ Account created! Share your referral link to earn!`);
+          showToast(`✅ Account created! Share your referral link to earn! Your code: ${newReferralCode}`);
         }
         
         localStorage.removeItem('pendingReferral');
@@ -1156,13 +1180,13 @@
             <button class="btn-gold" style="width:auto; padding:8px 16px;" onclick="copyRefLink()">📋 Copy</button>
           </div>
           <div style="font-size:0.7rem; text-align:center; margin:10px 0;">
-            <span class="level-badge">Level 1: 10% commission + 50 signup bonus</span>
+            <span class="level-badge">Level 1: 10% commission + 50 signup bonus (INSTANT)</span>
             <span class="level-badge">Level 2: 5% commission</span>
             <span class="level-badge">Level 3: 2.5% commission</span>
           </div>
           <div class="vip-card"><strong>How it works:</strong><br>
           • Share your referral link with friends<br>
-          • When they sign up using your link, you get 50 bonus coins!<br>
+          • When they sign up using your link, you get 50 bonus coins INSTANTLY!<br>
           • When they deposit 3000+ coins, you earn 10% commission!<br>
           • Their referrals also give you 5% and 2.5% commissions!<br>
           • EVERY referral link works - the chain continues!
