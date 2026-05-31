@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Casino Shuffle 786 • Referral System</title>
+  <title>Casino Shuffle 786 • Powerful Referral System</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a'/%3E%3Ctext x='50' y='72' font-size='65' text-anchor='middle' fill='%23ffd700' font-family='Arial'%3E♛%3C/text%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -164,14 +164,14 @@
   </div>
 
   <!-- Auth Modal -->
-  <div class="modal-overlay" id="authModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('authModal')">×</span><div style="text-align:center;font-size:2rem;">🌴</div><h3 style="text-align:center;">Casino Shuffle 786</h3><div style="background:#48C9B010; padding:8px; border-radius:12px; margin:10px 0; text-align:center; font-size:0.7rem;">🔒 Real Firebase Accounts • Referral System<br>🎁 Get 50 bonus coins when signing up with a referral link!<br>💰 Refer friends and earn 10% commission on their deposits!</div>
+  <div class="modal-overlay" id="authModal"><div class="modal-content"><span class="close-btn" onclick="closeModal('authModal')">×</span><div style="text-align:center;font-size:2rem;">🌴</div><h3 style="text-align:center;">Casino Shuffle 786</h3><div style="background:#48C9B010; padding:8px; border-radius:12px; margin:10px 0; text-align:center; font-size:0.7rem;">🔒 Cloud Save • Powerful Referral System<br>🎁 Get 50 bonus coins when signing up with a referral link!<br>💰 Refer friends and earn 10% commission on their deposits!</div>
       <input type="email" id="loginEmail" placeholder="Email" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;">
       <input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,0.2);border:1px solid #48C9B0;color:white;">
       <button class="btn btn-gold" style="width:100%;" onclick="doFirebaseLogin()">🔑 LOGIN</button>
       <div style="text-align:center;margin:16px 0;">── ☀️ NEW USER? REGISTER ──</div>
       <input type="text" id="regUsername" placeholder="Username" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
       <input type="email" id="regEmail" placeholder="Email" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
-      <input type="text" id="regReferral" placeholder="Referral Code (Optional)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FFD700;color:#ffd700;">
+      <input type="text" id="regReferral" placeholder="Referral Code (Get 50 bonus coins!)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FFD700;color:#ffd700;">
       <input type="password" id="regPassword" placeholder="Password (min 6 chars)" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
       <input type="password" id="regConfirm" placeholder="Confirm Password" style="width:100%;padding:10px;margin:4px 0;background:rgba(255,255,255,0.2);border-radius:12px;border:1px solid #FF6B6B;color:white;">
       <button class="btn" style="background:#FF6B6B;width:100%;" onclick="doFirebaseRegister()">🐚 CREATE ACCOUNT</button>
@@ -217,16 +217,12 @@
         <strong>💰 Commission Structure</strong>
         <div style="margin-top: 8px;">
           <div class="profile-row" style="border-bottom: none;">
-            <span>Level 1 (Direct)</span>
-            <span style="color:#2ecc71;">10% commission + 50 signup bonus</span>
+            <span>Referral Commission</span>
+            <span style="color:#2ecc71;">10% of deposit (min 3000 coins)</span>
           </div>
           <div class="profile-row" style="border-bottom: none;">
-            <span>Level 2</span>
-            <span style="color:#2ecc71;">5% commission</span>
-          </div>
-          <div class="profile-row" style="border-bottom: none;">
-            <span>Level 3</span>
-            <span style="color:#2ecc71;">2.5% commission</span>
+            <span>Sign-up Bonus</span>
+            <span style="color:#2ecc71;">50 coins for referrer (INSTANT)</span>
           </div>
         </div>
       </div>
@@ -349,7 +345,7 @@
       return n.toString(); 
     }
 
-    // ===== FORCE SIGN OUT ON PAGE LOAD - NO AUTO-LOGIN =====
+    // ===== FORCE SIGN OUT ON PAGE LOAD - START AS GUEST =====
     async function forceClearAndStartGuest() {
       try {
         const currentUser = auth.currentUser;
@@ -376,7 +372,7 @@
       updateAuthButtons();
     }
 
-    // ===== REFERRAL SYSTEM =====
+    // ===== POWERFUL REFERRAL SYSTEM =====
     const urlParams = new URLSearchParams(window.location.search);
     const urlReferralCode = urlParams.get('ref');
     
@@ -402,6 +398,7 @@
       return `${base}${random}`;
     }
     
+    // Save commission to database
     async function saveCommission(referrerId, userId, amount, level, type) {
       try {
         const commissionData = {
@@ -413,9 +410,11 @@
           status: 'pending',
           createdAt: Date.now()
         };
-        await database.ref('commissions').push().set(commissionData);
+        const newRef = database.ref('commissions').push();
+        await newRef.set(commissionData);
         console.log(`✅ Commission saved: ${amount} coins to ${referrerId} (Level ${level})`);
         
+        // For signup bonuses, add directly to referrer's balance IMMEDIATELY
         if (type === 'signup_bonus') {
           const referrerRef = database.ref('users/' + referrerId);
           const referrerSnapshot = await referrerRef.once('value');
@@ -425,6 +424,7 @@
             await referrerRef.update({ coins: currentBalance + amount });
             console.log(`✅ Added ${amount} signup bonus instantly to referrer ${referrerId}`);
             
+            // If the referrer is currently logged in, update their balance in real-time
             if (currentFirebaseUser && currentFirebaseUser.uid === referrerId) {
               balance = currentBalance + amount;
               updateUI();
@@ -433,6 +433,7 @@
           }
         }
         
+        // Update referral earnings
         const referrerRef = database.ref('users/' + referrerId);
         const referrerSnapshot = await referrerRef.once('value');
         const referrerData = referrerSnapshot.val();
@@ -447,6 +448,7 @@
       }
     }
     
+    // Process deposit commission for referrals
     async function processDepositCommission(spentAmount, userId) {
       if (spentAmount < 3000) return;
       
@@ -457,6 +459,8 @@
         
         const referredBy = userData.referredBy;
         if (!referredBy) return;
+        
+        console.log(`Processing ${spentAmount} spend for user ${userId}, referred by ${referredBy}`);
         
         const level1Commission = Math.floor(spentAmount * 0.10);
         await saveCommission(referredBy, userId, level1Commission, 1, 'deposit_commission');
@@ -488,6 +492,7 @@
       
       const userId = currentFirebaseUser.uid;
       
+      // Get referrals list
       const usersSnapshot = await database.ref('users').once('value');
       const users = usersSnapshot.val();
       referrals = [];
@@ -508,6 +513,7 @@
       totalReferralsCount = referrals.length;
       activeReferralsCount = activeCount;
       
+      // Get commissions for this user
       const commissionsSnapshot = await database.ref('commissions').once('value');
       const commissionsData = commissionsSnapshot.val();
       commissions = [];
@@ -650,6 +656,7 @@
       } catch (error) { showToast('❌ Login failed: ' + error.message); }
     }
     
+    // POWERFUL REGISTRATION WITH REFERRAL BONUS
     window.doFirebaseRegister = async function() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
@@ -672,6 +679,7 @@
         let referrerBonusGiven = false;
         let newUserBonus = 0;
         
+        // CHECK FOR REFERRAL CODE - GIVE REFERRER 50 COINS INSTANTLY
         if (referralCode && referralCode.trim()) {
           console.log("🔍 Looking for referrer with code:", referralCode);
           const usersSnapshot = await database.ref('users').once('value');
@@ -683,16 +691,19 @@
               referrerId = id;
               const currentReferrerBalance = userData.coins || 0;
               const currentReferrerEarnings = userData.referralEarnings || 0;
+              const currentReferralCount = userData.totalReferrals || 0;
               
+              // GIVE REFERRER 50 COINS INSTANTLY
               await database.ref('users/' + referrerId).update({ 
                 coins: currentReferrerBalance + 50,
                 referralEarnings: currentReferrerEarnings + 50,
-                totalReferrals: (userData.totalReferrals || 0) + 1
+                totalReferrals: currentReferralCount + 1
               });
               
               referrerBonusGiven = true;
               newUserBonus = 50;
               
+              // Save to commissions for tracking
               await database.ref('commissions').push().set({
                 referrerId: referrerId,
                 userId: uid,
@@ -705,6 +716,7 @@
               
               console.log("✅ Referrer found! Awarded 50 coins instantly to:", referrerId);
               
+              // If the referrer is currently logged in, update their balance in real-time
               if (currentFirebaseUser && currentFirebaseUser.uid === referrerId) {
                 balance = currentReferrerBalance + 50;
                 updateUI();
@@ -718,6 +730,7 @@
           }
         }
         
+        // Create new user
         await database.ref('users/' + uid).set({
           username: username,
           email: email,
@@ -1266,9 +1279,10 @@
             <button class="btn-gold" style="width:auto; padding:8px 16px;" onclick="copyRefLink()">📋 Copy</button>
           </div>
           <div style="font-size:0.7rem; text-align:center; margin:10px 0;">
-            <span class="level-badge">Level 1: 10% commission + 50 signup bonus (INSTANT)</span>
+            <span class="level-badge">Level 1 (Direct): 10% commission</span>
             <span class="level-badge">Level 2: 5% commission</span>
             <span class="level-badge">Level 3: 2.5% commission</span>
+            <span class="level-badge">🎁 Signup bonus: 50 coins for referrer (INSTANT)</span>
           </div>
           <div class="vip-card"><strong>How it works:</strong><br>
           • Share your referral link with friends<br>
