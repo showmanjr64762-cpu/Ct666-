@@ -179,7 +179,14 @@
             font-size: 2.5rem;
         }
         .auth-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; background: linear-gradient(135deg, #d4af37, #9b59b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .auth-subtitle { color: #888; font-size: 0.8rem; margin-top: 0.25rem; }
         .auth-content { padding: 2rem; }
+        .auth-tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .auth-tab { flex: 1; text-align: center; padding: 0.8rem; cursor: pointer; color: #888; font-weight: 600; transition: all 0.3s; border-bottom: 2px solid transparent; }
+        .auth-tab.active { color: #d4af37; border-bottom-color: #d4af37; }
+        .auth-form-panel { display: none; }
+        .auth-form-panel.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .error-message {
             background: rgba(231,76,60,0.1);
             border: 1px solid rgba(231,76,60,0.3);
@@ -192,6 +199,18 @@
             text-align: center;
         }
         .error-message.active { display: block; }
+        .success-message {
+            background: rgba(46,204,113,0.1);
+            border: 1px solid rgba(46,204,113,0.3);
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            color: #2ecc71;
+            font-size: 0.8rem;
+            display: none;
+            text-align: center;
+        }
+        .success-message.active { display: block; }
         .form-group { margin-bottom: 1.25rem; }
         .form-label { display: block; background: linear-gradient(90deg, #d4af37, #9b59b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; font-size: 0.8rem; font-weight: 600; }
         .form-input {
@@ -251,6 +270,13 @@
             gap: 0.5rem;
             font-weight: 600;
         }
+        .switch-auth {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .switch-auth span { color: #d4af37; cursor: pointer; text-decoration: underline; }
 
         .profile-modal-overlay {
             position: fixed; inset: 0; background: rgba(10,10,20,0.95); z-index: 3500;
@@ -826,7 +852,6 @@
         }
         .win-overlay.active, .lose-overlay.active { opacity: 1; visibility: visible; }
 
-        /* Flappy Game Styles */
         .flappy-overlay {
             position: fixed;
             inset: 0;
@@ -983,6 +1008,24 @@
             transition: all 0.3s;
         }
         .toggle-switch.active::after { left: 24px; }
+        .support-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(145deg, #d4af37, #9b59b6);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 700;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+        .settings-option { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .modal-close { background: none; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; }
+        .modal-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+        .commission-row { display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: 8px; margin-bottom: 0.5rem; }
+        .stat-item { text-align: center; }
+        .flappy-info-text { font-size: 11px; color: #b9e6ff; margin-top: 15px; }
+        .flappy-balance-display { background: rgba(0,0,0,0.5); border-radius: 40px; padding: 10px 20px; display: inline-block; margin: 12px 0; }
     </style>
 </head>
 <body>
@@ -1006,50 +1049,56 @@
             <div class="auth-header">
                 <div class="auth-logo">♛</div>
                 <div class="auth-title">Casino Shuffle 786</div>
-                <div class="auth-subtitle">Login to your account</div>
+                <div class="auth-subtitle">Login or Create Account</div>
             </div>
             <div class="auth-content">
-                <form id="loginForm" onsubmit="event.preventDefault(); window.handleFirebaseLogin()">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="window.switchAuthTab('login')">Login</div>
+                    <div class="auth-tab" onclick="window.switchAuthTab('register')">Register</div>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="loginPanel" class="auth-form-panel active">
                     <div id="loginErrors" class="error-message"></div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>
-                        <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password">
                     </div>
-                    <button type="submit" class="auth-btn">Login</button>
+                    <button class="auth-btn" onclick="window.handleFirebaseLogin()">Login</button>
                     <div class="auth-divider"><span>OR</span></div>
-                    <button type="button" class="guest-btn" onclick="window.guestLogin()"><span>👤</span><span>Continue as Guest</span></button>
-                </form>
+                    <button class="guest-btn" onclick="window.guestLogin()"><span>👤</span><span>Continue as Guest</span></button>
+                </div>
                 
-                <div class="register-section">
-                    <div class="auth-divider"><span>New User? Register Below</span></div>
-                    <form onsubmit="event.preventDefault(); window.handleFirebaseRegister()">
-                        <div id="registerErrors" class="error-message"></div>
-                        <div class="form-group">
-                            <label class="form-label">Username</label>
-                            <input type="text" id="regUsername" class="form-input" placeholder="Choose a username" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <input type="email" id="regEmail" class="form-input" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Password</label>
-                            <input type="password" id="regPassword" class="form-input" placeholder="Min 6 characters" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Confirm Password</label>
-                            <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm your password" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Referral Code (Optional)</label>
-                            <input type="text" id="regReferralCode" class="form-input" placeholder="Enter referral code if you have one">
-                        </div>
-                        <button type="submit" class="auth-btn">Create Account</button>
-                    </form>
+                <!-- Register Form -->
+                <div id="registerPanel" class="auth-form-panel">
+                    <div id="registerErrors" class="error-message"></div>
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" id="regUsername" class="form-input" placeholder="Choose a username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="regEmail" class="form-input" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="regPassword" class="form-input" placeholder="Min 6 characters">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm your password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Referral Code (Optional)</label>
+                        <input type="text" id="regReferralCode" class="form-input" placeholder="Enter referral code if you have one">
+                    </div>
+                    <button class="auth-btn" onclick="window.handleFirebaseRegister()">Create Account</button>
+                    <div class="auth-divider"><span>OR</span></div>
+                    <button class="guest-btn" onclick="window.guestLogin()"><span>👤</span><span>Continue as Guest</span></button>
                 </div>
             </div>
         </div>
@@ -1439,29 +1488,8 @@
         </div>
     </div>
 
-    <style>
-        .support-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(145deg, #d4af37, #9b59b6);
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: 700;
-            margin-top: 1rem;
-            cursor: pointer;
-        }
-        .settings-option { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .modal-close { background: none; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; }
-        .modal-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
-        .commission-row { display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: 8px; margin-bottom: 0.5rem; }
-        .stat-item { text-align: center; }
-        .flappy-info-text { font-size: 11px; color: #b9e6ff; margin-top: 15px; }
-        .flappy-balance-display { background: rgba(0,0,0,0.5); border-radius: 40px; padding: 10px 20px; display: inline-block; margin: 12px 0; }
-    </style>
-
     <script>
-        // Firebase Config
+        // ==================== FIREBASE CONFIGURATION ====================
         const firebaseConfig = {
             apiKey: "AIzaSyDUSi0mM3bYMEozFD3Ahh0vUZ5gBG1dNTU",
             authDomain: "flappy77777.firebaseapp.com",
@@ -1476,7 +1504,7 @@
         const auth = firebase.auth();
         const db = firebase.database();
 
-        // Game State
+        // ==================== GAME STATE ====================
         let currentUser = null;
         let notifications = [];
         let rewardCountdownInterval = null;
@@ -1523,7 +1551,9 @@
         const CARD_VALUES = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4'];
         const CARD_SUITS = [{ symbol: '♥', color: 'red' }, { symbol: '♠', color: 'black' }, { symbol: '♦', color: 'red' }, { symbol: '♣', color: 'black' }];
 
+        // ==================== HELPER FUNCTIONS ====================
         function formatNumber(num) { return num >= 1000 ? (num/1000).toFixed(1)+'K' : num; }
+        function escapeHtml(text) { if(!text) return ''; return text.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
         function showPopup(title, text) {
             document.getElementById('popupTitle').textContent = title;
@@ -1548,9 +1578,8 @@
                 <div class="notification-title">Notification</div><div class="notification-message">${escapeHtml(n.message)}</div>
                 <div class="notification-time">${n.time}</div></div></div>`).join('');
         }
-        function escapeHtml(text) { return text.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-        // Firebase Data Functions
+        // ==================== FIREBASE DATA FUNCTIONS ====================
         async function saveUserData() {
             if (!currentUser || currentUser.isGuest) return;
             const userData = {
@@ -1584,7 +1613,7 @@
             return false;
         }
 
-        // Referral System
+        // ==================== REFERRAL SYSTEM ====================
         function generateReferralCode() {
             return 'REF' + Math.random().toString(36).substring(2, 8).toUpperCase();
         }
@@ -1610,7 +1639,6 @@
                     activeReferrals: (referrerData.referralData.activeReferrals || 0) + 1,
                     referrals: newReferrals
                 });
-                // Also update the referrer's balance if they are logged in
                 if (currentUser && currentUser.uid === referredUserId) {
                     gameState.balance += commission;
                     referralData.totalEarnings = newEarnings;
@@ -1666,14 +1694,54 @@
             }
         }
 
-        // Auth Functions
+        // ==================== AUTH FUNCTIONS ====================
+        function switchAuthTab(tab) {
+            const loginTab = document.querySelector('.auth-tabs .auth-tab:first-child');
+            const registerTab = document.querySelector('.auth-tabs .auth-tab:last-child');
+            const loginPanel = document.getElementById('loginPanel');
+            const registerPanel = document.getElementById('registerPanel');
+            
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginPanel.classList.add('active');
+                registerPanel.classList.remove('active');
+                // Clear errors
+                document.getElementById('loginErrors').classList.remove('active');
+                document.getElementById('registerErrors').classList.remove('active');
+            } else {
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+                loginPanel.classList.remove('active');
+                registerPanel.classList.add('active');
+                document.getElementById('loginErrors').classList.remove('active');
+                document.getElementById('registerErrors').classList.remove('active');
+            }
+        }
+
         async function handleFirebaseLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
             const errorDiv = document.getElementById('loginErrors');
+            
+            errorDiv.classList.remove('active');
+            errorDiv.innerHTML = '';
+            
+            if (!email || !password) {
+                errorDiv.innerHTML = 'Please fill in all fields';
+                errorDiv.classList.add('active');
+                return;
+            }
+            
             try {
                 const result = await auth.signInWithEmailAndPassword(email, password);
-                currentUser = { uid: result.user.uid, username: result.user.displayName || email.split('@')[0], avatar: '👤', isGuest: false, email: result.user.email };
+                currentUser = { 
+                    uid: result.user.uid, 
+                    username: result.user.displayName || email.split('@')[0], 
+                    avatar: '👤', 
+                    isGuest: false, 
+                    email: result.user.email 
+                };
                 await loadUserData(currentUser.uid);
                 updateVIPLevel();
                 updateUI();
@@ -1686,7 +1754,14 @@
                 resetGame();
                 addNotification('Welcome back!', '🎉');
                 showPopup('Welcome back!', `Logged in as ${currentUser.username}`);
-            } catch (error) { errorDiv.innerHTML = error.message; errorDiv.classList.add('active'); }
+            } catch (error) {
+                let errorMsg = error.message;
+                if (error.code === 'auth/user-not-found') errorMsg = 'No account found with this email';
+                else if (error.code === 'auth/wrong-password') errorMsg = 'Incorrect password';
+                else if (error.code === 'auth/invalid-email') errorMsg = 'Invalid email format';
+                errorDiv.innerHTML = errorMsg;
+                errorDiv.classList.add('active');
+            }
         }
 
         async function handleFirebaseRegister() {
@@ -1696,19 +1771,73 @@
             const confirm = document.getElementById('regConfirmPassword').value.trim();
             const referrerCode = document.getElementById('regReferralCode').value.trim();
             const errorDiv = document.getElementById('registerErrors');
-            if (password !== confirm) { errorDiv.innerHTML = 'Passwords do not match'; errorDiv.classList.add('active'); return; }
-            if (password.length < 6) { errorDiv.innerHTML = 'Password must be 6+ chars'; errorDiv.classList.add('active'); return; }
+            
+            errorDiv.classList.remove('active');
+            errorDiv.innerHTML = '';
+            
+            if (!username || !email || !password || !confirm) {
+                errorDiv.innerHTML = 'Please fill all fields';
+                errorDiv.classList.add('active');
+                return;
+            }
+            
+            if (password !== confirm) {
+                errorDiv.innerHTML = 'Passwords do not match';
+                errorDiv.classList.add('active');
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorDiv.innerHTML = 'Password must be at least 6 characters';
+                errorDiv.classList.add('active');
+                return;
+            }
+            
             try {
                 const result = await auth.createUserWithEmailAndPassword(email, password);
                 await result.user.updateProfile({ displayName: username });
-                currentUser = { uid: result.user.uid, username, avatar: '👤', isGuest: false, email };
+                
+                currentUser = { 
+                    uid: result.user.uid, 
+                    username: username, 
+                    avatar: '👤', 
+                    isGuest: false, 
+                    email: email 
+                };
+                
                 const referralCode = generateReferralCode();
-                referralData = { code: referralCode, link: window.location.href + '?ref=' + referralCode, totalReferrals: 0, activeReferrals: 0, totalEarnings: 0, referrals: [] };
-                gameState = { ...gameState, balance: 1000, totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0, firstWagerProgress: 0, hasCompletedFirstWager: false };
-                rewardState = { lastDailyClaim: null, lastWeeklyClaim: null, lastMonthlyClaim: null, dailyStreak: 0, weeklyStreak: 0 };
-                missionsState = { dailyLogin: { completed: true, claimed: false, progress: 1, target: 1 }, firstDeposit: { completed: false, claimed: false, progress: 0, target: 1 }, gamesPlayed: { completed: false, claimed: false, progress: 0, target: 10 }, bigWin: { completed: false, claimed: false, progress: 0, target: 5 } };
+                referralData = { 
+                    code: referralCode, 
+                    link: window.location.href + '?ref=' + referralCode, 
+                    totalReferrals: 0, 
+                    activeReferrals: 0, 
+                    totalEarnings: 0, 
+                    referrals: [] 
+                };
+                
+                gameState = { 
+                    balance: 1000, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0,
+                    isPlaying: false, canFlip: false, firstCard: null, secondCard: null,
+                    cards: [], matchedPairs: 0, goldenCardsFound: [],
+                    totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0,
+                    firstWagerProgress: 0, hasCompletedFirstWager: false 
+                };
+                
+                rewardState = { 
+                    lastDailyClaim: null, lastWeeklyClaim: null, lastMonthlyClaim: null,
+                    dailyStreak: 0, weeklyStreak: 0 
+                };
+                
+                missionsState = { 
+                    dailyLogin: { completed: true, claimed: false, progress: 1, target: 1 },
+                    firstDeposit: { completed: false, claimed: false, progress: 0, target: 1 },
+                    gamesPlayed: { completed: false, claimed: false, progress: 0, target: 10 },
+                    bigWin: { completed: false, claimed: false, progress: 0, target: 5 }
+                };
+                
                 await saveUserData();
                 await applyReferralBonus(currentUser.uid, referrerCode);
+                
                 updateHeader();
                 updateUI();
                 updateRewardUI();
@@ -1718,7 +1847,19 @@
                 startRewardCountdown();
                 addNotification('Welcome! You got 1000 free coins!', '🎁');
                 showPopup('Welcome!', 'Account created successfully!');
-            } catch (error) { errorDiv.innerHTML = error.message; errorDiv.classList.add('active'); }
+                
+            } catch (error) {
+                let errorMsg = error.message;
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMsg = 'This email is already registered. Please login instead.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMsg = 'Please enter a valid email address.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMsg = 'Password is too weak. Use at least 6 characters.';
+                }
+                errorDiv.innerHTML = errorMsg;
+                errorDiv.classList.add('active');
+            }
         }
 
         function guestLogin() {
@@ -1736,7 +1877,7 @@
             updateHeader(); updateUI(); showAuthButtons(); resetGame(); showPopup('Logged out', 'You have been logged out'); openAuthModal();
         }
 
-        // UI Updates
+        // ==================== UI UPDATE FUNCTIONS ====================
         function updateHeader() {
             document.getElementById('headerUsername').innerText = currentUser ? currentUser.username : 'Guest';
             document.getElementById('headerAvatarIcon').innerText = currentUser?.avatar || '👤';
@@ -1774,7 +1915,7 @@
 
         function hideAuthButtons() { document.getElementById('authButtons').style.display = 'none'; }
         function showAuthButtons() { document.getElementById('authButtons').style.display = 'flex'; }
-        function openAuthModal() { document.getElementById('authOverlay').classList.add('active'); }
+        function openAuthModal() { document.getElementById('authOverlay').classList.add('active'); switchAuthTab('login'); }
         function closeAuth() { document.getElementById('authOverlay').classList.remove('active'); }
         function openProfile() { if(!currentUser) openAuthModal(); else document.getElementById('profileModal').classList.add('active'); }
         function closeProfile() { document.getElementById('profileModal').classList.remove('active'); cancelEdit(); }
@@ -1796,7 +1937,7 @@
         function closeWithdrawPopup() { document.getElementById('withdrawPopup').classList.remove('active'); }
         async function processWithdraw() { const amount = parseInt(document.getElementById('withdrawAmount').value); if(amount<1000) showPopup('Error', 'Min 1000'); else if(amount>gameState.balance) showPopup('Error', 'Insufficient'); else { gameState.balance -= amount; updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); showPopup('Request Sent', amount + ' coins withdrawal requested'); closeWithdrawPopup(); } }
 
-        // Shop & Purchase
+        // ==================== SHOP & PURCHASE ====================
         function renderShopGrid() {
             const items = [{amount:100,coins:100,bonus:5},{amount:500,coins:500,bonus:25},{amount:1000,coins:1000,bonus:50,featured:true},{amount:3000,coins:3000,bonus:150},{amount:5000,coins:5000,bonus:250},{amount:10000,coins:10000,bonus:500}];
             document.getElementById('shopGrid').innerHTML = items.map(i => `<div class="shop-card ${i.featured?'featured':''}" onclick="window.openPurchasePage(${i.amount},${i.coins})"><div class="shop-icon">💰</div><div class="shop-amount">₨${i.amount}</div><div class="shop-coins">${formatNumber(i.coins)} Coins</div><div class="shop-bonus">+${i.bonus} Bonus</div><button class="shop-btn">BUY NOW</button></div>`).join('');
@@ -1808,7 +1949,7 @@
         function closePurchasePage() { document.getElementById('purchasePage').classList.remove('active'); document.getElementById('purchasePhoneNumber').value=''; }
         async function submitPurchaseRequest() { const phone=document.getElementById('purchasePhoneNumber').value.trim(); if(!phone||phone.length<10) showPopup('Error','Valid phone required'); else { const bonus=Math.floor(currentPurchaseCoins*0.025); const total=currentPurchaseCoins+bonus; gameState.balance+=total; updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); if(!missionsState.firstDeposit.completed){ missionsState.firstDeposit.completed=true; missionsState.firstDeposit.progress=1; updateMissionsUI(); await saveUserData(); showPopup('Mission Update!','First Deposit mission completed!'); } addNotification('Purchased '+formatNumber(total)+' coins!','💰'); showPopup('Purchase Successful!',formatNumber(total)+' coins added!'); closePurchasePage(); } }
 
-        // Rewards
+        // ==================== REWARDS ====================
         function canClaimDaily() { if(!currentUser) return false; if(!rewardState.lastDailyClaim) return true; const last=new Date(rewardState.lastDailyClaim), today=new Date(); return last.getDate()!==today.getDate() || last.getMonth()!==today.getMonth() || last.getFullYear()!==today.getFullYear(); }
         function canClaimWeekly() { if(!currentUser || !rewardState.lastWeeklyClaim) return !rewardState.lastWeeklyClaim; const diff=Math.floor((new Date()-new Date(rewardState.lastWeeklyClaim))/(1000*60*60*24)); return diff>=7; }
         function canClaimMonthly() { if(!currentUser || !rewardState.lastMonthlyClaim) return !rewardState.lastMonthlyClaim; const last=new Date(rewardState.lastMonthlyClaim), today=new Date(); return last.getMonth()!==today.getMonth() || last.getFullYear()!==today.getFullYear(); }
@@ -1818,19 +1959,19 @@
         async function claimWeeklyReward() { if(!currentUser) openAuthModal(); else if(!canClaimWeekly()) showPopup('Already Claimed','Check back next week'); else { const reward=VIP_CONFIG.levels[gameState.vipLevel].weeklyReward; gameState.balance+=reward; rewardState.lastWeeklyClaim=new Date().toISOString(); updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); updateRewardUI(); addNotification(`Claimed ${reward} weekly coins!`,'🎁'); showPopup('Weekly Reward!',`+${reward} coins!`); } }
         async function claimMonthlyReward() { if(!currentUser) openAuthModal(); else if(!canClaimMonthly()) showPopup('Already Claimed','Check back next month'); else { const reward=VIP_CONFIG.levels[gameState.vipLevel].monthlyReward; gameState.balance+=reward; rewardState.lastMonthlyClaim=new Date().toISOString(); updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); updateRewardUI(); addNotification(`Claimed ${reward} monthly coins!`,'🎁'); showPopup('Monthly Reward!',`+${reward} coins!`); } }
 
-        // Missions
+        // ==================== MISSIONS ====================
         function updateMissionsUI() { const missions=[{id:'dailyLogin',title:'Daily Login',desc:'Login daily',reward:10,icon:'🎁'},{id:'firstDeposit',title:'First Deposit',desc:'Make first deposit',reward:50,icon:'💰'},{id:'gamesPlayed',title:'Betting Enthusiast',desc:'Place '+missionsState.gamesPlayed.target+' bets',reward:100,icon:'🎮',progress:missionsState.gamesPlayed.progress,target:missionsState.gamesPlayed.target},{id:'bigWin',title:'Winner\'s Circle',desc:'Win '+missionsState.bigWin.target+' games',reward:200,icon:'🏆',progress:missionsState.bigWin.progress,target:missionsState.bigWin.target}]; document.getElementById('missionsContent').innerHTML = missions.map(m=>{ const data=missionsState[m.id]; const isCompleted=data?.completed, isClaimed=data?.claimed; let progressText='',btnHtml=''; if(m.progress!==undefined){ const pct=(m.progress/m.target*100); progressText=`<div class="mission-progress"><div class="mission-progress-bar" style="width:${pct}%"></div><span>${m.progress}/${m.target}</span></div>`; } if(isClaimed) btnHtml='<button class="mission-btn claimed" disabled>✓ Claimed</button>'; else if(isCompleted) btnHtml=`<button class="mission-btn available" onclick="window.claimMissionReward('${m.id}',${m.reward})">🎁 Claim Reward</button>`; else btnHtml='<button class="mission-btn locked" disabled>🔒 Locked</button>'; return `<div class="mission-card"><div class="mission-header"><span class="mission-icon">${m.icon}</span><span class="mission-title">${m.title}</span></div><div class="mission-desc">${m.desc}</div>${progressText}<div class="mission-reward">🎁 ${m.reward} Coins</div>${btnHtml}</div>`; }).join(''); }
         async function claimMissionReward(missionId,reward) { if(!currentUser) openAuthModal(); else if(!missionsState[missionId]?.completed) showPopup('Not Completed','Complete mission first'); else if(missionsState[missionId]?.claimed) showPopup('Already Claimed','Reward already taken'); else { gameState.balance+=reward; missionsState[missionId].claimed=true; updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); updateMissionsUI(); addNotification(`Claimed ${reward} mission coins!`,'🎯'); showPopup('Mission Reward!',`+${reward} coins!`); } }
         function checkAndUpdateMissions() { let updated=false; if(!missionsState.gamesPlayed.completed && gameState.totalBets>=missionsState.gamesPlayed.target){ missionsState.gamesPlayed.completed=true; updated=true; } else if(!missionsState.gamesPlayed.completed) missionsState.gamesPlayed.progress=gameState.totalBets; if(!missionsState.bigWin.completed && gameState.totalWins>=missionsState.bigWin.target){ missionsState.bigWin.completed=true; updated=true; } else if(!missionsState.bigWin.completed) missionsState.bigWin.progress=gameState.totalWins; if(updated){ updateMissionsUI(); if(currentUser && !currentUser.isGuest) saveUserData(); showPopup('Mission Update!','A mission completed!'); } }
         function updateVIPLevel() { let newLevel=0; if(gameState.totalSpent>=640000) newLevel=5; else if(gameState.totalSpent>=320000) newLevel=4; else if(gameState.totalSpent>=160000) newLevel=3; else if(gameState.totalSpent>=80000) newLevel=2; else if(gameState.totalSpent>=40000) newLevel=1; if(newLevel>gameState.vipLevel){ gameState.vipLevel=newLevel; addNotification(`VIP Level ${newLevel} reached!`,'👑'); showPopup('VIP Level Up!',`You reached VIP ${newLevel}!`); } }
 
-        // Referral UI
+        // ==================== REFERRAL UI ====================
         function loadReferralData() { if(!currentUser) return; document.getElementById('referralCodeDisplay').innerText = referralData.code || 'SHUFFLE786'; document.getElementById('referralLinkInput').value = referralData.link || window.location.href; document.getElementById('totalReferrals').innerText = referralData.totalReferrals; document.getElementById('totalEarnings').innerText = formatNumber(referralData.totalEarnings); document.getElementById('activeReferrals').innerText = referralData.activeReferrals; const body = document.getElementById('referralsBody'); if(referralData.referrals.length===0) body.innerHTML = '<tr><td colspan="5">No referrals yet</td></tr>'; else body.innerHTML = referralData.referrals.map(r => `<tr><td>${escapeHtml(r.username)}</td><td><span class="status-badge ${r.status==='active'?'approved':'pending'}">${r.status==='active'?'Active':'Pending'}</span></td><td class="amount-positive">${formatNumber(r.deposit)}</td><td class="amount-positive">${formatNumber(r.commission)}</td><td>${r.date}</td></tr>`).join(''); }
         function copyReferralCode() { navigator.clipboard.writeText(referralData.code || 'SHUFFLE786'); showPopup('Copied!','Referral code copied'); }
         function copyReferralLink() { navigator.clipboard.writeText(referralData.link || window.location.href); showPopup('Copied!','Referral link copied'); }
-        function filterReferrals(filter) { document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); if(event?.target) event.target.classList.add('active'); let filtered = referralData.referrals; if(filter==='active') filtered = referralData.referrals.filter(r=>r.status==='active'); else if(filter==='pending') filtered = referralData.referrals.filter(r=>r.status!=='active'); document.getElementById('referralsBody').innerHTML = filtered.length===0 ? '<tr><td colspan="5">No referrals found</td></tr>' : filtered.map(r=>`<tr><td>${escapeHtml(r.username)}</td><td><span class="status-badge ${r.status==='active'?'approved':'pending'}">${r.status==='active'?'Active':'Pending'}</span></td><td class="amount-positive">${formatNumber(r.deposit)}</td><td class="amount-positive">${formatNumber(r.commission)}</td><td>${r.date}</td></tr>`).join(''); }
+        function filterReferrals(filter) { document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); if(event?.target) event.target.classList.add('active'); let filtered = referralData.referrals; if(filter==='active') filtered = referralData.referrals.filter(r=>r.status==='active'); else if(filter==='pending') filtered = referralData.referrals.filter(r=>r.status!=='active'); document.getElementById('referralsBody').innerHTML = filtered.length===0 ? '<tr><td colspan="5">No referrals found</td></table>' : filtered.map(r=>`<tr><td>${escapeHtml(r.username)}</td><td><span class="status-badge ${r.status==='active'?'approved':'pending'}">${r.status==='active'?'Active':'Pending'}</span></td><td class="amount-positive">${formatNumber(r.deposit)}</td><td class="amount-positive">${formatNumber(r.commission)}</td><td>${r.date}</td></tr>`).join(''); }
 
-        // Navigation
+        // ==================== NAVIGATION ====================
         function openReferral() { document.getElementById('referralSection').classList.add('active'); loadReferralData(); }
         function closeReferral() { document.getElementById('referralSection').classList.remove('active'); }
         function openOffers() { document.getElementById('offersSection').classList.add('active'); }
@@ -1859,7 +2000,7 @@
         function openNotificationPanel() { document.getElementById('notificationPanel').classList.add('open'); renderNotifications(); }
         function closeNotificationPanel() { document.getElementById('notificationPanel').classList.remove('open'); }
 
-        // Game Logic
+        // ==================== GAME LOGIC ====================
         function enterGame() { if(!currentUser) openAuthModal(); else { resetGame(); document.getElementById('gameView').classList.add('active'); } }
         function exitGame() { resetGame(); document.getElementById('gameView').classList.remove('active'); }
         function selectBet(amount) { if(gameState.isPlaying) return; if(amount>gameState.balance) showPopup('Insufficient','Not enough coins!'); else { gameState.currentBet=amount; document.querySelectorAll('.bet-option').forEach(b=>b.classList.remove('selected')); document.querySelector(`.bet-option[data-bet="${amount}"]`).classList.add('selected'); } }
@@ -1874,7 +2015,7 @@
         function continuePlaying(){ gameState.canFlip=true; document.getElementById('cashoutBtn').classList.add('hidden'); document.getElementById('continueBtn').classList.add('hidden'); }
         function resetGame(){ document.getElementById('winOverlay').classList.remove('active'); document.getElementById('loseOverlay').classList.remove('active'); document.getElementById('betPanel').style.display='block'; document.getElementById('startBtn').classList.remove('hidden'); document.getElementById('cardGrid').innerHTML=''; gameState.currentBet=0; gameState.currentWin=0; gameState.multiplier=1; gameState.pairsMatched=0; gameState.isPlaying=false; gameState.canFlip=false; gameState.firstCard=null; gameState.secondCard=null; gameState.cards=[]; document.getElementById('cashoutBtn').classList.add('hidden'); document.getElementById('continueBtn').classList.add('hidden'); document.querySelectorAll('.bet-option').forEach(b=>b.classList.remove('selected')); }
 
-        // Flappy Game (simplified, functional)
+        // ==================== FLAPPY GAME ====================
         let flappyGameActive=false, flappyAnimationId=null, flappyGameStateObj=null, flappyCurrentMultiplier=1, flappyCheckpointIndex=0, flappyPipesPassed=0, flappySelectedBet=null, flappyAwaitingCheckpoint=false, flappyCountdownInt=null, flappyTotalSpawned=0;
         const FLAPPY_VW=400, FLAPPY_VH=600;
         const FLAPPY_CFG={ width:400, height:600, birdSize:36, birdX:80, startY:250, gravity:0.65, jumpForce:-7.5, pipeSpeed:3.8, pipeWidth:60, pipeSpacing:190, gapSize:130, minGapY:140, maxGapY:360, maxSpeed:7.0 };
@@ -1893,14 +2034,78 @@
         function openFlappyGame(){ if(!currentUser) openAuthModal(); else{ document.getElementById('flappyOverlay').classList.add('active'); document.getElementById('flappyBetPopup').style.display='flex'; document.getElementById('flappyActionPopup').style.display='none'; document.getElementById('flappyBalanceDisplay').innerText=`💰 BAL: ${Math.floor(gameState.balance)}`; flappyGameActive=false; flappySelectedBet=null; initFlappy(); const canvas=document.getElementById('flappyCanvas'); function resizeFlappy(){ const cont=canvas.parentElement, cw=window.innerWidth, ch=window.innerHeight; const scale=Math.min(cw/FLAPPY_VW,ch/FLAPPY_VH); canvas.style.width=(FLAPPY_VW*scale)+'px'; canvas.style.height=(FLAPPY_VH*scale)+'px'; canvas.width=FLAPPY_VW; canvas.height=FLAPPY_VH; if(flappyGameStateObj) flappyGameStateObj.ctx=canvas.getContext('2d'); drawFlappyGame(); } resizeFlappy(); window.addEventListener('resize',resizeFlappy); canvas.onclick=()=>{ if(flappyGameActive && !flappyAwaitingCheckpoint) flappyGameStateObj.birdVelocity=FLAPPY_CFG.jumpForce; }; document.querySelectorAll('.flappy-bet-btn').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('.flappy-bet-btn').forEach(b=>b.style.background='#2a2a3e'); btn.style.background='#f59e0b'; flappySelectedBet=parseInt(btn.getAttribute('data-flappy-bet')); }; }); document.getElementById('flappyConfirmBetBtn').onclick=()=>{ if(!flappySelectedBet) showPopup('Select Bet','Choose bet amount'); else if(flappySelectedBet>gameState.balance) showPopup('Insufficient','Not enough coins'); else startFlappyGame(flappySelectedBet); }; document.getElementById('flappyCashoutBtn').onclick=flappyCashoutAction; document.getElementById('flappyContinueBtn').onclick=flappyContinueAction; } }
         function closeFlappyGame(){ if(flappyAnimationId) cancelAnimationFrame(flappyAnimationId); if(flappyGameStateObj && flappyGameStateObj.wingInterval) clearInterval(flappyGameStateObj.wingInterval); if(flappyCountdownInt) clearInterval(flappyCountdownInt); flappyGameActive=false; flappyAwaitingCheckpoint=false; document.getElementById('flappyOverlay').classList.remove('active'); updateUI(); }
 
-        // Leaderboard & Particles
+        // ==================== LEADERBOARD & PARTICLES ====================
         function renderLeaderboard(){ const list=document.getElementById('leaderboardList'); list.innerHTML='<div style="text-align:center;color:#666;">Loading...</div>'; db.ref('users').once('value').then(snap=>{ const users=[]; snap.forEach(s=>{ const d=s.val(); users.push({username:d.username||'User',totalSpent:d.totalSpent||0,avatar:d.avatar||'👤'}); }); users.sort((a,b)=>b.totalSpent-a.totalSpent); list.innerHTML=users.slice(0,7).map((u,i)=>{ let cls=''; if(i===0) cls='gold'; else if(i===1) cls='silver'; else if(i===2) cls='bronze'; return `<div class="leaderboard-item"><div class="rank-number ${cls}">${i+1}</div><div class="leader-avatar">${u.avatar}</div><div class="leader-info"><div class="leader-name">${escapeHtml(u.username)}</div><div class="leader-win">${formatNumber(u.totalSpent)} spent</div></div></div>`; }).join(''); }); }
         function createParticles(){ for(let i=0;i<50;i++){ const p=document.createElement('div'); p.className='particle'; p.style.left=Math.random()*100+'%'; p.style.animationDelay=Math.random()*10+'s'; p.style.animationDuration=(10+Math.random()*10)+'s'; document.getElementById('particles').appendChild(p); } }
         function hideSplash(){ const splash=document.getElementById('splashScreen'); splash.classList.add('fade-out'); setTimeout(()=>{ splash.style.display='none'; document.getElementById('appContainer').classList.add('visible'); },500); }
 
-        // Expose globals
-        window.handleFirebaseLogin=handleFirebaseLogin; window.handleFirebaseRegister=handleFirebaseRegister; window.guestLogin=guestLogin; window.logout=logout; window.openAuthModal=openAuthModal; window.closeAuth=closeAuth; window.openProfile=openProfile; window.closeProfile=closeProfile; window.showEditUsername=showEditUsername; window.updateUsername=updateUsername; window.cancelEdit=cancelEdit; window.changeAvatar=changeAvatar; window.selectAvatar=selectAvatar; window.closeAvatarPopup=closeAvatarPopup; window.openWithdraw=openWithdraw; window.closeWithdrawPopup=closeWithdrawPopup; window.processWithdraw=processWithdraw; window.openShop=openShop; window.closeShop=closeShop; window.openPurchasePage=openPurchasePage; window.closePurchasePage=closePurchasePage; window.submitPurchaseRequest=submitPurchaseRequest; window.openReferral=openReferral; window.closeReferral=closeReferral; window.copyReferralCode=copyReferralCode; window.copyReferralLink=copyReferralLink; window.filterReferrals=filterReferrals; window.openOffers=openOffers; window.closeOffers=closeOffers; window.openMissions=openMissions; window.closeMissions=closeMissions; window.openSupport=openSupport; window.closeSupport=closeSupport; window.openSupportBot=openSupportBot; window.openAdditionalSupport=openAdditionalSupport; window.closeAdditionalSupport=closeAdditionalSupport; window.sendSupportMessage=sendSupportMessage; window.openDailyRewards=openDailyRewards; window.closeDailyRewards=closeDailyRewards; window.claimDailyReward=claimDailyReward; window.claimWeeklyReward=claimWeeklyReward; window.claimMonthlyReward=claimMonthlyReward; window.claimMissionReward=claimMissionReward; window.openVIPPopup=openVIPPopup; window.closeVIPPopup=closeVIPPopup; window.openModal=openModal; window.closeModal=closeModal; window.toggleSound=toggleSound; window.toggleNotifications=toggleNotifications; window.enterGame=enterGame; window.exitGame=exitGame; window.setActiveNav=setActiveNav; window.resetGame=resetGame; window.closePopup=closePopup; window.deleteAllNotifications=deleteAllNotifications; window.openNotificationPanel=openNotificationPanel; window.closeNotificationPanel=closeNotificationPanel; window.openFlappyGame=openFlappyGame; window.closeFlappyGame=closeFlappyGame; window.showDownloadPopup=showDownloadPopup; window.closeDownloadPopup=closeDownloadPopup; window.downloadApk=downloadApk; window.selectBet=selectBet;
+        // ==================== EXPOSE GLOBALS ====================
+        window.switchAuthTab = switchAuthTab;
+        window.handleFirebaseLogin = handleFirebaseLogin;
+        window.handleFirebaseRegister = handleFirebaseRegister;
+        window.guestLogin = guestLogin;
+        window.logout = logout;
+        window.openAuthModal = openAuthModal;
+        window.closeAuth = closeAuth;
+        window.openProfile = openProfile;
+        window.closeProfile = closeProfile;
+        window.showEditUsername = showEditUsername;
+        window.updateUsername = updateUsername;
+        window.cancelEdit = cancelEdit;
+        window.changeAvatar = changeAvatar;
+        window.selectAvatar = selectAvatar;
+        window.closeAvatarPopup = closeAvatarPopup;
+        window.openWithdraw = openWithdraw;
+        window.closeWithdrawPopup = closeWithdrawPopup;
+        window.processWithdraw = processWithdraw;
+        window.openShop = openShop;
+        window.closeShop = closeShop;
+        window.openPurchasePage = openPurchasePage;
+        window.closePurchasePage = closePurchasePage;
+        window.submitPurchaseRequest = submitPurchaseRequest;
+        window.openReferral = openReferral;
+        window.closeReferral = closeReferral;
+        window.copyReferralCode = copyReferralCode;
+        window.copyReferralLink = copyReferralLink;
+        window.filterReferrals = filterReferrals;
+        window.openOffers = openOffers;
+        window.closeOffers = closeOffers;
+        window.openMissions = openMissions;
+        window.closeMissions = closeMissions;
+        window.openSupport = openSupport;
+        window.closeSupport = closeSupport;
+        window.openSupportBot = openSupportBot;
+        window.openAdditionalSupport = openAdditionalSupport;
+        window.closeAdditionalSupport = closeAdditionalSupport;
+        window.sendSupportMessage = sendSupportMessage;
+        window.openDailyRewards = openDailyRewards;
+        window.closeDailyRewards = closeDailyRewards;
+        window.claimDailyReward = claimDailyReward;
+        window.claimWeeklyReward = claimWeeklyReward;
+        window.claimMonthlyReward = claimMonthlyReward;
+        window.claimMissionReward = claimMissionReward;
+        window.openVIPPopup = openVIPPopup;
+        window.closeVIPPopup = closeVIPPopup;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.toggleSound = toggleSound;
+        window.toggleNotifications = toggleNotifications;
+        window.enterGame = enterGame;
+        window.exitGame = exitGame;
+        window.setActiveNav = setActiveNav;
+        window.resetGame = resetGame;
+        window.closePopup = closePopup;
+        window.deleteAllNotifications = deleteAllNotifications;
+        window.openNotificationPanel = openNotificationPanel;
+        window.closeNotificationPanel = closeNotificationPanel;
+        window.openFlappyGame = openFlappyGame;
+        window.closeFlappyGame = closeFlappyGame;
+        window.showDownloadPopup = showDownloadPopup;
+        window.closeDownloadPopup = closeDownloadPopup;
+        window.downloadApk = downloadApk;
+        window.selectBet = selectBet;
 
+        // ==================== INITIALIZATION ====================
         document.querySelectorAll('.bet-option').forEach(btn=>btn.addEventListener('click',()=>selectBet(parseInt(btn.getAttribute('data-bet')))));
         document.getElementById('startBtn').addEventListener('click',startGame);
         document.getElementById('cashoutBtn').addEventListener('click',cashout);
