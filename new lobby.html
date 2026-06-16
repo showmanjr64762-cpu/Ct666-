@@ -168,12 +168,25 @@
         .auth-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; background: linear-gradient(135deg, #d4af37, #9b59b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .auth-subtitle { color: #888; font-size: 0.8rem; margin-top: 0.25rem; }
         .auth-content { padding: 2rem; }
-        .auth-tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(212,175,55,0.2); }
-        .auth-tab { flex: 1; text-align: center; padding: 0.8rem; cursor: pointer; color: #888; font-weight: 600; transition: all 0.3s; border-bottom: 2px solid transparent; }
-        .auth-tab.active { color: #d4af37; border-bottom-color: #d4af37; }
-        .auth-form-panel { display: none; }
-        .auth-form-panel.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .auth-divider { text-align: center; margin: 1.5rem 0; position: relative; }
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), #9b59b6, rgba(212,175,55,0.3), transparent);
+        }
+        .auth-divider span {
+            background: linear-gradient(145deg, rgba(25,25,40,0.98), rgba(15,15,25,0.99));
+            padding: 0 1rem;
+            background: linear-gradient(90deg, #d4af37, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 0.75rem;
+            position: relative;
+        }
         .error-message {
             background: rgba(231,76,60,0.1);
             border: 1px solid rgba(231,76,60,0.3);
@@ -212,25 +225,7 @@
             margin-top: 0.5rem;
             margin-bottom: 1rem;
         }
-        .auth-divider { text-align: center; margin: 1.5rem 0; position: relative; }
-        .auth-divider::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), #9b59b6, rgba(212,175,55,0.3), transparent);
-        }
-        .auth-divider span {
-            background: linear-gradient(145deg, rgba(25,25,40,0.98), rgba(15,15,25,0.99));
-            padding: 0 1rem;
-            background: linear-gradient(90deg, #d4af37, #9b59b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 0.75rem;
-            position: relative;
-        }
+        .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .guest-btn {
             width: 100%;
             padding: 0.9rem;
@@ -244,6 +239,18 @@
             justify-content: center;
             gap: 0.5rem;
             font-weight: 600;
+        }
+        .guest-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .referral-hint {
+            font-size: 0.7rem;
+            color: #d4af37;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(212,175,55,0.08);
+            border-radius: 8px;
+            border: 1px solid rgba(212,175,55,0.2);
+            text-align: center;
         }
 
         .profile-modal-overlay {
@@ -1010,23 +1017,18 @@
         </div>
     </div>
 
-    <!-- Auth Modal -->
+    <!-- Auth Modal - Login on top, Register below -->
     <div class="auth-overlay" id="authOverlay">
         <div class="auth-container">
             <button class="close-auth" onclick="window.closeAuth()">×</button>
             <div class="auth-header">
                 <div class="auth-logo">♛</div>
                 <div class="auth-title">Casino Shuffle 786</div>
-                <div class="auth-subtitle">Login or Create Account</div>
+                <div class="auth-subtitle">Login to your account</div>
             </div>
             <div class="auth-content">
-                <div class="auth-tabs">
-                    <div class="auth-tab active" onclick="window.switchAuthTab('login')">Login</div>
-                    <div class="auth-tab" onclick="window.switchAuthTab('register')">Register</div>
-                </div>
-                
-                <!-- Login Panel -->
-                <div id="loginPanel" class="auth-form-panel active">
+                <!-- LOGIN SECTION -->
+                <div id="loginSection">
                     <div id="loginErrors" class="error-message"></div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
@@ -1037,12 +1039,13 @@
                         <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password">
                     </div>
                     <button class="auth-btn" onclick="window.handleFirebaseLogin()">Login</button>
-                    <div class="auth-divider"><span>OR</span></div>
-                    <button class="guest-btn" onclick="window.guestLogin()"><span>👤</span><span>Continue as Guest</span></button>
                 </div>
-                
-                <!-- Register Panel -->
-                <div id="registerPanel" class="auth-form-panel">
+
+                <div class="auth-divider"><span>OR</span></div>
+
+                <!-- REGISTER SECTION -->
+                <div id="registerSection">
+                    <div style="text-align:center;margin-bottom:1rem;color:#888;font-size:0.9rem;">Create a new account</div>
                     <div id="registerErrors" class="error-message"></div>
                     <div class="form-group">
                         <label class="form-label">Username</label>
@@ -1063,11 +1066,15 @@
                     <div class="form-group">
                         <label class="form-label">Referral Code (Optional)</label>
                         <input type="text" id="regReferralCode" class="form-input" placeholder="Enter referral code if you have one">
+                        <div id="referralHint" class="referral-hint" style="display:none;">✅ Referral code detected from link!</div>
                     </div>
                     <button class="auth-btn" onclick="window.handleFirebaseRegister()">Create Account</button>
-                    <div class="auth-divider"><span>OR</span></div>
-                    <button class="guest-btn" onclick="window.guestLogin()"><span>👤</span><span>Continue as Guest</span></button>
                 </div>
+
+                <div class="auth-divider"><span>OR</span></div>
+
+                <!-- GUEST BUTTON -->
+                <button class="guest-btn" onclick="window.guestLogin()"><span>👤</span><span>Continue as Guest (0 coins)</span></button>
             </div>
         </div>
     </div>
@@ -1342,7 +1349,7 @@
             <div class="header-left">
                 <div class="profile-avatar" onclick="window.openProfile()"><span id="headerAvatarIcon">👤</span></div>
                 <div class="user-info"><div class="username" id="headerUsername">Guest</div><div class="user-status" id="userStatus">Guest Mode</div></div>
-                <div class="balance-container"><span class="balance-amount" id="lobbyBalance">1000</span></div>
+                <div class="balance-container"><span class="balance-amount" id="lobbyBalance">0</span></div>
             </div>
             <div class="header-center" id="authButtons">
                 <button class="auth-header-btn" onclick="window.openAuthModal()">🔑 Login / Register</button>
@@ -1387,7 +1394,7 @@
     <div class="game-view" id="gameView">
         <button class="back-to-lobby" onclick="window.exitGame()">← Lobby</button>
         <div class="game-screen">
-            <div class="balance-bar"><span>💰 Balance: </span><span class="balance-amount" id="balanceDisplay">1000</span></div>
+            <div class="balance-bar"><span>💰 Balance: </span><span class="balance-amount" id="balanceDisplay">0</span></div>
             <div class="stats-panel">
                 <div class="stat-box"><div class="stat-label">Current Win</div><div class="stat-value win" id="currentWin">0</div></div>
                 <div class="stat-box"><div class="stat-label">Multiplier</div><div class="stat-value multiplier" id="multiplier">1.00x</div></div>
@@ -1431,7 +1438,7 @@
         <div id="flappyBetPopup" class="flappy-bet-overlay">
             <div class="flappy-bet-panel">
                 <h2>🐦 FLAPPY CHECKPOINT</h2>
-                <div><span class="flappy-balance-display" id="flappyBalanceDisplay">💰 BAL: 1000</span></div>
+                <div><span class="flappy-balance-display" id="flappyBalanceDisplay">💰 BAL: 0</span></div>
                 <div class="flappy-bet-buttons-grid">
                     <button class="flappy-bet-btn" data-flappy-bet="10">10</button>
                     <button class="flappy-bet-btn" data-flappy-bet="20">20</button>
@@ -1486,13 +1493,16 @@
             if (ref) {
                 referralCodeFromURL = ref.toUpperCase();
                 console.log('Referral code detected in URL:', referralCodeFromURL);
-                // Auto-fill the referral code field if register panel is open
+                // Show hint and auto-fill
                 setTimeout(() => {
-                    const regReferralInput = document.getElementById('regReferralCode');
-                    if (regReferralInput && !regReferralInput.value) {
-                        regReferralInput.value = referralCodeFromURL;
+                    const hint = document.getElementById('referralHint');
+                    const input = document.getElementById('regReferralCode');
+                    if (hint) hint.style.display = 'block';
+                    if (input && !input.value) {
+                        input.value = referralCodeFromURL;
+                        input.style.borderColor = '#2ecc71';
                     }
-                }, 1000);
+                }, 500);
             }
         }
 
@@ -1508,7 +1518,7 @@
         };
 
         let gameState = {
-            balance: 1000, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0,
+            balance: 0, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0,
             isPlaying: false, canFlip: false, firstCard: null, secondCard: null,
             cards: [], matchedPairs: 0, goldenCardsFound: [],
             totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0,
@@ -1582,7 +1592,7 @@
             const snapshot = await db.ref('users/' + uid).once('value');
             const data = snapshot.val();
             if (data) {
-                gameState.balance = data.balance || 1000;
+                gameState.balance = data.balance || 0;
                 gameState.totalBets = data.totalBets || 0;
                 gameState.totalWins = data.totalWins || 0;
                 gameState.totalSpent = data.totalSpent || 0;
@@ -1667,35 +1677,20 @@
         }
 
         // ==================== AUTH FUNCTIONS ====================
-        function switchAuthTab(tab) {
-            const loginTab = document.querySelector('.auth-tabs .auth-tab:first-child');
-            const registerTab = document.querySelector('.auth-tabs .auth-tab:last-child');
-            const loginPanel = document.getElementById('loginPanel');
-            const registerPanel = document.getElementById('registerPanel');
-            
-            if (tab === 'login') {
-                loginTab.classList.add('active');
-                registerTab.classList.remove('active');
-                loginPanel.classList.add('active');
-                registerPanel.classList.remove('active');
-                document.getElementById('loginErrors').classList.remove('active');
-                document.getElementById('registerErrors').classList.remove('active');
-            } else {
-                loginTab.classList.remove('active');
-                registerTab.classList.add('active');
-                loginPanel.classList.remove('active');
-                registerPanel.classList.add('active');
-                document.getElementById('loginErrors').classList.remove('active');
-                document.getElementById('registerErrors').classList.remove('active');
-                // Auto-fill referral code from URL if available
-                if (referralCodeFromURL) {
-                    const regInput = document.getElementById('regReferralCode');
-                    if (regInput && !regInput.value) {
-                        regInput.value = referralCodeFromURL;
-                    }
+        function openAuthModal() { 
+            document.getElementById('authOverlay').classList.add('active');
+            // Check if there's a referral code from URL
+            if (referralCodeFromURL) {
+                const hint = document.getElementById('referralHint');
+                const input = document.getElementById('regReferralCode');
+                if (hint) hint.style.display = 'block';
+                if (input && !input.value) {
+                    input.value = referralCodeFromURL;
+                    input.style.borderColor = '#2ecc71';
                 }
             }
         }
+        function closeAuth() { document.getElementById('authOverlay').classList.remove('active'); }
 
         async function handleFirebaseLogin() {
             const email = document.getElementById('loginEmail').value.trim();
@@ -1798,8 +1793,9 @@
                     referrals: [] 
                 };
                 
+                // NEW USERS START WITH 0 COINS
                 gameState = { 
-                    balance: 1000, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0,
+                    balance: 0, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0,
                     isPlaying: false, canFlip: false, firstCard: null, secondCard: null,
                     cards: [], matchedPairs: 0, goldenCardsFound: [],
                     totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0,
@@ -1835,8 +1831,8 @@
                 hideAuthButtons();
                 closeAuth();
                 startRewardCountdown();
-                addNotification('Welcome! You got 1000 free coins!', '🎁');
-                showPopup('Welcome!', 'Account created successfully!');
+                addNotification('Welcome! You can purchase coins to start playing!', '🎁');
+                showPopup('Welcome!', 'Account created successfully! You start with 0 coins. Purchase coins to play!');
                 
             } catch (error) {
                 let errorMsg = error.message;
@@ -1854,8 +1850,9 @@
 
         function guestLogin() {
             currentUser = { uid: 'GUEST_' + Date.now(), username: 'Guest_' + Math.floor(Math.random()*9999), avatar: '👤', isGuest: true };
-            gameState = { balance: 1000, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0, isPlaying: false, canFlip: false, firstCard: null, secondCard: null, cards: [], matchedPairs: 0, goldenCardsFound: [], totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0, firstWagerProgress: 0, hasCompletedFirstWager: false };
-            updateHeader(); updateUI(); updateRewardUI(); updateMissionsUI(); hideAuthButtons(); closeAuth(); startRewardCountdown(); addNotification('Guest mode with 1000 free coins!', '👤'); showPopup('Guest Mode', 'Register to save progress!');
+            // GUESTS START WITH 0 COINS
+            gameState = { balance: 0, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0, isPlaying: false, canFlip: false, firstCard: null, secondCard: null, cards: [], matchedPairs: 0, goldenCardsFound: [], totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0, firstWagerProgress: 0, hasCompletedFirstWager: false };
+            updateHeader(); updateUI(); updateRewardUI(); updateMissionsUI(); hideAuthButtons(); closeAuth(); startRewardCountdown(); addNotification('Guest mode with 0 coins!', '👤'); showPopup('Guest Mode', 'You are playing as guest with 0 coins. Register or purchase coins to play!');
         }
 
         async function logout() {
@@ -1863,7 +1860,7 @@
             if (rewardCountdownInterval) clearInterval(rewardCountdownInterval);
             try { await auth.signOut(); } catch(e) {}
             currentUser = null;
-            gameState = { balance: 1000, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0, isPlaying: false, canFlip: false, firstCard: null, secondCard: null, cards: [], matchedPairs: 0, goldenCardsFound: [], totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0, firstWagerProgress: 0, hasCompletedFirstWager: false };
+            gameState = { balance: 0, currentBet: 0, currentWin: 0, multiplier: 1, pairsMatched: 0, isPlaying: false, canFlip: false, firstCard: null, secondCard: null, cards: [], matchedPairs: 0, goldenCardsFound: [], totalBets: 0, totalWins: 0, totalSpent: 0, vipLevel: 0, firstWagerProgress: 0, hasCompletedFirstWager: false };
             updateHeader(); updateUI(); showAuthButtons(); resetGame(); showPopup('Logged out', 'You have been logged out'); openAuthModal();
         }
 
@@ -1881,6 +1878,7 @@
         function updateUI() {
             document.getElementById('balanceDisplay').innerText = formatNumber(gameState.balance);
             document.getElementById('lobbyBalance').innerText = formatNumber(gameState.balance);
+            document.getElementById('flappyBalanceDisplay').innerText = `💰 BAL: ${Math.floor(gameState.balance)}`;
             document.getElementById('currentWin').innerText = formatNumber(gameState.currentWin);
             document.getElementById('multiplier').innerText = gameState.multiplier.toFixed(2) + 'x';
             document.getElementById('pairsDisplay').innerText = gameState.pairsMatched + '/' + CONFIG.PAIRS_COUNT;
@@ -1905,8 +1903,6 @@
 
         function hideAuthButtons() { document.getElementById('authButtons').style.display = 'none'; }
         function showAuthButtons() { document.getElementById('authButtons').style.display = 'flex'; }
-        function openAuthModal() { document.getElementById('authOverlay').classList.add('active'); switchAuthTab('login'); }
-        function closeAuth() { document.getElementById('authOverlay').classList.remove('active'); }
         function openProfile() { if(!currentUser) openAuthModal(); else document.getElementById('profileModal').classList.add('active'); }
         function closeProfile() { document.getElementById('profileModal').classList.remove('active'); cancelEdit(); }
         function showEditUsername() { document.getElementById('editUsernameSection').style.display = 'block'; }
@@ -1990,14 +1986,14 @@
         function openNotificationPanel() { document.getElementById('notificationPanel').classList.add('open'); renderNotifications(); }
         function closeNotificationPanel() { document.getElementById('notificationPanel').classList.remove('open'); }
 
-        // ==================== GAME LOGIC (ORIGINAL - UNCHANGED) ====================
-        function enterGame() { if(!currentUser) openAuthModal(); else { resetGame(); document.getElementById('gameView').classList.add('active'); } }
+        // ==================== GAME LOGIC ====================
+        function enterGame() { if(!currentUser) { openAuthModal(); return; } if(gameState.balance < 10) { showPopup('Insufficient Balance', 'You need at least 10 coins to play! Purchase coins from shop.'); return; } resetGame(); document.getElementById('gameView').classList.add('active'); }
         function exitGame() { resetGame(); document.getElementById('gameView').classList.remove('active'); }
-        function selectBet(amount) { if(gameState.isPlaying) return; if(amount>gameState.balance) showPopup('Insufficient','Not enough coins!'); else { gameState.currentBet=amount; document.querySelectorAll('.bet-option').forEach(b=>b.classList.remove('selected')); document.querySelector(`.bet-option[data-bet="${amount}"]`).classList.add('selected'); } }
+        function selectBet(amount) { if(gameState.isPlaying) return; if(amount>gameState.balance) showPopup('Insufficient','Not enough coins! Please purchase coins from shop.'); else { gameState.currentBet=amount; document.querySelectorAll('.bet-option').forEach(b=>b.classList.remove('selected')); document.querySelector(`.bet-option[data-bet="${amount}"]`).classList.add('selected'); } }
         function shuffleArray(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
         function generateCards(){ let cards=[]; for(let i=0;i<CONFIG.PAIRS_COUNT;i++){ const val=CARD_VALUES[i%CARD_VALUES.length]; const suit=CARD_SUITS[i%4]; cards.push({value:val,suit:suit,id:'pair'+i+'a',type:'normal'},{value:val,suit:suit,id:'pair'+i+'b',type:'normal'}); } for(let i=0;i<CONFIG.BOMB_COUNT;i++) cards.push({type:'bomb',id:'bomb'+i}); for(let i=0;i<CONFIG.GOLDEN_COUNT;i++) cards.push({type:'golden',id:'golden'+i}); return shuffleArray(cards); }
         function renderCards(){ const grid=document.getElementById('cardGrid'); grid.innerHTML=''; gameState.cards.forEach((c,i)=>{ const cardDiv=document.createElement('div'); cardDiv.className='card'; cardDiv.setAttribute('data-index',i); cardDiv.setAttribute('data-type',c.type); cardDiv.setAttribute('data-value',c.value||''); cardDiv.setAttribute('data-id',c.id); const back=document.createElement('div'); back.className='card-face card-back'; back.innerHTML='<div class="card-back-pattern"></div><span class="card-back-logo">♛</span>'; const front=document.createElement('div'); front.className='card-face card-front'; if(c.type==='bomb'){ front.classList.add('bomb'); front.innerHTML='<div class="bomb-content"><span class="bomb-icon">💣</span><span class="bomb-text">BOOM!</span></div>'; }else if(c.type==='golden'){ front.classList.add('golden'); front.innerHTML='<div class="golden-content"><span class="golden-icon">👑</span><span class="golden-text">20X WIN!</span></div>'; }else{ front.classList.add(c.suit.color); front.innerHTML=`<div class="card-corner card-corner-tl"><span class="card-rank">${c.value}</span><span class="card-suit-small">${c.suit.symbol}</span></div><span class="card-center">${c.suit.symbol}</span><div class="card-corner card-corner-br"><span class="card-rank">${c.value}</span><span class="card-suit-small">${c.suit.symbol}</span></div>`; } cardDiv.appendChild(back); cardDiv.appendChild(front); cardDiv.onclick=()=>handleCardClick(cardDiv); grid.appendChild(cardDiv); }); }
-        async function startGame(){ if(!currentUser) openAuthModal(); else if(gameState.currentBet<=0) showPopup('No Bet','Select bet'); else if(gameState.currentBet>gameState.balance) showPopup('Insufficient','Not enough coins'); else{ gameState.balance-=gameState.currentBet; gameState.totalSpent+=gameState.currentBet; gameState.firstWagerProgress+=gameState.currentBet; gameState.totalBets++; checkAndUpdateMissions(); updateVIPLevel(); if(gameState.firstWagerProgress>=10000 && !gameState.hasCompletedFirstWager){ gameState.hasCompletedFirstWager=true; addNotification('Withdrawal requirement completed!','🎉'); } if(currentUser && !currentUser.isGuest) await saveUserData(); updateUI(); gameState.currentWin=0; gameState.multiplier=1; gameState.pairsMatched=0; gameState.isPlaying=true; gameState.canFlip=true; gameState.firstCard=null; gameState.secondCard=null; gameState.cards=generateCards(); renderCards(); document.getElementById('betPanel').style.display='none'; document.getElementById('startBtn').classList.add('hidden'); document.getElementById('cashoutBtn').classList.add('hidden'); document.getElementById('continueBtn').classList.add('hidden'); } }
+        async function startGame(){ if(!currentUser) openAuthModal(); else if(gameState.currentBet<=0) showPopup('No Bet','Select bet'); else if(gameState.currentBet>gameState.balance) showPopup('Insufficient','Not enough coins! Purchase coins from shop.'); else{ gameState.balance-=gameState.currentBet; gameState.totalSpent+=gameState.currentBet; gameState.firstWagerProgress+=gameState.currentBet; gameState.totalBets++; checkAndUpdateMissions(); updateVIPLevel(); if(gameState.firstWagerProgress>=10000 && !gameState.hasCompletedFirstWager){ gameState.hasCompletedFirstWager=true; addNotification('Withdrawal requirement completed!','🎉'); } if(currentUser && !currentUser.isGuest) await saveUserData(); updateUI(); gameState.currentWin=0; gameState.multiplier=1; gameState.pairsMatched=0; gameState.isPlaying=true; gameState.canFlip=true; gameState.firstCard=null; gameState.secondCard=null; gameState.cards=generateCards(); renderCards(); document.getElementById('betPanel').style.display='none'; document.getElementById('startBtn').classList.add('hidden'); document.getElementById('cashoutBtn').classList.add('hidden'); document.getElementById('continueBtn').classList.add('hidden'); } }
         function handleCardClick(card){ if(!gameState.canFlip) return; if(card.classList.contains('flipped')||card.classList.contains('matched')) return; const type=card.getAttribute('data-type'); card.classList.add('flipped'); if(type==='bomb'){ gameState.isPlaying=false; gameState.canFlip=false; if(currentUser && !currentUser.isGuest) saveUserData(); document.getElementById('loseOverlay').classList.add('active'); addNotification('Bomb! Game over','💣'); return; } if(type==='golden'){ if(!gameState.firstCard) gameState.firstCard=card; else if(!gameState.secondCard && gameState.firstCard!==card){ gameState.secondCard=card; gameState.canFlip=false; setTimeout(checkGoldenMatch,500); } return; } if(!gameState.firstCard) gameState.firstCard=card; else if(!gameState.secondCard && gameState.firstCard!==card){ gameState.secondCard=card; gameState.canFlip=false; setTimeout(checkMatch,500); } }
         function checkGoldenMatch(){ const c1=gameState.firstCard, c2=gameState.secondCard; if(c1.getAttribute('data-type')==='golden' && c2.getAttribute('data-type')==='golden'){ c1.classList.add('matched'); c2.classList.add('matched'); gameState.currentWin=gameState.currentBet*CONFIG.GOLDEN_MULTIPLIER; gameState.multiplier=CONFIG.GOLDEN_MULTIPLIER; gameState.balance+=gameState.currentWin; gameState.totalWins++; updateUI(); if(currentUser && !currentUser.isGuest) saveUserData(); checkAndUpdateMissions(); document.getElementById('winAmountDisplay').innerText=formatNumber(gameState.currentWin); document.getElementById('winOverlay').classList.add('active'); gameState.isPlaying=false; addNotification(`Golden cards! Won ${formatNumber(gameState.currentWin)}!`,'👑'); }else{ setTimeout(()=>{ if(c1) c1.classList.remove('flipped'); if(c2) c2.classList.remove('flipped'); gameState.canFlip=true; },500); } gameState.firstCard=null; gameState.secondCard=null; }
         function checkMatch(){ const c1=gameState.firstCard, c2=gameState.secondCard; const match=c1.getAttribute('data-value')===c2.getAttribute('data-value') && c1.getAttribute('data-id')!==c2.getAttribute('data-id'); if(match){ c1.classList.add('matched'); c2.classList.add('matched'); gameState.pairsMatched++; gameState.matchedPairs++; gameState.multiplier=CONFIG.MULTIPLIERS[gameState.pairsMatched-1]||gameState.multiplier; gameState.currentWin=Math.floor(gameState.currentBet*gameState.multiplier); updateUI(); if(gameState.pairsMatched>=CONFIG.PAIRS_COUNT){ gameState.balance+=gameState.currentWin; gameState.totalWins++; updateUI(); if(currentUser && !currentUser.isGuest) saveUserData(); checkAndUpdateMissions(); document.getElementById('winAmountDisplay').innerText=formatNumber(gameState.currentWin); document.getElementById('winOverlay').classList.add('active'); gameState.isPlaying=false; addNotification(`You won ${formatNumber(gameState.currentWin)}!`,'🎉'); }else{ gameState.canFlip=true; document.getElementById('cashoutBtn').classList.remove('hidden'); document.getElementById('continueBtn').classList.remove('hidden'); } }else{ setTimeout(()=>{ if(c1) c1.classList.remove('flipped'); if(c2) c2.classList.remove('flipped'); gameState.canFlip=true; },500); } gameState.firstCard=null; gameState.secondCard=null; }
@@ -2020,17 +2016,16 @@
         function flappyContinueAction(){ if(!flappyAwaitingCheckpoint) return; let timer=3; document.getElementById('flappyContinueTimer').style.display='block'; document.getElementById('flappyContinueTimer').innerText=`⏱️ ${timer}s`; if(flappyCountdownInt) clearInterval(flappyCountdownInt); flappyCountdownInt=setInterval(()=>{ timer--; document.getElementById('flappyContinueTimer').innerText=`⏱️ ${timer}s`; if(timer<=0){ clearInterval(flappyCountdownInt); flappyCountdownInt=null; document.getElementById('flappyActionPopup').style.display='none'; document.getElementById('flappyContinueTimer').style.display='none'; flappyAwaitingCheckpoint=false; flappyGameStateObj.lastTimestamp=0; flappyAnimationId=requestAnimationFrame(flappyGameLoop); } },1000); }
         function drawFlappyGame(){ const ctx=flappyGameStateObj.ctx, canvas=flappyGameStateObj.canvas; ctx.clearRect(0,0,FLAPPY_VW,FLAPPY_VH); const grad=ctx.createLinearGradient(0,0,0,FLAPPY_VH); grad.addColorStop(0,'#1a3a5c'); grad.addColorStop(0.7,'#4a8fba'); ctx.fillStyle=grad; ctx.fillRect(0,0,FLAPPY_VW,FLAPPY_VH); ctx.fillStyle='#2d6a4f'; ctx.fillRect(0,FLAPPY_VH-80,FLAPPY_VW,35); for(let p of flappyGameStateObj.pipes){ const topH=p.gapY-FLAPPY_CFG.gapSize/2; const botY=p.gapY+FLAPPY_CFG.gapSize/2; const botH=FLAPPY_VH-botY-80; if(p.isGolden){ ctx.fillStyle='#ffb347'; ctx.fillRect(p.x,0,FLAPPY_CFG.pipeWidth,topH); ctx.fillStyle='#ffb347'; ctx.fillRect(p.x,botY,FLAPPY_CFG.pipeWidth,botH); ctx.fillStyle='#e67e22'; ctx.fillRect(p.x-5,topH-25,FLAPPY_CFG.pipeWidth+10,25); ctx.fillRect(p.x-5,botY,FLAPPY_CFG.pipeWidth+10,25); ctx.fillStyle='#FFE484'; ctx.font='bold 20px monospace'; ctx.fillText('⭐',p.x+22,p.gapY-22); }else{ ctx.fillStyle='#1b5e20'; ctx.fillRect(p.x,0,FLAPPY_CFG.pipeWidth,topH); ctx.fillStyle='#1b5e20'; ctx.fillRect(p.x,botY,FLAPPY_CFG.pipeWidth,botH); ctx.fillStyle='#0d3b0f'; ctx.fillRect(p.x-5,topH-25,FLAPPY_CFG.pipeWidth+10,25); ctx.fillRect(p.x-5,botY,FLAPPY_CFG.pipeWidth+10,25); } } ctx.fillStyle='#ffb74d'; ctx.beginPath(); ctx.ellipse(FLAPPY_CFG.birdX+18,flappyGameStateObj.birdY+18,16,16,0,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#e65100'; ctx.beginPath(); ctx.ellipse(FLAPPY_CFG.birdX+14,flappyGameStateObj.birdY+18+(flappyGameStateObj.wingUp?-8:8),12,8,-0.3,0,Math.PI*2); ctx.fill(); ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(FLAPPY_CFG.birdX+24,flappyGameStateObj.birdY+12,7,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#1a1a2e'; ctx.beginPath(); ctx.arc(FLAPPY_CFG.birdX+25,flappyGameStateObj.birdY+12,3,0,Math.PI*2); ctx.fill(); ctx.font='bold 56px monospace'; ctx.fillStyle='#ffd700'; ctx.fillText(flappyGameStateObj.score,FLAPPY_VW/2-20,65); if(flappyCurrentMultiplier>1){ ctx.font='bold 16px monospace'; ctx.fillStyle='#ffd700'; ctx.fillText(`x${flappyCurrentMultiplier.toFixed(2)} MULTI`,15,50); } }
         function flappyGameLoop(timestamp){ if(!flappyGameActive || flappyAwaitingCheckpoint) return; if(!flappyGameStateObj.lastTimestamp) flappyGameStateObj.lastTimestamp=timestamp; let delta=Math.min((timestamp-flappyGameStateObj.lastTimestamp)/16.67,2); if(delta<=0){ flappyAnimationId=requestAnimationFrame(flappyGameLoop); flappyGameStateObj.lastTimestamp=timestamp; return; } flappyGameStateObj.lastTimestamp=timestamp; flappyGameStateObj.birdVelocity=Math.min(flappyGameStateObj.birdVelocity+FLAPPY_CFG.gravity*delta,12); flappyGameStateObj.birdY+=flappyGameStateObj.birdVelocity*delta; flappyGameStateObj.birdY=Math.max(0,Math.min(flappyGameStateObj.birdY,FLAPPY_CFG.height-FLAPPY_CFG.birdSize-80)); flappyGameStateObj.groundOffset=(flappyGameStateObj.groundOffset+FLAPPY_CFG.pipeSpeed*delta)%24; flappyGameStateObj.pipes=updateFlappyPipes(delta); if(checkFlappyCollision()){ flappyGameActive=false; if(flappyAnimationId) cancelAnimationFrame(flappyAnimationId); flappyAnimationId=null; addNotification('Crashed! Bet lost','💀'); showPopup('Game Over','You crashed!'); closeFlappyGame(); return; } updateFlappyScoring(); drawFlappyGame(); flappyAnimationId=requestAnimationFrame(flappyGameLoop); }
-        async function startFlappyGame(bet){ if(bet>gameState.balance){ showPopup('Insufficient','Not enough coins'); return false; } gameState.balance-=bet; flappySelectedBet=bet; updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); resetFlappyRound(); flappyGameActive=true; flappyAwaitingCheckpoint=false; document.getElementById('flappyBetPopup').style.display='none'; document.getElementById('flappyActionPopup').style.display='none'; flappyGameStateObj.lastTimestamp=0; flappyAnimationId=requestAnimationFrame(flappyGameLoop); if(flappyGameStateObj.wingInterval) clearInterval(flappyGameStateObj.wingInterval); flappyGameStateObj.wingInterval=setInterval(()=>{ flappyGameStateObj.wingUp=!flappyGameStateObj.wingUp; if(flappyGameActive && !flappyAwaitingCheckpoint) drawFlappyGame(); },100); return true; }
-        function openFlappyGame(){ if(!currentUser) openAuthModal(); else{ document.getElementById('flappyOverlay').classList.add('active'); document.getElementById('flappyBetPopup').style.display='flex'; document.getElementById('flappyActionPopup').style.display='none'; document.getElementById('flappyBalanceDisplay').innerText=`💰 BAL: ${Math.floor(gameState.balance)}`; flappyGameActive=false; flappySelectedBet=null; initFlappy(); const canvas=document.getElementById('flappyCanvas'); function resizeFlappy(){ const cont=canvas.parentElement, cw=window.innerWidth, ch=window.innerHeight; const scale=Math.min(cw/FLAPPY_VW,ch/FLAPPY_VH); canvas.style.width=(FLAPPY_VW*scale)+'px'; canvas.style.height=(FLAPPY_VH*scale)+'px'; canvas.width=FLAPPY_VW; canvas.height=FLAPPY_VH; if(flappyGameStateObj) flappyGameStateObj.ctx=canvas.getContext('2d'); drawFlappyGame(); } resizeFlappy(); window.addEventListener('resize',resizeFlappy); canvas.onclick=()=>{ if(flappyGameActive && !flappyAwaitingCheckpoint) flappyGameStateObj.birdVelocity=FLAPPY_CFG.jumpForce; }; document.querySelectorAll('.flappy-bet-btn').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('.flappy-bet-btn').forEach(b=>b.style.background='#2a2a3e'); btn.style.background='#f59e0b'; flappySelectedBet=parseInt(btn.getAttribute('data-flappy-bet')); }; }); document.getElementById('flappyConfirmBetBtn').onclick=()=>{ if(!flappySelectedBet) showPopup('Select Bet','Choose bet amount'); else if(flappySelectedBet>gameState.balance) showPopup('Insufficient','Not enough coins'); else startFlappyGame(flappySelectedBet); }; document.getElementById('flappyCashoutBtn').onclick=flappyCashoutAction; document.getElementById('flappyContinueBtn').onclick=flappyContinueAction; } }
+        async function startFlappyGame(bet){ if(bet>gameState.balance){ showPopup('Insufficient','Not enough coins! Purchase coins from shop.'); return false; } gameState.balance-=bet; flappySelectedBet=bet; updateUI(); if(currentUser && !currentUser.isGuest) await saveUserData(); resetFlappyRound(); flappyGameActive=true; flappyAwaitingCheckpoint=false; document.getElementById('flappyBetPopup').style.display='none'; document.getElementById('flappyActionPopup').style.display='none'; flappyGameStateObj.lastTimestamp=0; flappyAnimationId=requestAnimationFrame(flappyGameLoop); if(flappyGameStateObj.wingInterval) clearInterval(flappyGameStateObj.wingInterval); flappyGameStateObj.wingInterval=setInterval(()=>{ flappyGameStateObj.wingUp=!flappyGameStateObj.wingUp; if(flappyGameActive && !flappyAwaitingCheckpoint) drawFlappyGame(); },100); return true; }
+        function openFlappyGame(){ if(!currentUser) { openAuthModal(); return; } if(gameState.balance < 10) { showPopup('Insufficient Balance', 'You need at least 10 coins to play! Purchase coins from shop.'); return; } document.getElementById('flappyOverlay').classList.add('active'); document.getElementById('flappyBetPopup').style.display='flex'; document.getElementById('flappyActionPopup').style.display='none'; document.getElementById('flappyBalanceDisplay').innerText=`💰 BAL: ${Math.floor(gameState.balance)}`; flappyGameActive=false; flappySelectedBet=null; initFlappy(); const canvas=document.getElementById('flappyCanvas'); function resizeFlappy(){ const cont=canvas.parentElement, cw=window.innerWidth, ch=window.innerHeight; const scale=Math.min(cw/FLAPPY_VW,ch/FLAPPY_VH); canvas.style.width=(FLAPPY_VW*scale)+'px'; canvas.style.height=(FLAPPY_VH*scale)+'px'; canvas.width=FLAPPY_VW; canvas.height=FLAPPY_VH; if(flappyGameStateObj) flappyGameStateObj.ctx=canvas.getContext('2d'); drawFlappyGame(); } resizeFlappy(); window.addEventListener('resize',resizeFlappy); canvas.onclick=()=>{ if(flappyGameActive && !flappyAwaitingCheckpoint) flappyGameStateObj.birdVelocity=FLAPPY_CFG.jumpForce; }; document.querySelectorAll('.flappy-bet-btn').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('.flappy-bet-btn').forEach(b=>b.style.background='#2a2a3e'); btn.style.background='#f59e0b'; flappySelectedBet=parseInt(btn.getAttribute('data-flappy-bet')); }; }); document.getElementById('flappyConfirmBetBtn').onclick=()=>{ if(!flappySelectedBet) showPopup('Select Bet','Choose bet amount'); else if(flappySelectedBet>gameState.balance) showPopup('Insufficient','Not enough coins! Purchase coins from shop.'); else startFlappyGame(flappySelectedBet); }; document.getElementById('flappyCashoutBtn').onclick=flappyCashoutAction; document.getElementById('flappyContinueBtn').onclick=flappyContinueAction; }
         function closeFlappyGame(){ if(flappyAnimationId) cancelAnimationFrame(flappyAnimationId); if(flappyGameStateObj && flappyGameStateObj.wingInterval) clearInterval(flappyGameStateObj.wingInterval); if(flappyCountdownInt) clearInterval(flappyCountdownInt); flappyGameActive=false; flappyAwaitingCheckpoint=false; document.getElementById('flappyOverlay').classList.remove('active'); updateUI(); }
 
         // ==================== LEADERBOARD & PARTICLES ====================
-        function renderLeaderboard(){ const list=document.getElementById('leaderboardList'); list.innerHTML='<div style="text-align:center;color:#666;">Loading...</div>'; db.ref('users').once('value').then(snap=>{ const users=[]; snap.forEach(s=>{ const d=s.val(); users.push({username:d.username||'User',totalSpent:d.totalSpent||0,avatar:d.avatar||'👤'}); }); users.sort((a,b)=>b.totalSpent-a.totalSpent); list.innerHTML=users.slice(0,7).map((u,i)=>{ let cls=''; if(i===0) cls='gold'; else if(i===1) cls='silver'; else if(i===2) cls='bronze'; return `<div class="leaderboard-item"><div class="rank-number ${cls}">${i+1}</div><div class="leader-avatar">${u.avatar}</div><div class="leader-info"><div class="leader-name">${escapeHtml(u.username)}</div><div class="leader-win">${formatNumber(u.totalSpent)} spent</div></div></div>`; }).join(''); }); }
+        function renderLeaderboard(){ const list=document.getElementById('leaderboardList'); list.innerHTML='<div style="text-align:center;color:#666;">Loading...</div>'; db.ref('users').once('value').then(snap=>{ const users=[]; snap.forEach(s=>{ const d=s.val(); if(d.username) users.push({username:d.username, totalSpent:d.totalSpent||0, avatar:d.avatar||'👤'}); }); users.sort((a,b)=>b.totalSpent-a.totalSpent); list.innerHTML=users.slice(0,7).map((u,i)=>{ let cls=''; if(i===0) cls='gold'; else if(i===1) cls='silver'; else if(i===2) cls='bronze'; return `<div class="leaderboard-item"><div class="rank-number ${cls}">${i+1}</div><div class="leader-avatar">${u.avatar}</div><div class="leader-info"><div class="leader-name">${escapeHtml(u.username)}</div><div class="leader-win">${formatNumber(u.totalSpent)} spent</div></div></div>`; }).join(''); }); }
         function createParticles(){ for(let i=0;i<50;i++){ const p=document.createElement('div'); p.className='particle'; p.style.left=Math.random()*100+'%'; p.style.animationDelay=Math.random()*10+'s'; p.style.animationDuration=(10+Math.random()*10)+'s'; document.getElementById('particles').appendChild(p); } }
         function hideSplash(){ const splash=document.getElementById('splashScreen'); splash.classList.add('fade-out'); setTimeout(()=>{ splash.style.display='none'; document.getElementById('appContainer').classList.add('visible'); },500); }
 
         // ==================== EXPOSE GLOBALS ====================
-        window.switchAuthTab = switchAuthTab;
         window.handleFirebaseLogin = handleFirebaseLogin;
         window.handleFirebaseRegister = handleFirebaseRegister;
         window.guestLogin = guestLogin;
