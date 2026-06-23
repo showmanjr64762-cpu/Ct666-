@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>Royal flap 777 - Premium Card Game + Royal flap 777</title>
+    <title>CT666 - Premium Card Game + Flappy Game</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a'/%3E%3Ctext x='50' y='72' font-size='65' text-anchor='middle' fill='%23ffd700' font-family='Arial'%3E♛%3C/text%3E%3C/svg%3E">
     
@@ -1250,27 +1250,28 @@
         .mission-status.in-progress { color: #ffd700; }
         .mission-status.claimed { color: #888; }
 
-        /* ===== Floating Notification (top-right) - CLICKABLE ===== */
+        /* ===== FLOATING NOTIFICATION - FIXED BOTTOM RIGHT ===== */
         .floating-notification {
             position: fixed;
-            top: 80px;
+            bottom: 90px;
             right: 20px;
             background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
             border: 2px solid #d4af37;
             border-radius: 20px;
-            padding: 16px 20px;
-            max-width: 280px;
+            padding: 14px 18px;
+            max-width: 260px;
             color: #fff;
             font-family: 'Inter', sans-serif;
             z-index: 9999;
             box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.3);
-            animation: slideInRight 0.5s ease;
+            animation: slideUp 0.5s ease;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
             pointer-events: auto;
+            opacity: 1;
         }
         .floating-notification:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.4);
         }
         .floating-notification .notif-title {
@@ -1278,19 +1279,36 @@
             background: linear-gradient(135deg, #d4af37, #9b59b6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         .floating-notification .notif-body {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #ccc;
             margin-top: 4px;
         }
-        @keyframes slideInRight {
-            0% { transform: translateX(120px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+        .floating-notification .notif-cta {
+            font-size: 0.6rem;
+            color: #d4af37;
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+        @keyframes slideUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
         @media (max-width: 480px) {
-            .floating-notification { right: 10px; left: 10px; max-width: none; top: 70px; }
+            .floating-notification { 
+                right: 10px; 
+                left: 10px; 
+                max-width: none;
+                bottom: 75px;
+                padding: 12px 14px;
+            }
+        }
+
+        /* Game active - hide floating notifications */
+        .game-active .floating-notification {
+            display: none !important;
         }
     </style>
 </head>
@@ -1302,7 +1320,7 @@
     <div class="splash-screen" id="splashScreen">
         <div class="splash-content">
             <div class="splash-logo"></div>
-            <div class="splash-title">Royal Games </div>
+            <div class="splash-title">CT666</div>
             <div class="splash-subtitle">PREMIUM CASINO EXPERIENCE</div>
             <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
         </div>
@@ -1314,7 +1332,7 @@
             <button class="close-auth" onclick="window.closeAuth()">×</button>
             <div class="auth-header">
                 <div class="auth-logo">♛</div>
-                <div class="auth-title">Royal flap 777</div>
+                <div class="auth-title">CT666</div>
                 <div class="auth-subtitle">Login to your account</div>
             </div>
             <div class="auth-content">
@@ -1448,7 +1466,7 @@
         </div>
     </div>
 
-    <!-- Purchase Page with Safety Notice -->
+    <!-- Purchase Page -->
     <div class="purchase-page" id="purchasePage">
         <div class="purchase-header">
             <button class="purchase-back-btn" onclick="window.closePurchasePage()">← Back</button>
@@ -1465,8 +1483,6 @@
                 <div class="payment-number">03420095235</div>
                 <div class="payment-note">After sending payment, enter your number below and submit.</div>
             </div>
-            
-            <!-- Safety Notice -->
             <div class="payment-notice">
                 <strong>⚠️ Important Notice:</strong><br>
                 Recently some companies caught payment gateways red handed stealing users data.<br><br>
@@ -1476,7 +1492,6 @@
                 Stay safe from fraud!<br>
                 <span class="heart">❤️</span> Game Owner: <strong>Kursheed Hussain</strong> and Team <span class="heart">❤️❤️❤️</span>
             </div>
-            
             <div class="submit-form">
                 <h3>Confirm Your Purchase</h3>
                 <input type="tel" id="purchasePhoneNumber" class="form-input" placeholder="03xxxxxxxxx" maxlength="11">
@@ -1486,11 +1501,11 @@
         </div>
     </div>
 
-    <!-- Download Popup with Back to Lobby Button -->
+    <!-- Download Popup -->
     <div class="popup-overlay" id="downloadPopup">
         <div class="popup-content">
             <div class="popup-icon">📱</div>
-            <div class="popup-title">Royal flap 777  APK</div>
+            <div class="popup-title">CT666 APK</div>
             <div class="popup-text">
                 <p>Click below to download the APK:</p>
                 <div class="download-link-container">
@@ -1611,7 +1626,7 @@
         </div>
     </div>
 
-    <!-- Missions Section - Hard Missions -->
+    <!-- Missions Section -->
     <div class="fullscreen-section" id="missionsSection">
         <div class="fullscreen-header">
             <button class="back-btn" onclick="window.closeMissions()">← Back</button>
@@ -1705,7 +1720,7 @@
                     </div>
                     <div class="game-tile hot" onclick="window.openFlappyGame()">
                         <div class="game-icon">🐦</div>
-                        <div class="game-name">Royal flap 777</div>
+                        <div class="game-name">Royal Flap 777</div>
                         <div class="game-stats"><div class="entry-fee">Min: 10</div><div class="entry-fee">Multiplier Up to 10x+</div></div>
                         <button class="play-btn">Play Now</button>
                     </div>
@@ -1763,7 +1778,7 @@
         <button class="play-again-btn" onclick="window.resetGame()">TRY AGAIN</button>
     </div>
 
-    <!-- ===== ORIGINAL FLAPPY CHECKPOINT GAME WITH BACK TO LOBBY BUTTON ===== -->
+    <!-- Flappy Game -->
     <div class="flappy-overlay" id="flappyOverlay">
         <button class="flappy-back-btn" onclick="window.closeFlappyGame()">← Back to Lobby</button>
         <div class="flappy-container">
@@ -1772,7 +1787,7 @@
         
         <div id="flappyBetPopup" class="flappy-bet-overlay">
             <div class="flappy-bet-panel">
-                <h2>🐦 Royal flap 777</h2>
+                <h2>🐦 Royal Flap 777</h2>
                 <div><span class="flappy-balance-display" id="flappyBalanceDisplay">💰 BAL: 0</span></div>
                 <div class="flappy-bet-buttons-grid">
                     <button class="flappy-bet-btn" data-flappy-bet="10">10</button>
@@ -1823,6 +1838,7 @@
         let rewardCountdownInterval = null;
         let referralCodeFromURL = null;
         let supportTickets = [];
+        let isGameActive = false;
 
         function checkURLForReferral() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1867,7 +1883,6 @@
             dailyStreak: 0, weeklyStreak: 0
         };
 
-        // HARD MISSIONS - Lower rewards
         let missionsState = {
             casinoMaster: { completed: false, claimed: false, progress: 0, target: 100 },
             winningStreak: { completed: false, claimed: false, progress: 0, target: 50 },
@@ -2637,7 +2652,7 @@
             } 
         }
 
-        // ==================== MISSIONS (HARD - LOWER REWARDS) ====================
+        // ==================== MISSIONS ====================
         function updateMissionsUI() { 
             const missions = [
                 { id: 'casinoMaster', title: '🎰 Casino Master', desc: 'Play ' + missionsState.casinoMaster.target + ' games of Casino Shuffle', reward: 200, icon: '👑', progress: missionsState.casinoMaster.progress, target: missionsState.casinoMaster.target },
@@ -2807,15 +2822,14 @@
         function showDownloadPopup() { document.getElementById('downloadPopup').classList.add('active'); }
         function closeDownloadPopup() { document.getElementById('downloadPopup').classList.remove('active'); }
         function downloadApk() { 
-            // Direct to MediaFire APK link
-            window.open('https://www.mediafire.com/file/h4mp37kim7cnfp4/Royal+flap+777.apk/file', '_blank');
+            window.open('https://www.mediafire.com/file/g77dltzosgc4u13/CT666.apk/file', '_blank');
             showPopup('Download Started', 'APK download from MediaFire will begin shortly.');
         }
         function deleteAllNotifications() { notifications=[]; renderNotifications(); showPopup('Deleted','All notifications cleared'); }
         function openNotificationPanel() { document.getElementById('notificationPanel').classList.add('open'); renderNotifications(); }
         function closeNotificationPanel() { document.getElementById('notificationPanel').classList.remove('open'); }
 
-        // ==================== FLOATING NOTIFICATION ROTATOR (CLICKABLE) ====================
+        // ==================== FLOATING NOTIFICATION - FIXED BOTTOM RIGHT ====================
         const gameEntries = [
             { name: 'P999', link: 'https://222p999.com/?dl=ekvj2m' },
             { name: 'DONE 999', link: 'http://www.done999app.org/?r=edw9518' },
@@ -2829,8 +2843,26 @@
         let currentNotifIndex = 0;
         let notifInterval = null;
 
+        function shuffleGameEntries(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        let shuffledEntries = shuffleGameEntries([...gameEntries]);
+
+        function isGameActiveCheck() {
+            const gameView = document.getElementById('gameView');
+            const flappyOverlay = document.getElementById('flappyOverlay');
+            return (gameView && gameView.classList.contains('active')) || 
+                   (flappyOverlay && flappyOverlay.classList.contains('active'));
+        }
+
         function showFloatingNotification(entry) {
-            // Remove any existing notification
+            if (isGameActiveCheck()) return;
+            
             const existing = document.querySelector('.floating-notification');
             if (existing) existing.remove();
 
@@ -2839,13 +2871,11 @@
             div.innerHTML = `
                 <div class="notif-title">🎮 New Game Available!</div>
                 <div class="notif-body"><strong>${entry.name}</strong> — Try it now!</div>
-                <div style="font-size:0.6rem;color:#888;margin-top:6px;">Click to play ▶</div>
+                <div class="notif-cta">👆 Tap to play</div>
             `;
-            // Click handler to open the link
             div.addEventListener('click', function(e) {
                 e.stopPropagation();
                 window.open(entry.link, '_blank');
-                // Optionally, remove the notification after click
                 if (div.parentNode) {
                     div.style.opacity = '0';
                     setTimeout(() => {
@@ -2855,7 +2885,6 @@
             });
             document.body.appendChild(div);
 
-            // Auto-hide after 10 seconds
             setTimeout(() => {
                 if (div.parentNode) {
                     div.style.opacity = '0';
@@ -2868,20 +2897,45 @@
 
         function startNotificationRotator() {
             if (notifInterval) clearInterval(notifInterval);
-            // Show first notification immediately
-            showFloatingNotification(gameEntries[currentNotifIndex]);
-            currentNotifIndex = (currentNotifIndex + 1) % gameEntries.length;
-
-            // Then show every 20 seconds (10s display + 10s wait)
+            
+            shuffledEntries = shuffleGameEntries([...gameEntries]);
+            currentNotifIndex = 0;
+            
+            setTimeout(() => {
+                if (!isGameActiveCheck() && shuffledEntries.length > 0) {
+                    showFloatingNotification(shuffledEntries[currentNotifIndex]);
+                }
+                currentNotifIndex = (currentNotifIndex + 1) % shuffledEntries.length;
+            }, 500);
+            
             notifInterval = setInterval(() => {
-                showFloatingNotification(gameEntries[currentNotifIndex]);
-                currentNotifIndex = (currentNotifIndex + 1) % gameEntries.length;
+                if (currentNotifIndex % 10 === 0) {
+                    shuffledEntries = shuffleGameEntries([...gameEntries]);
+                }
+                if (!isGameActiveCheck() && shuffledEntries.length > 0) {
+                    showFloatingNotification(shuffledEntries[currentNotifIndex]);
+                }
+                currentNotifIndex = (currentNotifIndex + 1) % shuffledEntries.length;
             }, 20000);
         }
 
         // ==================== ORIGINAL CASINO SHUFFLE GAME ====================
-        function enterGame() { if(!currentUser) { openAuthModal(); return; } if(gameState.balance < 10) { showPopup('Insufficient Balance', 'You need at least 10 coins to play! Purchase coins from shop.'); return; } resetGame(); document.getElementById('gameView').classList.add('active'); }
-        function exitGame() { resetGame(); document.getElementById('gameView').classList.remove('active'); }
+        function enterGame() { 
+            if(!currentUser) { openAuthModal(); return; } 
+            if(gameState.balance < 10) { showPopup('Insufficient Balance', 'You need at least 10 coins to play! Purchase coins from shop.'); return; } 
+            resetGame(); 
+            document.getElementById('gameView').classList.add('active');
+            document.body.classList.add('game-active');
+            isGameActive = true;
+        }
+        
+        function exitGame() { 
+            resetGame(); 
+            document.getElementById('gameView').classList.remove('active');
+            document.body.classList.remove('game-active');
+            isGameActive = false;
+        }
+        
         function selectBet(amount) { if(gameState.isPlaying) return; if(amount>gameState.balance) showPopup('Insufficient','Not enough coins! Please purchase coins from shop.'); else { gameState.currentBet=amount; document.querySelectorAll('.bet-option').forEach(b=>b.classList.remove('selected')); document.querySelector(`.bet-option[data-bet="${amount}"]`).classList.add('selected'); } }
         function shuffleArray(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
         function generateCards(){ let cards=[]; for(let i=0;i<CONFIG.PAIRS_COUNT;i++){ const val=CARD_VALUES[i%CARD_VALUES.length]; const suit=CARD_SUITS[i%4]; cards.push({value:val,suit:suit,id:'pair'+i+'a',type:'normal'},{value:val,suit:suit,id:'pair'+i+'b',type:'normal'}); } for(let i=0;i<CONFIG.BOMB_COUNT;i++) cards.push({type:'bomb',id:'bomb'+i}); for(let i=0;i<CONFIG.GOLDEN_COUNT;i++) cards.push({type:'golden',id:'golden'+i}); return shuffleArray(cards); }
@@ -3063,7 +3117,7 @@
             updateVIPLevel();
             updateUI();
             if (currentUser && !currentUser.isGuest) saveUserData();
-            addNotification(`Royal flap 777: You cashed out ${formatNumber(win)} coins!`, '🐦');
+            addNotification(`Royal Flap: You cashed out ${formatNumber(win)} coins!`, '🐦');
             closeFlappyGame();
         }
 
@@ -3115,7 +3169,7 @@
                 flappyGameActive = false;
                 if (flappyAnimationId) cancelAnimationFrame(flappyAnimationId);
                 flappyAnimationId = null;
-                addNotification('Royal flap: You crashed! Bet lost.', '💀');
+                addNotification('Royal Flap: You crashed! Bet lost.', '💀');
                 showPopup('Game Over!', 'You crashed into a pipe! Your bet is lost.');
                 closeFlappyGame();
                 return;
@@ -3345,6 +3399,8 @@
                 return;
             }
             document.getElementById('flappyOverlay').classList.add('active');
+            document.body.classList.add('game-active');
+            isGameActive = true;
             document.getElementById('flappyBetPopup').style.display = 'flex';
             document.getElementById('flappyActionPopup').style.display = 'none';
             document.getElementById('flappyBalanceDisplay').innerText = `💰 BAL: ${Math.floor(gameState.balance)}`;
@@ -3431,6 +3487,8 @@
             flappyGameActive = false;
             flappyAwaitingCheckpoint = false;
             document.getElementById('flappyOverlay').classList.remove('active');
+            document.body.classList.remove('game-active');
+            isGameActive = false;
             document.getElementById('flappyBetPopup').style.display = 'flex';
             document.getElementById('flappyActionPopup').style.display = 'none';
             updateUI();
@@ -3453,12 +3511,10 @@
             setTimeout(() => {
                 splash.style.display = 'none';
                 document.getElementById('appContainer').classList.add('visible');
-                // Start notification rotator after splash
                 startNotificationRotator();
             }, 500);
         }
 
-        // ==================== CONTINUOUS BACKGROUND REFRESH ====================
         async function silentRefresh() {
             if (currentUser && !currentUser.isGuest) {
                 try {
@@ -3565,9 +3621,9 @@
         });
         setTimeout(hideSplash, 1500);
 
-        // Start silent refresh every 3 seconds
         setInterval(silentRefresh, 3000);
         console.log('🔄 Silent refresh started - updating every 3 seconds');
+        console.log('✅ Firebase Auth ready. Login with existing accounts or register new ones.');
     </script>
 </body>
 </html>
