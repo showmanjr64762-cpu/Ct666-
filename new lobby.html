@@ -1654,7 +1654,7 @@
         <div class="fullscreen-content">
             <div id="supportTicketList" style="margin-bottom:1.5rem;"></div>
             <div class="ticket-form">
-                <h3>Send Message to Admin</h3>
+                <h3>Support </h3>
                 <textarea id="supportMessage" class="form-input" placeholder="Describe your issue..." rows="6"></textarea>
                 <button class="auth-btn" onclick="window.sendSupportMessage()">Send Message</button>
             </div>
@@ -2311,7 +2311,7 @@
             try {
                 const newRef = db.ref('withdrawals').push();
                 await newRef.set(withdrawalData);
-                showPopup('Withdrawal Request Sent', 'Your withdrawal request has been sent to admin for approval.');
+                showPopup('Withdrawal Request Sent', 'Your withdrawal request has been sent to wait for approval.');
                 closeWithdrawPopup();
                 addNotification('Withdrawal request sent for ' + formatNumber(amount) + ' coins', '💸');
             } catch (error) {
@@ -2356,9 +2356,9 @@
             try {
                 const newRef = db.ref('depositRequests').push();
                 await newRef.set(depositData);
-                showPopup('Deposit Request Sent', 'Your deposit request has been sent to admin for approval. You will receive coins once approved.');
+                showPopup('Deposit Request Sent', 'Your deposit request has been sent wait for approval. You will receive coins once approved.');
                 closePurchasePage();
-                addNotification('Deposit request sent for ' + formatNumber(totalCoins) + ' coins (pending admin approval)', '💰');
+                addNotification('Deposit request sent for ' + formatNumber(totalCoins) + ' coins (pending approvals)', '💰');
             } catch (error) {
                 showPopup('Error', 'Failed to send deposit request. Please try again.');
                 console.error(error);
@@ -2433,7 +2433,7 @@
                 try { 
                     await db.ref('tickets').push().set(ticketData); 
                     addNotification('Support message sent','📧'); 
-                    showPopup('Sent','Message sent to admin'); 
+                    showPopup('Sent','Message sent '); 
                     document.getElementById('supportMessage').value = ''; 
                 } catch(e) { showPopup('Error','Failed to send'); }
             } 
@@ -2452,7 +2452,7 @@
                 }
                 if (data.status === 'rejected' && data.userId === currentUser?.uid) {
                     addNotification(`❌ Deposit rejected`, '❌');
-                    showPopup('Deposit Rejected', 'Your deposit request was rejected by admin.');
+                    showPopup('Deposit Rejected', 'Your deposit request was rejected .');
                 }
             });
 
@@ -2485,9 +2485,9 @@
                     const replies = ticket.replies || [];
                     if (replies.length > 0) {
                         const lastReply = replies[replies.length - 1];
-                        if (lastReply.from === 'admin') {
-                            addNotification(`📩 Admin replied to your support ticket`, '💬');
-                            showPopup('New Support Reply', `Admin replied: "${lastReply.message.substring(0, 50)}..."`);
+                        if (lastReply.from === 'Support') {
+                            addNotification(`📩  replied to your support ticket`, '💬');
+                            showPopup('New Support Reply', ` replied: "${lastReply.message.substring(0, 50)}..."`);
                             renderSupportTickets();
                         }
                     }
@@ -2501,7 +2501,7 @@
                     if (newBalance !== undefined && newBalance !== gameState.balance) {
                         gameState.balance = newBalance;
                         updateUI();
-                        addNotification('💰 Balance updated by admin', '💰');
+                        addNotification('💰 Balance updated ', '💰');
                     }
                     if (data.missions) {
                         missionsState = { ...missionsState, ...data.missions };
