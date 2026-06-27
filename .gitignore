@@ -1,8 +1,0 @@
-node_modules/
-serviceAccountKey.json
-.env
-.DS_Store
-*.log
-npm-debug.log*
-.env.local
-.env.*.local
